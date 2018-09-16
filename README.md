@@ -1,0 +1,2 @@
+# YuGiOhCollectionSupporter
+遊戯王カードをコレクションする際に、どのカードが必要か調べる。カード情報は遊戯王wikiより取得。
