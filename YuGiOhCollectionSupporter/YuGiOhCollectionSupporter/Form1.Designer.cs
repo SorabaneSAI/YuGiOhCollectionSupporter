@@ -34,6 +34,7 @@
 			this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
 			this.label1 = new System.Windows.Forms.Label();
+			this.ログToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -42,6 +43,7 @@
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.データ取得ToolStripMenuItem,
+            this.ログToolStripMenuItem,
             this.これについてToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
@@ -90,6 +92,13 @@
 			this.label1.Text = "待機中";
 			this.label1.Visible = false;
 			// 
+			// ログToolStripMenuItem
+			// 
+			this.ログToolStripMenuItem.Name = "ログToolStripMenuItem";
+			this.ログToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			this.ログToolStripMenuItem.Text = "ログ";
+			this.ログToolStripMenuItem.Click += new System.EventHandler(this.ログToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -116,6 +125,7 @@
 		private System.Windows.Forms.WebBrowser webBrowser1;
 		private System.Windows.Forms.ToolStripMenuItem データ取得ToolStripMenuItem;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ToolStripMenuItem ログToolStripMenuItem;
 	}
 }
 
