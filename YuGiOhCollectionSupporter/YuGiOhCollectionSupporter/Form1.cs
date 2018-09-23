@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace 遊戯王カードコレクトサポーター
+namespace YuGiOhCollectionSupporter
 {
 	public partial class Form1 : Form
 	{
@@ -18,6 +18,7 @@ namespace 遊戯王カードコレクトサポーター
 		{
 			InitializeComponent();
 			config = Config.Load();
+//			webBrowser1.Navigate(config.URL);
 		}
 
 		//設定を開く
@@ -35,6 +36,12 @@ namespace 遊戯王カードコレクトサポーター
 			AboutForm f = new AboutForm();
 			f.ShowDialog(this);
 			f.Dispose();
+		}
+
+		private void データ取得ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			DataGet dataget = new DataGet(config,label1);
+			dataget.getData();
 		}
 	}
 }

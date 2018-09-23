@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace 遊戯王カードコレクトサポーター
+namespace YuGiOhCollectionSupporter
 {
 	public class Config
 	{
 		public string URL = "http://yugioh-wiki.net/index.php";
+		private string CardListURL = @"?%A5%AB%A1%BC%A5%C9%A5%EA%A5%B9%A5%C8";
 		public string CardDataPass = "CardDataPass.dat";
 		public string UserDataPass = "UserDataPass.dat";
 		public string ConfigPass = "Config.dat";
 
+		public string getCardListURL() { return URL + CardListURL; }
 
 		public static void Save(Config config)
 		{

@@ -1,4 +1,4 @@
-﻿namespace 遊戯王カードコレクトサポーター
+﻿namespace YuGiOhCollectionSupporter
 {
 	partial class ConfigForm
 	{

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace 遊戯王カードコレクトサポーター
+namespace YuGiOhCollectionSupporter
 {
 	public partial class ConfigForm : Form
 	{

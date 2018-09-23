@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace 遊戯王カードコレクトサポーター
+namespace YuGiOhCollectionSupporter
 {
 	partial class AboutForm : Form
 	{
