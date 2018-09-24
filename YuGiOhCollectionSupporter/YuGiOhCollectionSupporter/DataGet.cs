@@ -61,14 +61,14 @@ namespace YuGiOhCollectionSupporter
 
 					//h3のシリーズのあとは、h4のパックの種類が連続することがある
 					string 元文章 = e.InnerHtml.Replace("\r\n", "");
-					string 正規表現 = getRegexStr("3")+ getRegexStr("4");
+					string 正規表現 = getRegexStr("3")+ "(.*?)"+"(?="+getRegexStr("3")+")";
 					MatchCollection mc = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase);
 
 					//m.Groups[0]はValue
 					//m.Groups[1]はシリーズ名
-					//m.Groups[2]には普通パックが含まれる
-					//m.Groups[3]はパックの種類
-					//m.Groups[4]にはそのパックの種類のパックが含まれる
+					//m.Groups[2]には通常パックが含まれる
+					//m.Groups[3]には残りの全パックが含まれる
+					//あとの２つはゼロ幅の肯定的先読みアサーションなのでいらない
 					foreach (Match m in mc)
 					{
 						if (m.Groups[1].Value.IndexOf("閲覧に際しての注意事項") != -1 ||
@@ -79,8 +79,22 @@ namespace YuGiOhCollectionSupporter
 						SeriesName.Add(m.Groups[1].Value);
 						form.AddLog("シリーズ :" + m.Groups[1] + "\n" + m.Value + "\n\n");
 						string pack_type = "Normal";
-						//m.Groups[2]以降は奇数と偶数で処理を分ける
-						for (int i = 2; i < m.Groups.Count; i++)
+
+						//m.Groups[2]を解体
+						MatchCollection mc2 = Regex.Matches(m.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
+						foreach (Match m2 in mc2)
+						{
+							form.AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n");
+						}
+
+						//m.Groups[3]を解体
+						MatchCollection mc3 = Regex.Matches(m.Groups[3].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
+						foreach (Match m3 in mc3)
+						{
+							form.AddLog("パック :" + m3.Groups[2].Value + "\nURL :" + m3.Groups[1].Value + "\n");
+						}
+						/*
+						for (int i = 2; i < m.Groups.Count-2; i++)
 						{
 							if (i % 2 == 0)
 							{
@@ -100,45 +114,46 @@ namespace YuGiOhCollectionSupporter
 								form.AddLog("パックタイプ :" + pack_type + "\n");
 							}
 						}
-					}
-
-						/*
-						//<ul class="list2" style="padding-left:16px;margin-left:16px"><li><a href="#x88b8682"> 閲覧に際しての注意事項 </a></li>
-						//を探す(こっちしか階層構造になってない)
-						foreach (HtmlElement e2 in e.GetElementsByTagName("ul"))
-						{
-							if (!string.IsNullOrEmpty(e2.GetAttribute("className")) && e2.GetAttribute("className") == "list2")
-							{
-								// リンク文字列とそのURLの列挙
-								foreach (HtmlElement e3 in e2.GetElementsByTagName("li"))
-								{
-									if (!string.IsNullOrEmpty(e3.InnerText))
-									{
-										if (e3.InnerText.IndexOf("閲覧に際しての注意事項") != -1)
-											continue;
-
-										foreach (HtmlElement e4 in e3.GetElementsByTagName("A"))
-										{
-											string href = e4.GetAttribute("href"); // HREF属性の値
-											string text = e4.InnerText; // リンク文字列
-
-											//↑と†は関係ないのでスキップ
-											if (text == "↑" || text == "†")
-												continue;
-											Console.WriteLine("リンク：" + href);
-											Console.WriteLine("文字列：" + text + "\n");
-
-											//liのなかにある拾うべきaは最初の一つだけ
-											break;
-										}
-									}
-								}
-								break;
-							}
-						}
-						break;
 						*/
 					}
+
+					/*
+					//<ul class="list2" style="padding-left:16px;margin-left:16px"><li><a href="#x88b8682"> 閲覧に際しての注意事項 </a></li>
+					//を探す(こっちしか階層構造になってない)
+					foreach (HtmlElement e2 in e.GetElementsByTagName("ul"))
+					{
+						if (!string.IsNullOrEmpty(e2.GetAttribute("className")) && e2.GetAttribute("className") == "list2")
+						{
+							// リンク文字列とそのURLの列挙
+							foreach (HtmlElement e3 in e2.GetElementsByTagName("li"))
+							{
+								if (!string.IsNullOrEmpty(e3.InnerText))
+								{
+									if (e3.InnerText.IndexOf("閲覧に際しての注意事項") != -1)
+										continue;
+
+									foreach (HtmlElement e4 in e3.GetElementsByTagName("A"))
+									{
+										string href = e4.GetAttribute("href"); // HREF属性の値
+										string text = e4.InnerText; // リンク文字列
+
+										//↑と†は関係ないのでスキップ
+										if (text == "↑" || text == "†")
+											continue;
+										Console.WriteLine("リンク：" + href);
+										Console.WriteLine("文字列：" + text + "\n");
+
+										//liのなかにある拾うべきaは最初の一つだけ
+										break;
+									}
+								}
+							}
+							break;
+						}
+					}
+					break;
+					*/
+				}
 			}
 			Application.DoEvents();
 

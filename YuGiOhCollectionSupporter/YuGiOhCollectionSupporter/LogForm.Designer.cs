@@ -47,7 +47,6 @@
 			this.ClientSize = new System.Drawing.Size(1076, 588);
 			this.Controls.Add(this.richTextBox1);
 			this.Name = "LogForm";
-			this.ShowInTaskbar = false;
 			this.Text = "ログ";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);
 			this.ResumeLayout(false);
