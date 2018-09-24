@@ -124,8 +124,8 @@
 		private System.Windows.Forms.ToolStripMenuItem これについてToolStripMenuItem;
 		private System.Windows.Forms.WebBrowser webBrowser1;
 		private System.Windows.Forms.ToolStripMenuItem データ取得ToolStripMenuItem;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ToolStripMenuItem ログToolStripMenuItem;
+		public System.Windows.Forms.Label label1;
 	}
 }
 

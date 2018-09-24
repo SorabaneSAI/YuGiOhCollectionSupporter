@@ -15,17 +15,26 @@ namespace YuGiOhCollectionSupporter
 		NonDispBrowser webbrowser = new NonDispBrowser();
 		Label label;
 		List<string> SeriesName = new List<string>();
+		Form1 form;
 
-		public DataGet(Config cfg,  Label lbl)
+		public DataGet(Form1 f)
 		{
-			config = cfg;
-			label = lbl;
+			form = f;
+			config = f.config;
+			label = f.label1;
 		}
 
 		void UpdateLabel(string txt)
 		{
 			label.Text = txt;
 			label.Update();
+		}
+
+		//hnumが3はシリーズ、4はパックの種類
+		string getRegexStr(string hnum)
+		{
+			string MAX_STR = "100";	//適当
+			return "<div class=jumpmenu><a href=\"#navigator\">.{1,"+MAX_STR+"}?</a></div><h" + hnum + " id=.{1,"+MAX_STR+ "}?>(.{1,"+MAX_STR+ "}?)<(.{1,5000}?</a>)</li></ul>";
 		}
 
 		//遊戯王カードwikiのカードリストから、全カードの情報を入手
@@ -35,6 +44,7 @@ namespace YuGiOhCollectionSupporter
 			
 			//まずカードリストの名前とURLを得る
 			UpdateLabel("遊戯王カードwikiに接続");
+			form.AddLog("遊戯王カードwikiに接続 :"+ config.getCardListURL());
 			webbrowser.NavigateAndWait(config.getCardListURL());
 
 			HtmlDocument doc = webbrowser.Document;
@@ -49,54 +59,86 @@ namespace YuGiOhCollectionSupporter
 					//から第10期シリーズを取り出す h3ならシリーズ h4ならパックのリスト
 					//なぜかプログラム中では""がとれたり、順番が変わったりする
 
-					string MAX_STR = "50";	//あんまり長いと別のが引っかかる
-					System.Text.RegularExpressions.MatchCollection mc =
-						System.Text.RegularExpressions.Regex.Matches(e.InnerHtml.Replace("\r\n",""), "<div class=jumpmenu><a href=\"#navigator\">.{1,"+ MAX_STR + 
-						"}</a></div><h3 id=.{1,"+ MAX_STR + "}>(.{1,"+ MAX_STR + "})<(.*?)</a></li></ul>", RegexOptions.IgnoreCase);
+					//h3のシリーズのあとは、h4のパックの種類が連続することがある
+					string 元文章 = e.InnerHtml.Replace("\r\n", "");
+					string 正規表現 = getRegexStr("3")+ getRegexStr("4");
+					MatchCollection mc = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase);
 
 					//m.Groups[0]はValue
-					foreach (System.Text.RegularExpressions.Match m in mc)
+					//m.Groups[1]はシリーズ名
+					//m.Groups[2]には普通パックが含まれる
+					//m.Groups[3]はパックの種類
+					//m.Groups[4]にはそのパックの種類のパックが含まれる
+					foreach (Match m in mc)
 					{
-						Console.WriteLine(m.Value+"\n"+ m.Groups[1]+"\n\n");
-					}
+						if (m.Groups[1].Value.IndexOf("閲覧に際しての注意事項") != -1 ||
+							m.Groups[1].Value.IndexOf("関連リンク") != -1 ||
+							m.Groups[1].Value.IndexOf("備考") != -1)
+							continue;
 
-					/*
-					//<ul class="list2" style="padding-left:16px;margin-left:16px"><li><a href="#x88b8682"> 閲覧に際しての注意事項 </a></li>
-					//を探す(こっちしか階層構造になってない)
-					foreach (HtmlElement e2 in e.GetElementsByTagName("ul"))
-					{
-						if (!string.IsNullOrEmpty(e2.GetAttribute("className")) && e2.GetAttribute("className") == "list2")
+						SeriesName.Add(m.Groups[1].Value);
+						form.AddLog("シリーズ :" + m.Groups[1] + "\n" + m.Value + "\n\n");
+						string pack_type = "Normal";
+						//m.Groups[2]以降は奇数と偶数で処理を分ける
+						for (int i = 2; i < m.Groups.Count; i++)
 						{
-							// リンク文字列とそのURLの列挙
-							foreach (HtmlElement e3 in e2.GetElementsByTagName("li"))
+							if (i % 2 == 0)
 							{
-								if (!string.IsNullOrEmpty(e3.InnerText))
+								//<a title=   </a>に囲まれた文字を取得
+								MatchCollection mc2 = Regex.Matches(m.Groups[i].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
+								foreach (Match m2 in mc2)
 								{
-									if (e3.InnerText.IndexOf("閲覧に際しての注意事項") != -1)
+									//↑と†は関係ないのでスキップ
+									if (m2.Value.IndexOf("↑") != -1 || m2.Value.IndexOf("†") != -1)
 										continue;
-
-									foreach (HtmlElement e4 in e3.GetElementsByTagName("A"))
-									{
-										string href = e4.GetAttribute("href"); // HREF属性の値
-										string text = e4.InnerText; // リンク文字列
-
-										//↑と†は関係ないのでスキップ
-										if (text == "↑" || text == "†")
-											continue;
-										Console.WriteLine("リンク：" + href);
-										Console.WriteLine("文字列：" + text + "\n");
-
-										//liのなかにある拾うべきaは最初の一つだけ
-										break;
-									}
+									form.AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n");
 								}
 							}
-							break;
+							else
+							{
+								pack_type = m.Groups[i].Value;
+								form.AddLog("パックタイプ :" + pack_type + "\n");
+							}
 						}
 					}
-					break;
-					*/
-				}
+
+						/*
+						//<ul class="list2" style="padding-left:16px;margin-left:16px"><li><a href="#x88b8682"> 閲覧に際しての注意事項 </a></li>
+						//を探す(こっちしか階層構造になってない)
+						foreach (HtmlElement e2 in e.GetElementsByTagName("ul"))
+						{
+							if (!string.IsNullOrEmpty(e2.GetAttribute("className")) && e2.GetAttribute("className") == "list2")
+							{
+								// リンク文字列とそのURLの列挙
+								foreach (HtmlElement e3 in e2.GetElementsByTagName("li"))
+								{
+									if (!string.IsNullOrEmpty(e3.InnerText))
+									{
+										if (e3.InnerText.IndexOf("閲覧に際しての注意事項") != -1)
+											continue;
+
+										foreach (HtmlElement e4 in e3.GetElementsByTagName("A"))
+										{
+											string href = e4.GetAttribute("href"); // HREF属性の値
+											string text = e4.InnerText; // リンク文字列
+
+											//↑と†は関係ないのでスキップ
+											if (text == "↑" || text == "†")
+												continue;
+											Console.WriteLine("リンク：" + href);
+											Console.WriteLine("文字列：" + text + "\n");
+
+											//liのなかにある拾うべきaは最初の一つだけ
+											break;
+										}
+									}
+								}
+								break;
+							}
+						}
+						break;
+						*/
+					}
 			}
 			Application.DoEvents();
 

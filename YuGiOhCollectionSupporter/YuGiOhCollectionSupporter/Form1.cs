@@ -43,7 +43,7 @@ namespace YuGiOhCollectionSupporter
 
 		private void データ取得ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			DataGet dataget = new DataGet(config,label1);
+			DataGet dataget = new DataGet(this);
 			dataget.getAllData();
 		}
 
@@ -57,7 +57,7 @@ namespace YuGiOhCollectionSupporter
 
 		public void AddLog(string text)
 		{
-			logform.richTextBox1.Text += text;
+			logform.richTextBox1.Text += text + "\n";
 		}
 	}
 }
