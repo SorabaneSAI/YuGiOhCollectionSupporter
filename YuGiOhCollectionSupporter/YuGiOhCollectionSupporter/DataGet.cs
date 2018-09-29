@@ -34,7 +34,7 @@ namespace YuGiOhCollectionSupporter
 		string getRegexStr(string hnum)
 		{
 			string MAX_STR = "100";	//適当
-			return "<div class=jumpmenu><a href=\"#navigator\">.{1,"+MAX_STR+"}?</a></div><h" + hnum + " id=.{1,"+MAX_STR+ "}?>(.{1,"+MAX_STR+ "}?)<(.{1,5000}?</a>)</li></ul>";
+			return "<div class=jumpmenu><a href=\"#navigator\">.{1,"+MAX_STR+"}?</a></div><h" + hnum + " id=.{1,"+MAX_STR+ "}?>(?:<A title=.*?\">)?(.{1," + MAX_STR+ "}?)<(.{1,5000}?</a>)</li></ul>";
 		}
 
 		//遊戯王カードwikiのカードリストから、全カードの情報を入手
@@ -88,10 +88,23 @@ namespace YuGiOhCollectionSupporter
 						}
 
 						//m.Groups[3]を解体
-						MatchCollection mc3 = Regex.Matches(m.Groups[3].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
+						MatchCollection mc3 = Regex.Matches(m.Groups[3].Value, getRegexStr("4")+ ".*?", RegexOptions.IgnoreCase);
+						if (mc3.Count == 0) continue;
 						foreach (Match m3 in mc3)
 						{
-							form.AddLog("パック :" + m3.Groups[2].Value + "\nURL :" + m3.Groups[1].Value + "\n");
+							//パックタイプ名がリンクになってることを考慮
+							MatchCollection mc4 = Regex.Matches(m3.Groups[1].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)", RegexOptions.IgnoreCase);
+							if(mc4.Count != 0)
+								pack_type = mc4[0].Groups[2].Value;
+							else
+								pack_type = m3.Groups[1].Value;
+							form.AddLog("パックタイプ :" + pack_type + "\n");
+							//mc3[0].Groups[2]を解体
+							MatchCollection mc5 = Regex.Matches(m3.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
+							foreach (Match m5 in mc5)
+							{
+								form.AddLog("パック :" + m5.Groups[2].Value + "\nURL :" + m5.Groups[1].Value + "\n");
+							}
 						}
 						/*
 						for (int i = 2; i < m.Groups.Count-2; i++)
