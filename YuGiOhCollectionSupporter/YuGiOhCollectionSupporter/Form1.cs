@@ -11,6 +11,11 @@ using System.Windows.Forms;
 
 namespace YuGiOhCollectionSupporter
 {
+	public enum LogLevel
+	{
+		全部,情報,警告,エラー,必須項目
+	}
+
 	public partial class Form1 : Form
 	{
 		public Config config = new Config();
@@ -21,7 +26,7 @@ namespace YuGiOhCollectionSupporter
 			InitializeComponent();
 			config = Config.Load();
 			//			webBrowser1.Navigate(config.URL);
-			AddLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()));
+			AddLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
 		}
 
 		//設定を開く
@@ -55,9 +60,9 @@ namespace YuGiOhCollectionSupporter
 				logform.Hide();
 		}
 
-		public void AddLog(string text)
+		public void AddLog(string text, LogLevel LV)
 		{
-			logform.richTextBox1.Text += text + "\n";
+			logform.dataGridView1.Rows.Add(LV.ToString(),text);
 		}
 	}
 }

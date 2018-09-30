@@ -44,7 +44,7 @@ namespace YuGiOhCollectionSupporter
 			
 			//まずカードリストの名前とURLを得る
 			UpdateLabel("遊戯王カードwikiに接続");
-			form.AddLog("遊戯王カードwikiに接続 :"+ config.getCardListURL());
+			form.AddLog("遊戯王カードwikiに接続 :"+ config.getCardListURL(), LogLevel.全部);
 			webbrowser.NavigateAndWait(config.getCardListURL());
 
 			HtmlDocument doc = webbrowser.Document;
@@ -68,7 +68,6 @@ namespace YuGiOhCollectionSupporter
 					//m.Groups[1]はシリーズ名
 					//m.Groups[2]には通常パックが含まれる
 					//m.Groups[3]には残りの全パックが含まれる
-					//あとの２つはゼロ幅の肯定的先読みアサーションなのでいらない
 					foreach (Match m in mc)
 					{
 						if (m.Groups[1].Value.IndexOf("閲覧に際しての注意事項") != -1 ||
@@ -77,14 +76,15 @@ namespace YuGiOhCollectionSupporter
 							continue;
 
 						SeriesName.Add(m.Groups[1].Value);
-						form.AddLog("シリーズ :" + m.Groups[1] + "\n" + m.Value + "\n\n");
+						form.AddLog("シリーズ :" + m.Groups[1] + "\n", LogLevel.情報);
 						string pack_type = "Normal";
 
 						//m.Groups[2]を解体
 						MatchCollection mc2 = Regex.Matches(m.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
 						foreach (Match m2 in mc2)
 						{
-							form.AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n");
+							form.AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n", LogLevel.情報);
+							getPackData(m2.Groups[1].Value, m2.Groups[2].Value, pack_type, m.Groups[1].Value);
 						}
 
 						//m.Groups[3]を解体
@@ -98,84 +98,93 @@ namespace YuGiOhCollectionSupporter
 								pack_type = mc4[0].Groups[2].Value;
 							else
 								pack_type = m3.Groups[1].Value;
-							form.AddLog("パックタイプ :" + pack_type + "\n");
+							form.AddLog("パックタイプ :" + pack_type + "\n", LogLevel.情報);
 							//mc3[0].Groups[2]を解体
 							MatchCollection mc5 = Regex.Matches(m3.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
 							foreach (Match m5 in mc5)
 							{
-								form.AddLog("パック :" + m5.Groups[2].Value + "\nURL :" + m5.Groups[1].Value + "\n");
+								form.AddLog("パック :" + m5.Groups[2].Value + "\nURL :" + m5.Groups[1].Value + "\n", LogLevel.情報);
+								getPackData(m5.Groups[1].Value, m5.Groups[2].Value, pack_type, m.Groups[1].Value);
 							}
 						}
-						/*
-						for (int i = 2; i < m.Groups.Count-2; i++)
-						{
-							if (i % 2 == 0)
-							{
-								//<a title=   </a>に囲まれた文字を取得
-								MatchCollection mc2 = Regex.Matches(m.Groups[i].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
-								foreach (Match m2 in mc2)
-								{
-									//↑と†は関係ないのでスキップ
-									if (m2.Value.IndexOf("↑") != -1 || m2.Value.IndexOf("†") != -1)
-										continue;
-									form.AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n");
-								}
-							}
-							else
-							{
-								pack_type = m.Groups[i].Value;
-								form.AddLog("パックタイプ :" + pack_type + "\n");
-							}
-						}
-						*/
 					}
 
-					/*
-					//<ul class="list2" style="padding-left:16px;margin-left:16px"><li><a href="#x88b8682"> 閲覧に際しての注意事項 </a></li>
-					//を探す(こっちしか階層構造になってない)
-					foreach (HtmlElement e2 in e.GetElementsByTagName("ul"))
-					{
-						if (!string.IsNullOrEmpty(e2.GetAttribute("className")) && e2.GetAttribute("className") == "list2")
-						{
-							// リンク文字列とそのURLの列挙
-							foreach (HtmlElement e3 in e2.GetElementsByTagName("li"))
-							{
-								if (!string.IsNullOrEmpty(e3.InnerText))
-								{
-									if (e3.InnerText.IndexOf("閲覧に際しての注意事項") != -1)
-										continue;
-
-									foreach (HtmlElement e4 in e3.GetElementsByTagName("A"))
-									{
-										string href = e4.GetAttribute("href"); // HREF属性の値
-										string text = e4.InnerText; // リンク文字列
-
-										//↑と†は関係ないのでスキップ
-										if (text == "↑" || text == "†")
-											continue;
-										Console.WriteLine("リンク：" + href);
-										Console.WriteLine("文字列：" + text + "\n");
-
-										//liのなかにある拾うべきaは最初の一つだけ
-										break;
-									}
-								}
-							}
-							break;
-						}
-					}
-					break;
-					*/
 				}
 			}
-			Application.DoEvents();
 
 			label.Visible = false;	//最後に非表示
 		}
 
-		public void getPackData(string PackURL)
+		//パックのページに移動し、カードのリンクを得る
+		public void getPackData(string PackURL, string PackName, string PackType, string SeriesName)
 		{
+			Application.DoEvents();
 
+			UpdateLabel(PackName+"に接続");
+			form.AddLog(PackName +"に接続 :" + PackURL, LogLevel.情報);
+			webbrowser.NavigateAndWait(PackURL);
+
+			HtmlDocument doc = webbrowser.Document;
+			foreach (HtmlElement e in doc.GetElementsByTagName("div"))
+			{
+				if (!string.IsNullOrEmpty(e.GetAttribute("id")) && e.GetAttribute("id") == "body")
+				{
+					//概要を取得
+					string 元文章 = e.InnerText;
+					string 正規表現 = "(.*)↑.{0,10}収録カードリスト";
+					MatchCollection mc = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+					if (mc.Count == 0)
+					{
+						form.AddLog("パック読み込みエラー\n", LogLevel.エラー);
+						return;
+					}
+
+					string パック概要 = mc[0].Groups[1].Value;
+					form.AddLog("パック概要:"+ パック概要.Replace("\r\n", "") + "\n", LogLevel.全部);
+
+					//パックのテーブルを取得
+					元文章 = e.InnerHtml.Replace("\r\n", "");
+					正規表現 = "<div class=jumpmenu><a href=\"#navigator\">(.*?)(?=<div class=jumpmenu>)";
+					MatchCollection mc2 = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase);
+
+					if (mc2.Count == 0)
+					{
+						form.AddLog("パック読み込みエラー\n", LogLevel.エラー);
+						return;
+					}
+
+					//なぜか</li>がないので<li>で代用
+					//</A> <SPAN style="FONT-SIZE: 10px; DISPLAY: inline-block; LINE-HEIGHT: 130%; TEXT-INDENT: 0px"><A title="Super (20d)" href="http://yugioh-wiki.net/index.php?Super">Super</A>,<A title="Secret (131d)" href="http://yugioh-wiki.net/index.php?Secret">Secret</A></SPAN>
+
+					元文章 = mc2[0].Groups[1].Value.Replace("\r\n", "");
+					正規表現 = "<li>(.*?)<a title=.*?href=\"(.*?)\">《(.*?)》.*?(<span.*?</span>).*?(?=<li>)";
+					MatchCollection mc3 = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase);
+					foreach (Match m in mc3)
+					{
+						string log = "略号 :" + m.Groups[1].Value + "  カード :《" + m.Groups[3].Value + "》  レア :";
+
+						log += "  URL :" + m.Groups[2].Value;
+
+						if (m.Groups.Count == 4) //レア度ありならさらに分解
+						{
+							元文章 = m.Groups[4].Value;
+							正規表現 = ">(.{1,30}?)</a>.*?";
+							MatchCollection mc4 = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase);
+							foreach (Match m4 in mc4)
+							{
+								foreach (var cc in m4.Captures)
+								{
+									log += cc + "  ";
+								}
+							}
+						}
+
+						form.AddLog(log, LogLevel.情報);
+					}
+
+				}
+			}
 		}
 	}
 }

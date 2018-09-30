@@ -22,5 +22,10 @@ namespace YuGiOhCollectionSupporter
 			e.Cancel = true;
 			Hide();
 		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			dataGridView1.Rows.Clear();
+		}
 	}
 }
