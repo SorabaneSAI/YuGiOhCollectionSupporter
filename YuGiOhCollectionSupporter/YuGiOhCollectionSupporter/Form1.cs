@@ -20,6 +20,7 @@ namespace YuGiOhCollectionSupporter
 	{
 		public Config config = new Config();
 		public LogForm logform = new LogForm();
+		public bool ProgramEndFlag = false;
 
 		public Form1()
 		{
@@ -62,7 +63,19 @@ namespace YuGiOhCollectionSupporter
 
 		public void AddLog(string text, LogLevel LV)
 		{
-			logform.dataGridView1.Rows.Add(LV.ToString(),text);
+			logform.dataGridView1.Rows.Add(LV,text);
+			//ログに加えるが、現在のログレベル以下なら非表示にする
+			int index = logform.dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
+			var row = logform.dataGridView1.Rows[index];
+			if ((int)(LogLevel)row.Cells[0].Value < logform.comboBox1.SelectedIndex)
+				row.Visible = false;
+
+		}
+
+		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			Application.Exit();
+			ProgramEndFlag = true;
 		}
 	}
 }

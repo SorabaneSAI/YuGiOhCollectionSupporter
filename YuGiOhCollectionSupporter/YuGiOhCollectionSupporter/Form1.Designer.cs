@@ -31,10 +31,10 @@
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.データ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.ログToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
 			this.label1 = new System.Windows.Forms.Label();
-			this.ログToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -65,6 +65,13 @@
 			this.データ取得ToolStripMenuItem.Text = "データ取得";
 			this.データ取得ToolStripMenuItem.Click += new System.EventHandler(this.データ取得ToolStripMenuItem_Click);
 			// 
+			// ログToolStripMenuItem
+			// 
+			this.ログToolStripMenuItem.Name = "ログToolStripMenuItem";
+			this.ログToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			this.ログToolStripMenuItem.Text = "ログ";
+			this.ログToolStripMenuItem.Click += new System.EventHandler(this.ログToolStripMenuItem_Click);
+			// 
 			// これについてToolStripMenuItem
 			// 
 			this.これについてToolStripMenuItem.Name = "これについてToolStripMenuItem";
@@ -92,13 +99,6 @@
 			this.label1.Text = "待機中";
 			this.label1.Visible = false;
 			// 
-			// ログToolStripMenuItem
-			// 
-			this.ログToolStripMenuItem.Name = "ログToolStripMenuItem";
-			this.ログToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-			this.ログToolStripMenuItem.Text = "ログ";
-			this.ログToolStripMenuItem.Click += new System.EventHandler(this.ログToolStripMenuItem_Click);
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -110,6 +110,7 @@
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
 			this.Text = "遊戯王カードコレクトサポーター";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);

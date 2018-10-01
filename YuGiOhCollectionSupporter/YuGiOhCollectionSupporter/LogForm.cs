@@ -27,5 +27,19 @@ namespace YuGiOhCollectionSupporter
 		{
 			dataGridView1.Rows.Clear();
 		}
+
+		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			//レベルの低いログを非表示にする
+			for(int i=0; i < dataGridView1.Rows.Count; i++)
+			{
+				var row = dataGridView1.Rows[i];
+				if ((int)(LogLevel)row.Cells[0].Value < comboBox1.SelectedIndex)
+					dataGridView1.Rows[i].Visible = false;
+				else
+					dataGridView1.Rows[i].Visible = true;
+			}
+
+		}
 	}
 }

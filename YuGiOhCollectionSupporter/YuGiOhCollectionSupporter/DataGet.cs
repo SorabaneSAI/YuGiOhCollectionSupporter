@@ -12,7 +12,7 @@ namespace YuGiOhCollectionSupporter
 	public class DataGet
 	{
 		Config config;
-		NonDispBrowser webbrowser = new NonDispBrowser();
+		public NonDispBrowser webbrowser = new NonDispBrowser();
 		Label label;
 		List<string> SeriesName = new List<string>();
 		Form1 form;
@@ -85,6 +85,11 @@ namespace YuGiOhCollectionSupporter
 						{
 							form.AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n", LogLevel.情報);
 							getPackData(m2.Groups[1].Value, m2.Groups[2].Value, pack_type, m.Groups[1].Value);
+							if (form.ProgramEndFlag == true)
+							{
+								webbrowser.Dispose();
+								return;
+							}
 						}
 
 						//m.Groups[3]を解体
@@ -105,6 +110,11 @@ namespace YuGiOhCollectionSupporter
 							{
 								form.AddLog("パック :" + m5.Groups[2].Value + "\nURL :" + m5.Groups[1].Value + "\n", LogLevel.情報);
 								getPackData(m5.Groups[1].Value, m5.Groups[2].Value, pack_type, m.Groups[1].Value);
+								if (form.ProgramEndFlag == true)
+								{
+									webbrowser.Dispose();
+									return;
+								}
 							}
 						}
 					}
@@ -119,6 +129,11 @@ namespace YuGiOhCollectionSupporter
 		public void getPackData(string PackURL, string PackName, string PackType, string SeriesName)
 		{
 			Application.DoEvents();
+			if (form.ProgramEndFlag == true)
+			{
+				webbrowser.Dispose();
+				return;
+			}
 
 			UpdateLabel(PackName+"に接続");
 			form.AddLog(PackName +"に接続 :" + PackURL, LogLevel.情報);

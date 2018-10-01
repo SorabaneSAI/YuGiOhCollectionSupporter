@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
-			this.LogLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Log_Level = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.text = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.label1 = new System.Windows.Forms.Label();
 			this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -49,7 +49,7 @@
 			this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.LogLevel,
+            this.Log_Level,
             this.text});
 			this.dataGridView1.Location = new System.Drawing.Point(0, 33);
 			this.dataGridView1.Name = "dataGridView1";
@@ -60,15 +60,15 @@
 			this.dataGridView1.Size = new System.Drawing.Size(1076, 555);
 			this.dataGridView1.TabIndex = 1;
 			// 
-			// LogLevel
+			// Log_Level
 			// 
-			this.LogLevel.FillWeight = 10.80075F;
-			this.LogLevel.HeaderText = "ログレベル";
-			this.LogLevel.Name = "LogLevel";
-			this.LogLevel.ReadOnly = true;
-			this.LogLevel.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.LogLevel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.LogLevel.Width = 58;
+			this.Log_Level.FillWeight = 10.80075F;
+			this.Log_Level.HeaderText = "ログレベル";
+			this.Log_Level.Name = "Log_Level";
+			this.Log_Level.ReadOnly = true;
+			this.Log_Level.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.Log_Level.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.Log_Level.Width = 60;
 			// 
 			// text
 			// 
@@ -102,6 +102,7 @@
 			this.comboBox1.Size = new System.Drawing.Size(119, 20);
 			this.comboBox1.TabIndex = 2;
 			this.comboBox1.Text = "情報";
+			this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
 			// 
 			// button1
 			// 
@@ -132,11 +133,11 @@
 		}
 
 		#endregion
-		public System.Windows.Forms.DataGridView dataGridView1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn LogLevel;
-		private System.Windows.Forms.DataGridViewTextBoxColumn text;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ComboBox comboBox1;
 		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Log_Level;
+		private System.Windows.Forms.DataGridViewTextBoxColumn text;
+		public System.Windows.Forms.DataGridView dataGridView1;
+		public System.Windows.Forms.ComboBox comboBox1;
 	}
 }
