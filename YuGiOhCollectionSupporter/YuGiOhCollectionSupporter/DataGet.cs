@@ -151,12 +151,12 @@ namespace YuGiOhCollectionSupporter
 
 					if (mc.Count == 0)
 					{
-						form.AddLog("パック読み込みエラー\n", LogLevel.エラー);
+						form.AddLog("パック読み込みエラー(" + PackName + ")\n", LogLevel.エラー);
 						return;
 					}
 
 					string パック概要 = mc[0].Groups[1].Value;
-					form.AddLog("パック概要:"+ パック概要.Replace("\r\n", "") + "\n", LogLevel.全部);
+					form.AddLog("パック概要:" + パック概要.Replace("\r\n", "") + "\n", LogLevel.全部);
 
 					//パックのテーブルを取得
 					元文章 = e.InnerHtml;
@@ -165,41 +165,101 @@ namespace YuGiOhCollectionSupporter
 
 					if (mc2.Count == 0)
 					{
-						form.AddLog("パック読み込みエラー\n", LogLevel.エラー);
+						form.AddLog("パック読み込みエラー2(" + PackName + ")\n", LogLevel.エラー);
 						return;
 					}
 
-					//なぜか</li>がないので<li>で代用
-					//</A> <SPAN style="FONT-SIZE: 10px; DISPLAY: inline-block; LINE-HEIGHT: 130%; TEXT-INDENT: 0px"><A title="Super (20d)" href="http://yugioh-wiki.net/index.php?Super">Super</A>,<A title="Secret (131d)" href="http://yugioh-wiki.net/index.php?Secret">Secret</A></SPAN>
 
-					string[] カード配列 = mc2[0].Groups[1].Value.Split('\n');
-					正規表現 = "<li>(.*?)<a title=.*?href=\"(.*?)\">《(.*?)》(.*?)\r";
-					foreach(string str in カード配列)
+					//ストラクチャーと仮定してテーブルがないか調査
+					string 元文章3 = mc2[0].Groups[1].Value.Replace('\n', ' ');
+					string 正規表現3 = "<tbody>(.*?)</tbody>";
+					MatchCollection mc9 = Regex.Matches(元文章3, 正規表現3, RegexOptions.IgnoreCase);
+
+					//もし０なら通常パックかもね
+					if (mc9.Count == 0)
 					{
-						MatchCollection mc3 = Regex.Matches(str, 正規表現, RegexOptions.IgnoreCase);
-						foreach (Match m in mc3)
+						//なぜか</li>がないので<li>で代用
+						//</A> <SPAN style="FONT-SIZE: 10px; DISPLAY: inline-block; LINE-HEIGHT: 130%; TEXT-INDENT: 0px"><A title="Super (20d)" href="http://yugioh-wiki.net/index.php?Super">Super</A>,<A title="Secret (131d)" href="http://yugioh-wiki.net/index.php?Secret">Secret</A></SPAN>
+						string[] カード配列 = mc2[0].Groups[1].Value.Split('\n');
+						正規表現 = "<li>(.*?)<a title=.*?href=\"(.*?)\">《(.*?)》(.*?)\r";
+						foreach (string str in カード配列)
 						{
-							string 略号 = m.Groups[1].Value;
-							string CardName = m.Groups[3].Value;
-							List<string> RareArray = new List<string>();
-							string URL = m.Groups[2].Value;
+							MatchCollection mc3 = Regex.Matches(str, 正規表現, RegexOptions.IgnoreCase);
 
-							if (m.Groups.Count == 5) //レア度ありならさらに分解
+							foreach (Match m in mc3)
 							{
+								string 略号 = m.Groups[1].Value;
+								string CardName = m.Groups[3].Value;
+								List<string> RareArray = new List<string>();
+								string URL = m.Groups[2].Value;
 
-								元文章 = m.Groups[4].Value;
-								string レア正規表現 = ">(.{1,30}?)</a>.*?";
-								MatchCollection mc4 = Regex.Matches(元文章, レア正規表現, RegexOptions.IgnoreCase);
-								foreach (Match m4 in mc4)
+								if (m.Groups.Count == 5) //レア度ありならさらに分解
 								{
-									if (m4.Groups.Count > 1)
-										RareArray.Add(m4.Groups[1].Value);
-									else
-										form.AddLog("レア度取得失敗", LogLevel.警告);
+
+									元文章 = m.Groups[4].Value;
+									string レア正規表現 = ">(.{1,30}?)</a>.*?";
+									MatchCollection mc4 = Regex.Matches(元文章, レア正規表現, RegexOptions.IgnoreCase);
+									foreach (Match m4 in mc4)
+									{
+										if (m4.Groups.Count > 1)
+											RareArray.Add(m4.Groups[1].Value);
+										else
+											form.AddLog("レア度取得失敗", LogLevel.警告);
+									}
+								}
+								if (RareArray.Count == 0)
+									RareArray.Add("Normal");
+								GetCardData(略号, CardName, RareArray, URL);
+							}
+						}
+					}
+					else
+					{
+						foreach (Match m9 in mc9)
+						{
+							string 元文章8 = m9.Value;
+							string 正規表現8 = "<tr>(.*?)</tr>";
+							MatchCollection mc8 = Regex.Matches(元文章8, 正規表現8, RegexOptions.IgnoreCase);
+
+							if (mc8.Count == 0)
+							{
+								form.AddLog("パック読み込みエラー8(" + PackName + ")\n", LogLevel.エラー);
+								return;
+							}
+
+				foreach (Match m8 in mc8)
+							{
+								string 元文章7 = m8.Value.Replace("\r","");
+								string 正規表現7 = "<td.*?>(.*?)</td>.*?href=\"(.*?)\">《(.*?)》</a>(.*?)</tr>";
+								MatchCollection mc7 = Regex.Matches(元文章7, 正規表現7, RegexOptions.IgnoreCase);
+
+								foreach (Match m7 in mc7)
+								{
+									string 略号 = m7.Groups[1].Value;
+									string CardName = m7.Groups[3].Value;
+									List<string> RareArray = new List<string>();
+									string URL = m7.Groups[2].Value;
+
+									string 元文章6 = m7.Groups[4].Value;
+									string レア正規表現 = ">(.{1,30}?)</a>.*?";
+									MatchCollection mc5 = Regex.Matches(元文章6, レア正規表現, RegexOptions.IgnoreCase);
+									foreach (Match m5 in mc5)
+									{
+										if (m5.Groups.Count > 1)
+											RareArray.Add(m5.Groups[1].Value);
+										else
+											form.AddLog("レア度取得失敗", LogLevel.警告);
+									}
+									if (RareArray.Count == 0)
+										RareArray.Add("Normal");
+									GetCardData(略号, CardName, RareArray, URL);
+									//最初の１つだけでいい
+									break;
 								}
 							}
 
-							GetCardData(略号, CardName, RareArray, URL);
+							//最初の１つだけでいい
+							break;
 						}
 					}
 				}
