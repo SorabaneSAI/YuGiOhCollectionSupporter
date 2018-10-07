@@ -33,18 +33,18 @@ namespace YuGiOhCollectionSupporter
 		//hnumが3はシリーズ、4はパックの種類
 		string getRegexStr(string hnum)
 		{
-			string MAX_STR = "100";	//適当
-			return "<div class=jumpmenu><a href=\"#navigator\">.{1,"+MAX_STR+"}?</a></div><h" + hnum + " id=.{1,"+MAX_STR+ "}?>(?:<A title=.*?\">)?(.{1," + MAX_STR+ "}?)<(.{1,5000}?</a>)</li></ul>";
+			string MAX_STR = "100"; //適当
+			return "<div class=jumpmenu><a href=\"#navigator\">.{1," + MAX_STR + "}?</a></div><h" + hnum + " id=.{1," + MAX_STR + "}?>(?:<A title=.*?\">)?(.{1," + MAX_STR + "}?)<(.{1,5000}?</a>)</li></ul>";
 		}
 
 		//遊戯王カードwikiのカードリストから、全カードの情報を入手
 		public void getAllData()
 		{
-			label.Visible = true;  
-			
+			label.Visible = true;
+
 			//まずカードリストの名前とURLを得る
 			UpdateLabel("遊戯王カードwikiに接続");
-			form.AddLog("遊戯王カードwikiに接続 :"+ config.getCardListURL(), LogLevel.全部);
+			form.AddLog("遊戯王カードwikiに接続 :" + config.getCardListURL(), LogLevel.全部);
 			webbrowser.NavigateAndWait(config.getCardListURL());
 
 			HtmlDocument doc = webbrowser.Document;
@@ -61,7 +61,7 @@ namespace YuGiOhCollectionSupporter
 
 					//h3のシリーズのあとは、h4のパックの種類が連続することがある
 					string 元文章 = e.InnerHtml.Replace("\r\n", "");
-					string 正規表現 = getRegexStr("3")+ "(.*?)"+"(?="+getRegexStr("3")+")";
+					string 正規表現 = getRegexStr("3") + "(.*?)" + "(?=" + getRegexStr("3") + ")";
 					MatchCollection mc = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase);
 
 					//m.Groups[0]はValue
@@ -93,13 +93,13 @@ namespace YuGiOhCollectionSupporter
 						}
 
 						//m.Groups[3]を解体
-						MatchCollection mc3 = Regex.Matches(m.Groups[3].Value, getRegexStr("4")+ ".*?", RegexOptions.IgnoreCase);
+						MatchCollection mc3 = Regex.Matches(m.Groups[3].Value, getRegexStr("4") + ".*?", RegexOptions.IgnoreCase);
 						if (mc3.Count == 0) continue;
 						foreach (Match m3 in mc3)
 						{
 							//パックタイプ名がリンクになってることを考慮
 							MatchCollection mc4 = Regex.Matches(m3.Groups[1].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)", RegexOptions.IgnoreCase);
-							if(mc4.Count != 0)
+							if (mc4.Count != 0)
 								pack_type = mc4[0].Groups[2].Value;
 							else
 								pack_type = m3.Groups[1].Value;
@@ -121,22 +121,23 @@ namespace YuGiOhCollectionSupporter
 
 				}
 			}
+			UpdateLabel("セーブ中…");
+			CardDataBase.Save(CardDB);
+			label.Visible = false;  //最後に非表示
 
-			label.Visible = false;	//最後に非表示
 		}
 
 		//パックのページに移動し、カードのリンクを得る
 		public void getPackData(string PackURL, string PackName, string PackType, string SeriesName)
 		{
-			Application.DoEvents();
 			if (form.ProgramEndFlag == true)
 			{
 				webbrowser.Dispose();
 				return;
 			}
 
-			UpdateLabel(PackName+"に接続");
-			form.AddLog(PackName +"に接続 :" + PackURL, LogLevel.情報);
+			UpdateLabel(PackName + "に接続");
+			form.AddLog(PackName + "に接続 :" + PackURL, LogLevel.情報);
 			webbrowser.NavigateAndWait(PackURL);
 
 			HtmlDocument doc = webbrowser.Document;
@@ -157,6 +158,19 @@ namespace YuGiOhCollectionSupporter
 
 					string パック概要 = mc[0].Groups[1].Value;
 					form.AddLog("パック概要:" + パック概要.Replace("\r\n", "") + "\n", LogLevel.全部);
+
+					//概要からパック発売日時を取得(最初のyyyy年mm月dd日)
+					string 正規表現Date = "(\\d{4}年\\d{1,2}月\\d{1,2}日)";
+					MatchCollection mcdate = Regex.Matches(元文章.Replace("\r\n", ""), 正規表現Date, RegexOptions.IgnoreCase);
+
+					if (mcdate.Count == 0)
+					{
+						form.AddLog("日時読み込みエラー(" + PackName + ")\n", LogLevel.エラー);
+						return;
+					}
+
+					DateTime Date = DateTime.Parse(mcdate[0].Groups[1].Value);
+					form.AddLog("パック発売日:" + Date.ToShortDateString() + "\n", LogLevel.全部);
 
 					//パックのテーブルを取得
 					元文章 = e.InnerHtml;
@@ -209,7 +223,12 @@ namespace YuGiOhCollectionSupporter
 								}
 								if (RareArray.Count == 0)
 									RareArray.Add("Normal");
-								GetCardData(略号, CardName, RareArray, URL);
+								foreach (var rare in RareArray)
+								{
+									CardData card = GetCardData(略号, CardName, rare, URL, PackName);
+									if(form.CardDB.AddCardDataBase(card) !=0)
+										form.AddLog("重複データのためスキップ\n", LogLevel.情報);
+								}
 							}
 						}
 					}
@@ -227,9 +246,9 @@ namespace YuGiOhCollectionSupporter
 								return;
 							}
 
-				foreach (Match m8 in mc8)
+							foreach (Match m8 in mc8)
 							{
-								string 元文章7 = m8.Value.Replace("\r","");
+								string 元文章7 = m8.Value.Replace("\r", "");
 								string 正規表現7 = "<td.*?>(.*?)</td>.*?href=\"(.*?)\">《(.*?)》</a>(.*?)</tr>";
 								MatchCollection mc7 = Regex.Matches(元文章7, 正規表現7, RegexOptions.IgnoreCase);
 
@@ -252,7 +271,13 @@ namespace YuGiOhCollectionSupporter
 									}
 									if (RareArray.Count == 0)
 										RareArray.Add("Normal");
-									GetCardData(略号, CardName, RareArray, URL);
+
+									foreach (var rare in RareArray)
+									{
+										CardData card = GetCardData(略号, CardName, rare, URL,PackName);
+										if (form.CardDB.AddCardDataBase(card) != 0)
+											form.AddLog("重複データのためスキップ\n", LogLevel.情報);
+									}
 									//最初の１つだけでいい
 									break;
 								}
@@ -262,23 +287,98 @@ namespace YuGiOhCollectionSupporter
 							break;
 						}
 					}
+					//なんかエラー出るし１つでいい
+					break;
 				}
 			}
 		}
 
-		public void GetCardData(string 略号, string CardName, List<string> RareArray, string URL)
+		public CardData GetCardData(string 略号, string CardName, string Rare, string URL, string PackName)
 		{
-			string log = "略号 :" + 略号 + "  カード :《" + CardName + "》  レア :";
-
-			foreach (string str in RareArray)
+			string 略号文字 = "";
+			string 地域名 = "";
+			int 略号番号 = 0;
+			int 略号番号桁数 = 2;
+			//略号を分解
+			if (略号 != "")
 			{
-				log += str + "  ";
+				string[] strarray = 略号.TrimEnd().Split('-');
+				略号文字 = strarray[0];
+				string 番号数字 = "";
+
+				foreach (char c in strarray[1])
+				{
+					if (!Char.IsLetter(c))
+						番号数字 += c;
+					else
+						地域名 += c;
+				}
+				略号番号 = int.Parse(番号数字);
+				略号番号桁数 = 番号数字.Length;
 			}
 
-			log += "  URL :" + URL;
-
+			string log = "略号 :" + 略号 + "  カード :《" + CardName + "》 レア :" + Rare + "  URL :" + URL;
 			form.AddLog(log, LogLevel.情報);
 
+			return new CardData(CardName, 略号, 地域名, 略号番号, 略号番号桁数, Rare, PackName);
+
+			/*
+			//フリガナ取得
+			form.AddLog(CardName + "に接続 :" + URL, LogLevel.全部);
+			webbrowser.NavigateAndWait(URL);
+			HtmlDocument doc = webbrowser.Document;
+			foreach (HtmlElement e in doc.GetElementsByTagName("div"))
+			{
+				if (!string.IsNullOrEmpty(e.GetAttribute("id")) && e.GetAttribute("id") == "body")
+				{
+					//概要を取得
+					string 元文章 = e.InnerHtml;
+					string 正規表現 = "《(.*?)(?<!<)/(.*?)》";
+					MatchCollection mc = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+
+					//<h2 id="content_1_0">《<ruby><rb>星杯</rb><rp>(</rp><rt>せいはい</rt><rp>)</rp></ruby>を<ruby><rb>戴</rb><rp>(</rp><rt>いただ</rt><rp>)</rp></ruby>く<ruby><rb>巫女</rb><rp>(</rp><rt>みこ</rt><rp>)</rp></ruby>/Crowned by the World Chalice》
+					//後ろから/を検索しようとするとスタッシュバスターの英名で引っかかる
+					if (mc.Count == 0)
+					{
+						form.AddLog("カード読み込みエラー(" + CardName + ")\n", LogLevel.エラー);
+						return null;
+					}
+
+					string 英語名 = mc[0].Groups[2].Value;
+
+					string 正規表現2 = "(<rb>.*?</rb>)|(<rp>.*?</rp>)|(<ruby>)|(</ruby>)|(<rt>)|(</rt>)";
+					string 読み = Regex.Replace(mc[0].Groups[1].Value, 正規表現2,"", RegexOptions.IgnoreCase);
+
+					string 略号文字 = "";
+					string 地域名 = "";
+					int 略号番号=0;
+					int 略号番号桁数=2;
+					//略号を分解
+					if (略号 != "")
+					{
+						string[] strarray = 略号.TrimEnd().Split('-');
+						略号文字 = strarray[0];
+						string 番号数字 = "";
+
+						foreach (char c in strarray[1])
+						{
+							if (!Char.IsLetter(c))
+								番号数字 += c;
+							else
+								地域名 += c;
+						}
+						略号番号 = int.Parse(番号数字);
+						略号番号桁数 = 番号数字.Length;
+					}
+
+					string log = "略号 :" + 略号 + "  カード :《" + CardName + "》 ("+読み +"/"+ 英語名+") レア :" + Rare + "  URL :" + URL;
+					form.AddLog(log, LogLevel.情報);
+
+					return new CardData(CardName,  略号, 地域名, 略号番号, 略号番号桁数, Rare, PackName);
+				}
+			}
+			return null;
+			*/
 		}
 	}
 }

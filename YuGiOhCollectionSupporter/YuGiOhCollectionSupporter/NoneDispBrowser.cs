@@ -54,7 +54,6 @@ namespace YuGiOhCollectionSupporter
 					// タイムアウト
 					return false;
 				}
-				Application.DoEvents();
 			}
 			return true;
 		}

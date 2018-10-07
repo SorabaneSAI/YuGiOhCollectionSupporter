@@ -22,12 +22,15 @@ namespace YuGiOhCollectionSupporter
 		public LogForm logform = new LogForm();
 		public bool ProgramEndFlag = false;
 
+		public CardDataBase CardDB = new CardDataBase();
+
 		public Form1()
 		{
 			InitializeComponent();
 			config = Config.Load();
 			//			webBrowser1.Navigate(config.URL);
 			AddLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
+			CardDB = CardDataBase.Load();
 		}
 
 		//設定を開く
@@ -47,10 +50,14 @@ namespace YuGiOhCollectionSupporter
 			f.Dispose();
 		}
 
+
 		private void データ取得ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			DataGet dataget = new DataGet(this);
-			dataget.getAllData();
+
+			//超重いので別の処理
+			Task.Run( () => dataget.getAllData());
+
 		}
 
 		private void ログToolStripMenuItem_Click(object sender, EventArgs e)
@@ -63,12 +70,15 @@ namespace YuGiOhCollectionSupporter
 
 		public void AddLog(string text, LogLevel LV)
 		{
-			logform.dataGridView1.Rows.Add(LV,text);
-			//ログに加えるが、現在のログレベル以下なら非表示にする
-			int index = logform.dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
-			var row = logform.dataGridView1.Rows[index];
-			if ((int)(LogLevel)row.Cells[0].Value < logform.comboBox1.SelectedIndex)
-				row.Visible = false;
+			lock (logform.dataGridView1)
+			{
+				logform.dataGridView1.Rows.Add(LV, text);
+				//ログに加えるが、現在のログレベル以下なら非表示にする
+				int index = logform.dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
+				var row = logform.dataGridView1.Rows[index];
+				if ((int)(LogLevel)row.Cells[0].Value < logform.comboBox1.SelectedIndex)
+					row.Visible = false;
+			}
 
 		}
 
