@@ -24,6 +24,9 @@ namespace YuGiOhCollectionSupporter
 
 		public CardDataBase CardDB = new CardDataBase();
 
+		public List<string> PackList = new List<string>();
+		public bool StartFlag = false;
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -55,9 +58,10 @@ namespace YuGiOhCollectionSupporter
 		{
 			DataGet dataget = new DataGet(this);
 
-
+			PackList.Clear();
 			//超重いので別の処理
-			Task.Run(() =>	 dataget.getAllData());
+			//			Task.Run(() =>	 dataget.getAllData());
+			dataget.getAllData();
 		}
 
 		private void ログToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,6 +85,36 @@ namespace YuGiOhCollectionSupporter
 				logform.dataGridView1.FirstDisplayedScrollingRowIndex = logform.dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
 			}
 
+		}
+
+		public void AddPack(string name)
+		{
+			lock (PackList)
+			{
+				//重複チェック
+				foreach (var item in PackList)
+				{
+					if (item.Equals(name))
+						return;
+				}
+				PackList.Add(name);
+			}
+		}
+		public void DeletePack(string name)
+		{
+			lock (PackList)
+			{
+				//重複チェック
+				foreach (var item in PackList)
+				{
+					if (item.Equals(name))
+					{
+						PackList.Remove(item);
+						return;
+					}
+				}
+				AddLog("処理済みのパックを処理",LogLevel.警告);
+			}
 		}
 
 		private void Form1_FormClosed(object sender, FormClosedEventArgs e)

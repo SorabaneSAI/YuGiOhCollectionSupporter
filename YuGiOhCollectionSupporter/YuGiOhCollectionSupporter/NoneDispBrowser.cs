@@ -11,30 +11,19 @@ namespace YuGiOhCollectionSupporter
 	public class NonDispBrowser : WebBrowser
 	{
 
-		bool done;
+//		bool done;
 
 		// タイムアウト時間（10秒）
 		TimeSpan timeout = new TimeSpan(0, 0, 10);
 
 		delegate void deligatemethod(bool f);
 
-		protected override void OnDocumentCompleted(
-					  WebBrowserDocumentCompletedEventArgs e)
-		{
-			deligatemethod m = setdone;
-			// ページにフレームが含まれる場合にはフレームごとに
-			// このメソッドが実行されるため実際のURLを確認する
-			if (e.Url == this.Url)
-			{
-				this.Invoke(m,true);
-			}
-		}
-
+		/*
 		void setdone(bool flag)
 		{
 			done = flag;
 		}
-
+		*/
 		protected override void OnNewWindow(CancelEventArgs e)
 		{
 			// ポップアップ・ウィンドウをキャンセル
@@ -46,7 +35,7 @@ namespace YuGiOhCollectionSupporter
 			// スクリプト・エラーを表示しない
 			this.ScriptErrorsSuppressed = true;
 		}
-
+		/*
 		public bool NavigateAndWait(string url)
 		{
 
@@ -68,5 +57,6 @@ namespace YuGiOhCollectionSupporter
 			}
 			return true;
 		}
+		*/
 	}
 }
