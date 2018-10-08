@@ -16,6 +16,7 @@ namespace YuGiOhCollectionSupporter
 		Label label;
 		List<string> SeriesName = new List<string>();
 		Form1 form;
+		CardDataBase cdb = new CardDataBase();
 
 		public DataGet(Form1 f)
 		{
@@ -26,8 +27,20 @@ namespace YuGiOhCollectionSupporter
 
 		void UpdateLabel(string txt)
 		{
-			label.Text = txt;
-			label.Update();
+			label.Invoke(new Action(() =>
+			{
+				label.Text = txt;
+				label.Update();
+			}));
+		}
+
+		void AddLog(string text, LogLevel LV)
+		{
+			//他スレッド操作
+			form.Invoke(new Action(() =>
+			{
+				form.AddLog(text,LV);
+			}));
 		}
 
 		//hnumが3はシリーズ、4はパックの種類
@@ -40,91 +53,118 @@ namespace YuGiOhCollectionSupporter
 		//遊戯王カードwikiのカードリストから、全カードの情報を入手
 		public void getAllData()
 		{
-			label.Visible = true;
-
-			//まずカードリストの名前とURLを得る
-			UpdateLabel("遊戯王カードwikiに接続");
-			form.AddLog("遊戯王カードwikiに接続 :" + config.getCardListURL(), LogLevel.全部);
-			webbrowser.NavigateAndWait(config.getCardListURL());
-
-			HtmlDocument doc = webbrowser.Document;
-
-			//<div class="body">を探す
-			foreach (HtmlElement e in doc.GetElementsByTagName("div"))
+			try
 			{
-				if (!string.IsNullOrEmpty(e.GetAttribute("id")) && e.GetAttribute("id") == "body")
+
+				form.Invoke(new Action(() =>
 				{
+					label.Visible = true;
+					form.toolStripMenuItem1.Enabled = false;
+					form.データ取得ToolStripMenuItem.Enabled = false;
+				}));
 
-					//< div class="jumpmenu"><a href = "#navigator" > &uarr;</a></div><h3 id = "content_1_2" > 第10期シリーズ < a class="anchor_super" id="nbb37b14" href="http://yugioh-wiki.net/index.php?%A5%AB%A1%BC%A5%C9%A5%EA%A5%B9%A5%C8#nbb37b14" title="nbb37b14">&dagger;</a></h3>
-					//から第10期シリーズを取り出す h3ならシリーズ h4ならパックのリスト
-					//なぜかプログラム中では""がとれたり、順番が変わったりする
+				//まずカードリストの名前とURLを得る
+				UpdateLabel("遊戯王カードwikiに接続");
+				AddLog("遊戯王カードwikiに接続 :" + config.getCardListURL(), LogLevel.全部);
 
-					//h3のシリーズのあとは、h4のパックの種類が連続することがある
-					string 元文章 = e.InnerHtml.Replace("\r\n", "");
-					string 正規表現 = getRegexStr("3") + "(.*?)" + "(?=" + getRegexStr("3") + ")";
-					MatchCollection mc = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase);
+				webbrowser.NavigateAndWait(config.getCardListURL());
+				
+				HtmlDocument doc = webbrowser.Document;
 
-					//m.Groups[0]はValue
-					//m.Groups[1]はシリーズ名
-					//m.Groups[2]には通常パックが含まれる
-					//m.Groups[3]には残りの全パックが含まれる
-					foreach (Match m in mc)
+				//<div class="body">を探す
+				foreach (HtmlElement e in doc.GetElementsByTagName("div"))
+				{
+					if (!string.IsNullOrEmpty(e.GetAttribute("id")) && e.GetAttribute("id") == "body")
 					{
-						if (m.Groups[1].Value.IndexOf("閲覧に際しての注意事項") != -1 ||
-							m.Groups[1].Value.IndexOf("関連リンク") != -1 ||
-							m.Groups[1].Value.IndexOf("備考") != -1)
-							continue;
 
-						SeriesName.Add(m.Groups[1].Value);
-						form.AddLog("シリーズ :" + m.Groups[1] + "\n", LogLevel.情報);
-						string pack_type = "Normal";
+						//< div class="jumpmenu"><a href = "#navigator" > &uarr;</a></div><h3 id = "content_1_2" > 第10期シリーズ < a class="anchor_super" id="nbb37b14" href="http://yugioh-wiki.net/index.php?%A5%AB%A1%BC%A5%C9%A5%EA%A5%B9%A5%C8#nbb37b14" title="nbb37b14">&dagger;</a></h3>
+						//から第10期シリーズを取り出す h3ならシリーズ h4ならパックのリスト
+						//なぜかプログラム中では""がとれたり、順番が変わったりする
 
-						//m.Groups[2]を解体
-						MatchCollection mc2 = Regex.Matches(m.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
-						foreach (Match m2 in mc2)
+						//h3のシリーズのあとは、h4のパックの種類が連続することがある
+						string 元文章 = e.InnerHtml.Replace("\r\n", "");
+						string 正規表現 = getRegexStr("3") + "(.*?)" + "(?=" + getRegexStr("3") + ")";
+						MatchCollection mc = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase);
+
+						//m.Groups[0]はValue
+						//m.Groups[1]はシリーズ名
+						//m.Groups[2]には通常パックが含まれる
+						//m.Groups[3]には残りの全パックが含まれる
+						foreach (Match m in mc)
 						{
-							form.AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n", LogLevel.情報);
-							getPackData(m2.Groups[1].Value, m2.Groups[2].Value, pack_type, m.Groups[1].Value);
-							if (form.ProgramEndFlag == true)
-							{
-								webbrowser.Dispose();
-								return;
-							}
-						}
+							if (m.Groups[1].Value.IndexOf("閲覧に際しての注意事項") != -1 ||
+								m.Groups[1].Value.IndexOf("関連リンク") != -1 ||
+								m.Groups[1].Value.IndexOf("備考") != -1)
+								continue;
 
-						//m.Groups[3]を解体
-						MatchCollection mc3 = Regex.Matches(m.Groups[3].Value, getRegexStr("4") + ".*?", RegexOptions.IgnoreCase);
-						if (mc3.Count == 0) continue;
-						foreach (Match m3 in mc3)
-						{
-							//パックタイプ名がリンクになってることを考慮
-							MatchCollection mc4 = Regex.Matches(m3.Groups[1].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)", RegexOptions.IgnoreCase);
-							if (mc4.Count != 0)
-								pack_type = mc4[0].Groups[2].Value;
-							else
-								pack_type = m3.Groups[1].Value;
-							form.AddLog("パックタイプ :" + pack_type + "\n", LogLevel.情報);
-							//mc3[0].Groups[2]を解体
-							MatchCollection mc5 = Regex.Matches(m3.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
-							foreach (Match m5 in mc5)
+							SeriesName.Add(m.Groups[1].Value);
+							AddLog("シリーズ :" + m.Groups[1] + "\n", LogLevel.情報);
+							string pack_type = "Normal";
+
+							//m.Groups[2]を解体
+							MatchCollection mc2 = Regex.Matches(m.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
+							foreach (Match m2 in mc2)
 							{
-								form.AddLog("パック :" + m5.Groups[2].Value + "\nURL :" + m5.Groups[1].Value + "\n", LogLevel.情報);
-								getPackData(m5.Groups[1].Value, m5.Groups[2].Value, pack_type, m.Groups[1].Value);
+								AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n", LogLevel.情報);
+								getPackData(m2.Groups[1].Value, m2.Groups[2].Value, pack_type, m.Groups[1].Value);
 								if (form.ProgramEndFlag == true)
 								{
 									webbrowser.Dispose();
 									return;
 								}
 							}
+
+							//m.Groups[3]を解体
+							MatchCollection mc3 = Regex.Matches(m.Groups[3].Value, getRegexStr("4") + ".*?", RegexOptions.IgnoreCase);
+							if (mc3.Count == 0) continue;
+							foreach (Match m3 in mc3)
+							{
+								//パックタイプ名がリンクになってることを考慮
+								MatchCollection mc4 = Regex.Matches(m3.Groups[1].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)", RegexOptions.IgnoreCase);
+								if (mc4.Count != 0)
+									pack_type = mc4[0].Groups[2].Value;
+								else
+									pack_type = m3.Groups[1].Value;
+								AddLog("パックタイプ :" + pack_type + "\n", LogLevel.情報);
+								//mc3[0].Groups[2]を解体
+								MatchCollection mc5 = Regex.Matches(m3.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
+								foreach (Match m5 in mc5)
+								{
+									AddLog("パック :" + m5.Groups[2].Value + "\nURL :" + m5.Groups[1].Value + "\n", LogLevel.情報);
+									getPackData(m5.Groups[1].Value, m5.Groups[2].Value, pack_type, m.Groups[1].Value);
+									if (form.ProgramEndFlag == true)
+									{
+										webbrowser.Dispose();
+										return;
+									}
+								}
+							}
 						}
+
 					}
-
 				}
+				UpdateLabel("セーブ中…");
+				form.Invoke(new Action(() =>
+				{
+					form.CardDB = cdb;
+				}));
+				CardDataBase.Save(cdb);
+				MessageBox.Show("カード情報の取得が終了しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 			}
-			UpdateLabel("セーブ中…");
-			CardDataBase.Save(CardDB);
-			label.Visible = false;  //最後に非表示
-
+			catch (Exception e)
+			{
+				MessageBox.Show("エラーで終了:"+ e.Message + "\n"+ e.StackTrace,	"エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
+			}
+			finally
+			{
+				form.Invoke(new Action(() =>
+				{
+					label.Visible = false;  //最後に非表示
+					form.toolStripMenuItem1.Enabled = false;
+					form.データ取得ToolStripMenuItem.Enabled = false;
+				}));
+			}
+			return ;
 		}
 
 		//パックのページに移動し、カードのリンクを得る
@@ -137,7 +177,7 @@ namespace YuGiOhCollectionSupporter
 			}
 
 			UpdateLabel(PackName + "に接続");
-			form.AddLog(PackName + "に接続 :" + PackURL, LogLevel.情報);
+			AddLog(PackName + "に接続 :" + PackURL, LogLevel.情報);
 			webbrowser.NavigateAndWait(PackURL);
 
 			HtmlDocument doc = webbrowser.Document;
@@ -152,12 +192,12 @@ namespace YuGiOhCollectionSupporter
 
 					if (mc.Count == 0)
 					{
-						form.AddLog("パック読み込みエラー(" + PackName + ")\n", LogLevel.エラー);
+						AddLog("パック読み込みエラー(" + PackName + ")\n", LogLevel.エラー);
 						return;
 					}
 
 					string パック概要 = mc[0].Groups[1].Value;
-					form.AddLog("パック概要:" + パック概要.Replace("\r\n", "") + "\n", LogLevel.全部);
+					AddLog("パック概要:" + パック概要.Replace("\r\n", "") + "\n", LogLevel.全部);
 
 					//概要からパック発売日時を取得(最初のyyyy年mm月dd日)
 					string 正規表現Date = "(\\d{4}年\\d{1,2}月\\d{1,2}日)";
@@ -165,12 +205,12 @@ namespace YuGiOhCollectionSupporter
 
 					if (mcdate.Count == 0)
 					{
-						form.AddLog("日時読み込みエラー(" + PackName + ")\n", LogLevel.エラー);
+						AddLog("日時読み込みエラー(" + PackName + ")\n", LogLevel.エラー);
 						return;
 					}
 
 					DateTime Date = DateTime.Parse(mcdate[0].Groups[1].Value);
-					form.AddLog("パック発売日:" + Date.ToShortDateString() + "\n", LogLevel.全部);
+					AddLog("パック発売日:" + Date.ToShortDateString() + "\n", LogLevel.全部);
 
 					//パックのテーブルを取得
 					元文章 = e.InnerHtml;
@@ -179,7 +219,7 @@ namespace YuGiOhCollectionSupporter
 
 					if (mc2.Count == 0)
 					{
-						form.AddLog("パック読み込みエラー2(" + PackName + ")\n", LogLevel.エラー);
+						AddLog("パック読み込みエラー2(" + PackName + ")\n", LogLevel.エラー);
 						return;
 					}
 
@@ -218,7 +258,7 @@ namespace YuGiOhCollectionSupporter
 										if (m4.Groups.Count > 1)
 											RareArray.Add(m4.Groups[1].Value);
 										else
-											form.AddLog("レア度取得失敗", LogLevel.警告);
+											AddLog("レア度取得失敗", LogLevel.警告);
 									}
 								}
 								if (RareArray.Count == 0)
@@ -226,8 +266,8 @@ namespace YuGiOhCollectionSupporter
 								foreach (var rare in RareArray)
 								{
 									CardData card = GetCardData(略号, CardName, rare, URL, PackName);
-									if(form.CardDB.AddCardDataBase(card) !=0)
-										form.AddLog("重複データのためスキップ\n", LogLevel.情報);
+									if(cdb.AddCardDataBase(card, form.CardDB) !=0)
+										AddLog("重複データのためスキップ\n", LogLevel.情報);
 								}
 							}
 						}
@@ -242,7 +282,7 @@ namespace YuGiOhCollectionSupporter
 
 							if (mc8.Count == 0)
 							{
-								form.AddLog("パック読み込みエラー8(" + PackName + ")\n", LogLevel.エラー);
+								AddLog("パック読み込みエラー8(" + PackName + ")\n", LogLevel.エラー);
 								return;
 							}
 
@@ -267,7 +307,7 @@ namespace YuGiOhCollectionSupporter
 										if (m5.Groups.Count > 1)
 											RareArray.Add(m5.Groups[1].Value);
 										else
-											form.AddLog("レア度取得失敗", LogLevel.警告);
+											AddLog("レア度取得失敗", LogLevel.警告);
 									}
 									if (RareArray.Count == 0)
 										RareArray.Add("Normal");
@@ -275,8 +315,8 @@ namespace YuGiOhCollectionSupporter
 									foreach (var rare in RareArray)
 									{
 										CardData card = GetCardData(略号, CardName, rare, URL,PackName);
-										if (form.CardDB.AddCardDataBase(card) != 0)
-											form.AddLog("重複データのためスキップ\n", LogLevel.情報);
+										if (cdb.AddCardDataBase(card, form.CardDB) != 0)
+											AddLog("重複データのためスキップ\n", LogLevel.情報);
 									}
 									//最初の１つだけでいい
 									break;
@@ -318,13 +358,13 @@ namespace YuGiOhCollectionSupporter
 			}
 
 			string log = "略号 :" + 略号 + "  カード :《" + CardName + "》 レア :" + Rare + "  URL :" + URL;
-			form.AddLog(log, LogLevel.情報);
+			AddLog(log, LogLevel.情報);
 
 			return new CardData(CardName, 略号, 地域名, 略号番号, 略号番号桁数, Rare, PackName);
 
 			/*
 			//フリガナ取得
-			form.AddLog(CardName + "に接続 :" + URL, LogLevel.全部);
+			AddLog(CardName + "に接続 :" + URL, LogLevel.全部);
 			webbrowser.NavigateAndWait(URL);
 			HtmlDocument doc = webbrowser.Document;
 			foreach (HtmlElement e in doc.GetElementsByTagName("div"))
@@ -340,7 +380,7 @@ namespace YuGiOhCollectionSupporter
 					//後ろから/を検索しようとするとスタッシュバスターの英名で引っかかる
 					if (mc.Count == 0)
 					{
-						form.AddLog("カード読み込みエラー(" + CardName + ")\n", LogLevel.エラー);
+						AddLog("カード読み込みエラー(" + CardName + ")\n", LogLevel.エラー);
 						return null;
 					}
 
@@ -372,7 +412,7 @@ namespace YuGiOhCollectionSupporter
 					}
 
 					string log = "略号 :" + 略号 + "  カード :《" + CardName + "》 ("+読み +"/"+ 英語名+") レア :" + Rare + "  URL :" + URL;
-					form.AddLog(log, LogLevel.情報);
+					AddLog(log, LogLevel.情報);
 
 					return new CardData(CardName,  略号, 地域名, 略号番号, 略号番号桁数, Rare, PackName);
 				}

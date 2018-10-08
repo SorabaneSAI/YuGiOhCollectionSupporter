@@ -55,9 +55,9 @@ namespace YuGiOhCollectionSupporter
 		{
 			DataGet dataget = new DataGet(this);
 
-			//超重いので別の処理
-			Task.Run( () => dataget.getAllData());
 
+			//超重いので別の処理
+			Task.Run(() =>	 dataget.getAllData());
 		}
 
 		private void ログToolStripMenuItem_Click(object sender, EventArgs e)
@@ -78,6 +78,7 @@ namespace YuGiOhCollectionSupporter
 				var row = logform.dataGridView1.Rows[index];
 				if ((int)(LogLevel)row.Cells[0].Value < logform.comboBox1.SelectedIndex)
 					row.Visible = false;
+				logform.dataGridView1.FirstDisplayedScrollingRowIndex = logform.dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
 			}
 
 		}

@@ -16,15 +16,23 @@ namespace YuGiOhCollectionSupporter
 		// タイムアウト時間（10秒）
 		TimeSpan timeout = new TimeSpan(0, 0, 10);
 
+		delegate void deligatemethod(bool f);
+
 		protected override void OnDocumentCompleted(
 					  WebBrowserDocumentCompletedEventArgs e)
 		{
+			deligatemethod m = setdone;
 			// ページにフレームが含まれる場合にはフレームごとに
 			// このメソッドが実行されるため実際のURLを確認する
 			if (e.Url == this.Url)
 			{
-				done = true;
+				this.Invoke(m,true);
 			}
+		}
+
+		void setdone(bool flag)
+		{
+			done = flag;
 		}
 
 		protected override void OnNewWindow(CancelEventArgs e)
@@ -44,7 +52,9 @@ namespace YuGiOhCollectionSupporter
 
 			base.Navigate(url); // ページの移動
 
-			done = false;
+			deligatemethod m = setdone;
+			this.Invoke(m, false);
+
 			DateTime start = DateTime.Now;
 
 			while (done == false)
@@ -54,6 +64,7 @@ namespace YuGiOhCollectionSupporter
 					// タイムアウト
 					return false;
 				}
+				Application.DoEvents();
 			}
 			return true;
 		}

@@ -21,6 +21,8 @@ namespace YuGiOhCollectionSupporter
 
 		public string Rare;
 
+		public bool 所持フラグ = false;
+
 		public CardData(string name, /*string yomi, string eng,*/ string mark, string place,int num, int digit, string rare,string pack)
 		{
 			名前 = name;

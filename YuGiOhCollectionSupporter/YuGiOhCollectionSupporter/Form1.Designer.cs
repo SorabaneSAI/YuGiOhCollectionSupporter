@@ -33,7 +33,6 @@
 			this.データ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ログToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
 			this.label1 = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -79,16 +78,6 @@
 			this.これについてToolStripMenuItem.Text = "これについて";
 			this.これについてToolStripMenuItem.Click += new System.EventHandler(this.これについてToolStripMenuItem_Click);
 			// 
-			// webBrowser1
-			// 
-			this.webBrowser1.Location = new System.Drawing.Point(0, 24);
-			this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-			this.webBrowser1.Name = "webBrowser1";
-			this.webBrowser1.ScriptErrorsSuppressed = true;
-			this.webBrowser1.Size = new System.Drawing.Size(20, 20);
-			this.webBrowser1.TabIndex = 1;
-			this.webBrowser1.Visible = false;
-			// 
 			// label1
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -107,7 +96,6 @@
 			this.ClientSize = new System.Drawing.Size(1025, 454);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.menuStrip1);
-			this.Controls.Add(this.webBrowser1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
 			this.Text = "遊戯王カードコレクトサポーター";
@@ -122,12 +110,11 @@
 		#endregion
 
 		private System.Windows.Forms.MenuStrip menuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem これについてToolStripMenuItem;
-		private System.Windows.Forms.WebBrowser webBrowser1;
-		private System.Windows.Forms.ToolStripMenuItem データ取得ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ログToolStripMenuItem;
 		public System.Windows.Forms.Label label1;
+		public System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+		public System.Windows.Forms.ToolStripMenuItem データ取得ToolStripMenuItem;
 	}
 }
 

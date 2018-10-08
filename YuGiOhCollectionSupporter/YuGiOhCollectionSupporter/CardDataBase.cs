@@ -11,7 +11,7 @@ namespace YuGiOhCollectionSupporter
 		private List<CardData> CardDB= new List<CardData>();
 		private string SaveDataPath = "CardDataBase.dat";
 
-		public int AddCardDataBase(CardData card )
+		public int AddCardDataBase(CardData card , CardDataBase oldDB)
 		{
 			//重複チェック
 			foreach (var item in CardDB)
@@ -19,6 +19,15 @@ namespace YuGiOhCollectionSupporter
 				if (item.Equals(card))
 					return -1;
 			}
+			//旧DBとの比較で所持情報を引き継ぐ
+			foreach (var item in oldDB.CardDB)
+			{
+				if (item.Equals(card))
+				{
+					card.所持フラグ = item.所持フラグ;
+				}
+			}
+
 			CardDB.Add(card);
 			return 0;
 		}
