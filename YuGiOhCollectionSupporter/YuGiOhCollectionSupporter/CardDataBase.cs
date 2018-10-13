@@ -8,8 +8,13 @@ namespace YuGiOhCollectionSupporter
 {
 	public class CardDataBase
 	{
-		private List<CardData> CardDB= new List<CardData>();
-		private string SaveDataPath = "CardDataBase.dat";
+		public List<CardData> CardDB= new List<CardData>();
+		public string SaveDataPath = "CardDataBase.dat";
+
+		public int getAllCardCount()
+		{
+			return CardDB.Count;
+		}
 
 		public int AddCardDataBase(CardData card , CardDataBase oldDB)
 		{

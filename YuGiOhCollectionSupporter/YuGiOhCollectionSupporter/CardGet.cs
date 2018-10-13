@@ -12,33 +12,23 @@ namespace YuGiOhCollectionSupporter
 	{
 		public string PackName;
 		public CardDataBase cdb;
-		public Label label;
 		public Form1 form;
+		public bool ExecutedFlag = false;   //実行済みならもっかいやらない
 
-		public CardGet(string packname, CardDataBase db, Label l, Form1 f)
+		public CardGet(string packname, CardDataBase db, Form1 f)
 		{
 			PackName = packname;
 			cdb = db;
-			label = l;
 			form = f;
 		}
 
-		void AddPack()
-		{
-			form.Invoke(new Action(() =>
-			{
-				form.AddPack(PackName);
-				form.label2.Text = "残りパック数:" + form.PackList.Count;
-				form.label2.Update();
-			}));
-		}
 		void DeletePack()
 		{
 			form.Invoke(new Action(() =>
 			{
 				form.DeletePack(PackName);
-				form.label2.Text = "残りパック数:" + form.PackList.Count;
-				form.label2.Update();
+				form.label1.Text = "残りパック数:" + form.PackList.Count;
+				form.label1.Update();
 			}));
 		}
 
@@ -60,7 +50,8 @@ namespace YuGiOhCollectionSupporter
 			//			if (ev.Url == this.Url)
 			try
 			{
-				AddPack();
+				if (ExecutedFlag == true) return;
+				ExecutedFlag = true;
 				HtmlDocument doc = Document;
 				foreach (HtmlElement e in doc.GetElementsByTagName("div"))
 				{
@@ -220,6 +211,7 @@ namespace YuGiOhCollectionSupporter
 			finally
 			{
 				DeletePack();
+				Dispose();
 			}
 		}
 

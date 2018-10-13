@@ -15,7 +15,9 @@ namespace YuGiOhCollectionSupporter
 		public Label label;
 		public List<string> SeriesName = new List<string>();
 		public Form1 form;
-		public CardDataBase cdb = new CardDataBase();
+		public bool ExecutedFlag = false;   //実行済みならもっかいやらない
+
+		public List<PackData> PackDataList = new List<PackData>();
 
 		public DataGet(Form1 f)
 		{
@@ -42,21 +44,7 @@ namespace YuGiOhCollectionSupporter
 			}));
 		}
 
-		void AddPack(string name)
-		{
-			form.Invoke(new Action(() =>
-			{
-				form.AddPack(name);
-				form.label2.Text = "残りパック数:" + form.PackList.Count;
-				form.label2.Update();
-			}));
-		}
-		/*
-		static async void Delay(int ms)
-		{
-			await Task.Delay(ms);
-		}
-		*/
+
 		//hnumが3はシリーズ、4はパックの種類
 		string getRegexStr(string hnum)
 		{
@@ -68,10 +56,12 @@ namespace YuGiOhCollectionSupporter
 		protected override void OnDocumentCompleted(
 					  WebBrowserDocumentCompletedEventArgs ev)
 		{
+			if (ExecutedFlag == true) return;
 			// ページにフレームが含まれる場合にはフレームごとに
 			// このメソッドが実行されるため実際のURLを確認する
 			if (ev.Url == this.Url)
 			{
+				ExecutedFlag = true;
 				HtmlDocument doc = Document;
 
 				//<div class="body">を探す
@@ -108,9 +98,10 @@ namespace YuGiOhCollectionSupporter
 							MatchCollection mc2 = Regex.Matches(m.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
 							foreach (Match m2 in mc2)
 							{
-								AddLog("パック :" + m2.Groups[2].Value + "\nURL :" + m2.Groups[1].Value + "\n", LogLevel.情報);
-								getPackData(m2.Groups[1].Value, m2.Groups[2].Value, pack_type, m.Groups[1].Value);
-//								Delay(10000);
+								PackData pack = new PackData(m2.Groups[1].Value, m2.Groups[2].Value, pack_type, m.Groups[1].Value);
+								AddLog("パック :" + pack.Name + "\nURL :" + pack.URL + "\n", LogLevel.情報);
+								PackDataList.Add(pack);
+
 								if (form.ProgramEndFlag == true)
 								{
 									Dispose();
@@ -134,9 +125,10 @@ namespace YuGiOhCollectionSupporter
 								MatchCollection mc5 = Regex.Matches(m3.Groups[2].Value, "<a title=.*?href=\"(.*?)\".*?>(.*?)</a>", RegexOptions.IgnoreCase);
 								foreach (Match m5 in mc5)
 								{
-									AddLog("パック :" + m5.Groups[2].Value + "\nURL :" + m5.Groups[1].Value + "\n", LogLevel.情報);
-									getPackData(m5.Groups[1].Value, m5.Groups[2].Value, pack_type, m.Groups[1].Value);
-//									Delay(10000);
+									PackData pack = new PackData(m5.Groups[1].Value, m5.Groups[2].Value, pack_type, m.Groups[1].Value);
+									AddLog("パック :" + pack.Name + "\nURL :" + pack.URL + "\n", LogLevel.情報);
+									PackDataList.Add(pack);
+
 									if (form.ProgramEndFlag == true)
 									{
 										Dispose();
@@ -148,15 +140,13 @@ namespace YuGiOhCollectionSupporter
 
 					}
 				}
-				/*
-				UpdateLabel("セーブ中…");
+				UpdateLabel("全パック取得完了");
 				form.Invoke(new Action(() =>
 				{
-					form.CardDB = cdb;
+					form.PackDataList = PackDataList;
+					form.PackGotFlag = true;
 				}));
-				CardDataBase.Save(cdb);
-				MessageBox.Show("カード情報の取得が終了しました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				*/
+
 			}
 		}
 
@@ -169,7 +159,7 @@ namespace YuGiOhCollectionSupporter
 				form.Invoke(new Action(() =>
 				{
 					label.Visible = true;
-					form.label2.Visible = true;
+					form.label1.Visible = true;
 					form.toolStripMenuItem1.Enabled = false;
 					form.データ取得ToolStripMenuItem.Enabled = false;
 				}));
@@ -185,36 +175,7 @@ namespace YuGiOhCollectionSupporter
 			{
 				MessageBox.Show("エラーで終了:"+ e.Message + "\n"+ e.StackTrace,	"エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
 			}
-			finally
-			{
-				/*
-				form.Invoke(new Action(() =>
-				{
-					label.Visible = false;  //最後に非表示
-					form.label2.Visible = false;  
-					form.toolStripMenuItem1.Enabled = false;
-					form.データ取得ToolStripMenuItem.Enabled = false;
-				}));
-				*/
-			}
 			return ;
-		}
-
-		//パックのページに移動し、カードのリンクを得る
-		public void getPackData(string PackURL, string PackName, string PackType, string SeriesName)
-		{
-			if (form.ProgramEndFlag == true)
-			{
-				Dispose();
-				return;
-			}
-
-			AddPack(PackName);
-			UpdateLabel(PackName + "に接続");
-			AddLog(PackName + "に接続 :" + PackURL, LogLevel.情報);
-
-			CardGet card = new CardGet(PackName,cdb,label,form);
-			card.Navigate(PackURL);
 		}
 
 	}

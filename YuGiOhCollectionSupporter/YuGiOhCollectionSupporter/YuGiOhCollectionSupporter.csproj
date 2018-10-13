@@ -81,6 +81,7 @@
     <Compile Include="NoneDispBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PackData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AboutForm.resx">

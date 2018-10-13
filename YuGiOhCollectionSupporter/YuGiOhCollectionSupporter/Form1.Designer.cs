@@ -34,7 +34,6 @@
 			this.ログToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -90,23 +89,11 @@
 			this.label1.Text = "待機中";
 			this.label1.Visible = false;
 			// 
-			// label2
-			// 
-			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(545, 433);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(41, 12);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "待機中";
-			this.label2.Visible = false;
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1025, 454);
-			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
@@ -128,7 +115,6 @@
 		public System.Windows.Forms.Label label1;
 		public System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		public System.Windows.Forms.ToolStripMenuItem データ取得ToolStripMenuItem;
-		public System.Windows.Forms.Label label2;
 	}
 }
 

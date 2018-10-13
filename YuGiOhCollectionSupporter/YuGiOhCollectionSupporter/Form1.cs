@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,8 +25,9 @@ namespace YuGiOhCollectionSupporter
 
 		public CardDataBase CardDB = new CardDataBase();
 
-		public List<string> PackList = new List<string>();
-		public bool StartFlag = false;
+		public List<string> PackList = new List<string>();	//データ取得が終わったかのカウント用
+		public List<PackData> PackDataList = new List<PackData>();
+		public bool PackGotFlag = false;
 
 		public Form1()
 		{
@@ -59,9 +61,12 @@ namespace YuGiOhCollectionSupporter
 			DataGet dataget = new DataGet(this);
 
 			PackList.Clear();
+			PackDataList.Clear();
+			PackGotFlag = false;
 			//超重いので別の処理
 			//			Task.Run(() =>	 dataget.getAllData());
 			dataget.getAllData();
+			getCardData();
 		}
 
 		private void ログToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,6 +88,17 @@ namespace YuGiOhCollectionSupporter
 				if ((int)(LogLevel)row.Cells[0].Value < logform.comboBox1.SelectedIndex)
 					row.Visible = false;
 				logform.dataGridView1.FirstDisplayedScrollingRowIndex = logform.dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
+
+				//増えてきたら情報ログを消してく
+				if (logform.dataGridView1.Rows.Count > 1000)
+				{
+					for (int i=0; i< logform.dataGridView1.Rows.Count; i++ )
+					{
+						var r = logform.dataGridView1.Rows[i];
+						if ((LogLevel)r.Cells[0].Value == LogLevel.情報)
+							logform.dataGridView1.Rows.RemoveAt(i);
+					}
+				}
 			}
 
 		}
@@ -115,6 +131,50 @@ namespace YuGiOhCollectionSupporter
 				}
 				AddLog("処理済みのパックを処理",LogLevel.警告);
 			}
+		}
+
+		public async void getCardData()
+		{
+			CardDataBase cdb = new CardDataBase();
+			while (PackGotFlag == false)
+			{
+				await Task.Delay(1000);
+			}
+			foreach (var pack in PackDataList)
+			{
+				PackList.Add(pack.Name);
+				getPackData(pack.URL, pack.Name, pack.TypeName, pack.SeriesName,cdb);
+
+				label1.Text = "残りパック数:" + PackList.Count;
+			}
+			while (PackList.Count >0)
+			{
+				await Task.Delay(1000);
+			}
+
+			label1.Visible = false;  //最後に非表示
+			toolStripMenuItem1.Enabled = true;
+			データ取得ToolStripMenuItem.Enabled = true;
+
+			CardDB = cdb;
+			CardDataBase.Save(CardDB);
+			MessageBox.Show("カード情報の取得が終了しました。\n全カード種類:" +CardDB.getAllCardCount(), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+		//パックのページに移動し、カードのリンクを得る
+		public void getPackData(string PackURL, string PackName, string PackType, string SeriesName, CardDataBase cdb)
+		{
+			if (ProgramEndFlag == true)
+				return;
+
+			Invoke(new Action(() =>
+			{
+				AddPack(PackName);
+				AddLog(PackName + "に接続 :" + PackURL, LogLevel.情報);
+			}));
+
+			CardGet card = new CardGet(PackName, cdb, this);
+			card.Navigate(PackURL);
 		}
 
 		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
