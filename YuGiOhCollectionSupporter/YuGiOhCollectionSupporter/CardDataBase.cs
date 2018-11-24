@@ -8,35 +8,34 @@ namespace YuGiOhCollectionSupporter
 {
 	public class CardDataBase
 	{
-		public List<CardData> CardDB= new List<CardData>();
+		public List<PackData> PackDB = new List<PackData>();
 		public string SaveDataPath = "CardDataBase.dat";
 
 		public int getAllCardCount()
 		{
-			return CardDB.Count;
+			int num = 0;
+			foreach (var pack in PackDB)
+			{
+				num += pack.CardDB.Count;
+			}
+			return num;
 		}
-
+		/*
 		public int AddCardDataBase(CardData card , CardDataBase oldDB)
 		{
 			//重複チェック
-			foreach (var item in CardDB)
+			foreach (var pack in PackDB)
 			{
-				if (item.Equals(card))
-					return -1;
 			}
 			//旧DBとの比較で所持情報を引き継ぐ
-			foreach (var item in oldDB.CardDB)
+			foreach (var pack in oldDB.PackDB)
 			{
-				if (item.Equals(card))
-				{
-					card.所持フラグ = item.所持フラグ;
-				}
 			}
 
 			CardDB.Add(card);
 			return 0;
 		}
-
+		*/
 		public static void Save(CardDataBase cdb)
 		{
 			//＜XMLファイルに書き込む＞

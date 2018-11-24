@@ -36,6 +36,8 @@ namespace YuGiOhCollectionSupporter
 			//			webBrowser1.Navigate(config.URL);
 			AddLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
 			CardDB = CardDataBase.Load();
+			formPanel.SetFormPanelLeft(CardDB,this);
+			
 		}
 
 		//設定を開く
@@ -96,7 +98,10 @@ namespace YuGiOhCollectionSupporter
 					{
 						var r = logform.dataGridView1.Rows[i];
 						if ((LogLevel)r.Cells[0].Value == LogLevel.情報)
+						{
 							logform.dataGridView1.Rows.RemoveAt(i);
+							break;
+						}
 					}
 				}
 			}
@@ -143,7 +148,9 @@ namespace YuGiOhCollectionSupporter
 			foreach (var pack in PackDataList)
 			{
 				PackList.Add(pack.Name);
-				getPackData(pack.URL, pack.Name, pack.TypeName, pack.SeriesName,cdb);
+				getPackData(pack.URL, pack.Name, pack.TypeName, pack.SeriesName, pack);
+
+				cdb.PackDB.Add(pack);
 
 				label1.Text = "残りパック数:" + PackList.Count;
 			}
@@ -162,7 +169,7 @@ namespace YuGiOhCollectionSupporter
 		}
 
 		//パックのページに移動し、カードのリンクを得る
-		public void getPackData(string PackURL, string PackName, string PackType, string SeriesName, CardDataBase cdb)
+		public void getPackData(string PackURL, string PackName, string PackType, string SeriesName, PackData pd)
 		{
 			if (ProgramEndFlag == true)
 				return;
@@ -173,7 +180,7 @@ namespace YuGiOhCollectionSupporter
 				AddLog(PackName + "に接続 :" + PackURL, LogLevel.情報);
 			}));
 
-			CardGet card = new CardGet(PackName, cdb, this);
+			CardGet card = new CardGet(PackName, pd, this);
 			card.Navigate(PackURL);
 		}
 

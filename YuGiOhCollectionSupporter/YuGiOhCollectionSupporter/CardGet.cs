@@ -11,14 +11,14 @@ namespace YuGiOhCollectionSupporter
 	public class CardGet : NonDispBrowser
 	{
 		public string PackName;
-		public CardDataBase cdb;
+		public PackData packdata;
 		public Form1 form;
 		public bool ExecutedFlag = false;   //実行済みならもっかいやらない
 
-		public CardGet(string packname, CardDataBase db, Form1 f)
+		public CardGet(string packname, PackData pd, Form1 f)
 		{
 			PackName = packname;
-			cdb = db;
+			packdata = pd;
 			form = f;
 		}
 
@@ -138,7 +138,8 @@ namespace YuGiOhCollectionSupporter
 									foreach (var rare in RareArray)
 									{
 										CardData card = GetCardData(略号, CardName, rare, URL, PackName);
-										if (cdb.AddCardDataBase(card, form.CardDB) != 0)
+										PackData result = form.CardDB.PackDB.Find(n => n.Name == PackName);	//旧データを探す
+										if (packdata.AddCardDataBase(card, result) != 0)
 											AddLog("重複データのためスキップ\n", LogLevel.情報);
 									}
 								}
@@ -187,7 +188,8 @@ namespace YuGiOhCollectionSupporter
 										foreach (var rare in RareArray)
 										{
 											CardData card = GetCardData(略号, CardName, rare, URL, PackName);
-											if (cdb.AddCardDataBase(card, form.CardDB) != 0)
+											PackData result = form.CardDB.PackDB.Find(n => n.Name == PackName); //旧データを探す
+											if (packdata.AddCardDataBase(card, result) != 0)
 												AddLog("重複データのためスキップ\n", LogLevel.情報);
 										}
 										//最初の１つだけでいい
