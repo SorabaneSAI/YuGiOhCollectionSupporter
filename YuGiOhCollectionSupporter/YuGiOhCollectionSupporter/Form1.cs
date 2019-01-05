@@ -189,5 +189,11 @@ namespace YuGiOhCollectionSupporter
 			Application.Exit();
 			ProgramEndFlag = true;
 		}
+
+		//クリックしたら右側にパックの内容表示
+		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			formPanel.SetFormPanelRight(CardDB, e.Node.Text,this);
+		}
 	}
 }

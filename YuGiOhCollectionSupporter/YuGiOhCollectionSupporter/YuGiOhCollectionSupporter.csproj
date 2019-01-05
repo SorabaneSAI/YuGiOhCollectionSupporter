@@ -53,6 +53,12 @@
     </Compile>
     <Compile Include="CardData.cs" />
     <Compile Include="CardDataBase.cs" />
+    <Compile Include="CardDataUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CardDataUI.Designer.cs">
+      <DependentUpon>CardDataUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="CardGet.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -83,10 +89,25 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="PackData.cs" />
+    <Compile Include="PackUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PackUI.Designer.cs">
+      <DependentUpon>PackUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RarityUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RarityUI.Designer.cs">
+      <DependentUpon>RarityUI.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CardDataUI.resx">
+      <DependentUpon>CardDataUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -97,6 +118,9 @@
     <EmbeddedResource Include="LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PackUI.resx">
+      <DependentUpon>PackUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -106,6 +130,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RarityUI.resx">
+      <DependentUpon>RarityUI.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

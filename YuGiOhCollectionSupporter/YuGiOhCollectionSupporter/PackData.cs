@@ -48,5 +48,56 @@ namespace YuGiOhCollectionSupporter
 			TypeName = type;
 			SeriesName = series;
 		}
+
+		public int getAllCardNum_Name()
+		{
+			List<string> namelist = new List<string>();
+
+			for (int i = 0; i < CardDB.Count; i++)
+			{
+//				if (CardDB[i].所持フラグ == true)
+				{
+					//同じ名前のカードは登録しない
+					if (!namelist.Contains(CardDB[i].名前))
+					{
+						namelist.Add(CardDB[i].名前);
+					}
+				}
+			}
+			return namelist.Count;
+		}
+		public int getAllCardNum_Rare() { return CardDB.Count; }
+		//同名で持ってる数
+		public int getHaveCardNum_Name()
+		{
+			List<string> namelist = new List<string>();
+
+			for (int i = 0; i < CardDB.Count; i++)
+			{
+				if (CardDB[i].所持フラグ == true)
+				{
+					//同じ名前のカードは登録しない
+					if (!namelist.Contains(CardDB[i].名前))
+					{
+						namelist.Add(CardDB[i].名前);
+					}
+				}
+			}
+			return namelist.Count;
+		}
+
+		//レアリティも別
+		public int getHaveCardNum_Rare()
+		{
+			int count = 0;
+			for (int i = 0; i < CardDB.Count; i++)
+			{
+				if (CardDB[i].所持フラグ == true)
+				{
+					count++;
+				}
+			}
+			return count;
+		}
 	}
 }

@@ -56,10 +56,22 @@ namespace YuGiOhCollectionSupporter
 			treeview.Nodes.AddRange(TreeNodeList.ToArray());
 
 		}
-		//左側はシーズンとパック名
-		public static void SetFormPanelRight(CardDataBase CardDB)
+		//右側はパック選択パックの中身
+		public static void SetFormPanelRight(CardDataBase CardDB, string packname, Form1 form)
 		{
-
+			//中身あったら削除
+			if (form.splitContainer1.Panel2.Controls.Count > 0)
+				form.splitContainer1.Panel2.Controls.Clear();
+			foreach (var pack in CardDB.PackDB)
+			{
+				if (pack.Name == packname)
+				{
+					PackUI packUI = new PackUI();
+					packUI.Init(CardDB,pack);
+					form.splitContainer1.Panel2.Controls.Add(packUI);
+					break;
+				}
+			}
 		}
 	}
 }
