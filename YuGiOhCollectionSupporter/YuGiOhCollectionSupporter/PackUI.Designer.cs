@@ -28,6 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.label2 = new System.Windows.Forms.Label();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -35,6 +37,14 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.未所持 = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.所持 = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.panel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label2
@@ -104,10 +114,76 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel1.BackColor = System.Drawing.Color.DarkGray;
+			this.panel1.Controls.Add(this.dataGridView1);
 			this.panel1.Location = new System.Drawing.Point(7, 158);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(626, 467);
+			this.panel1.Size = new System.Drawing.Size(808, 467);
 			this.panel1.TabIndex = 7;
+			// 
+			// dataGridView1
+			// 
+			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.略号,
+            this.名前,
+            this.レアリティ,
+            this.所持,
+            this.未所持});
+			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.RowTemplate.Height = 21;
+			this.dataGridView1.Size = new System.Drawing.Size(808, 467);
+			this.dataGridView1.TabIndex = 0;
+			// 
+			// 未所持
+			// 
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+			this.未所持.DefaultCellStyle = dataGridViewCellStyle2;
+			this.未所持.HeaderText = "未所持";
+			this.未所持.MinimumWidth = 50;
+			this.未所持.Name = "未所持";
+			this.未所持.Text = "未所持";
+			this.未所持.Width = 60;
+			// 
+			// 所持
+			// 
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Transparent;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
+			this.所持.DefaultCellStyle = dataGridViewCellStyle1;
+			this.所持.HeaderText = "所持";
+			this.所持.MinimumWidth = 50;
+			this.所持.Name = "所持";
+			this.所持.Text = "所持";
+			this.所持.Width = 60;
+			// 
+			// レアリティ
+			// 
+			this.レアリティ.HeaderText = "レアリティ";
+			this.レアリティ.MinimumWidth = 100;
+			this.レアリティ.Name = "レアリティ";
+			this.レアリティ.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.レアリティ.Width = 150;
+			// 
+			// 名前
+			// 
+			this.名前.HeaderText = "名前";
+			this.名前.MinimumWidth = 100;
+			this.名前.Name = "名前";
+			this.名前.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.名前.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.名前.Width = 250;
+			// 
+			// 略号
+			// 
+			this.略号.HeaderText = "略号";
+			this.略号.MinimumWidth = 80;
+			this.略号.Name = "略号";
 			// 
 			// PackUI
 			// 
@@ -121,7 +197,9 @@
 			this.Controls.Add(this.linkLabel1);
 			this.Controls.Add(this.label2);
 			this.Name = "PackUI";
-			this.Size = new System.Drawing.Size(636, 628);
+			this.Size = new System.Drawing.Size(818, 628);
+			this.panel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -136,5 +214,11 @@
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Panel panel1;
+		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
+		private System.Windows.Forms.DataGridViewLinkColumn 名前;
+		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
+		private System.Windows.Forms.DataGridViewButtonColumn 所持;
+		private System.Windows.Forms.DataGridViewButtonColumn 未所持;
 	}
 }

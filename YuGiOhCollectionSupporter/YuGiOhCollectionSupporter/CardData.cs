@@ -47,7 +47,7 @@ namespace YuGiOhCollectionSupporter
 			{
 				format += "0";
 			}
-			return 略号文字 + "-" + 略号地域 + No.ToString("{0:"+format+"}");
+			return 略号文字 + "-" + 略号地域 + string.Format("{0:"+format+"}", No);
 		}
 
 		//objと自分自身が等価のときはtrueを返す
