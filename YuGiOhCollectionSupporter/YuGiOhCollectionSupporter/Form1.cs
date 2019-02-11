@@ -37,7 +37,7 @@ namespace YuGiOhCollectionSupporter
 			AddLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
 			CardDB = CardDataBase.Load();
 			formPanel.SetFormPanelLeft(CardDB,this);
-			
+
 		}
 
 		//設定を開く

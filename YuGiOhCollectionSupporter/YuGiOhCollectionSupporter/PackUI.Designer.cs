@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.label2 = new System.Windows.Forms.Label();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -38,11 +38,11 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
-			this.未所持 = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.所持 = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.所持 = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.未所持 = new System.Windows.Forms.DataGridViewButtonColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
@@ -67,6 +67,7 @@
 			this.linkLabel1.TabIndex = 2;
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Text = "ホームへ";
+			this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
 			// 
 			// label1
 			// 
@@ -136,16 +137,29 @@
 			this.dataGridView1.Size = new System.Drawing.Size(808, 467);
 			this.dataGridView1.TabIndex = 0;
 			// 
-			// 未所持
+			// 略号
 			// 
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-			this.未所持.DefaultCellStyle = dataGridViewCellStyle2;
-			this.未所持.HeaderText = "未所持";
-			this.未所持.MinimumWidth = 50;
-			this.未所持.Name = "未所持";
-			this.未所持.Text = "未所持";
-			this.未所持.Width = 60;
+			this.略号.HeaderText = "略号";
+			this.略号.MinimumWidth = 80;
+			this.略号.Name = "略号";
+			// 
+			// 名前
+			// 
+			this.名前.HeaderText = "名前";
+			this.名前.MinimumWidth = 100;
+			this.名前.Name = "名前";
+			this.名前.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.名前.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.名前.Width = 250;
+			// 
+			// レアリティ
+			// 
+			this.レアリティ.HeaderText = "レアリティ";
+			this.レアリティ.MinimumWidth = 100;
+			this.レアリティ.Name = "レアリティ";
+			this.レアリティ.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.レアリティ.Width = 150;
 			// 
 			// 所持
 			// 
@@ -161,29 +175,16 @@
 			this.所持.Text = "所持";
 			this.所持.Width = 60;
 			// 
-			// レアリティ
+			// 未所持
 			// 
-			this.レアリティ.HeaderText = "レアリティ";
-			this.レアリティ.MinimumWidth = 100;
-			this.レアリティ.Name = "レアリティ";
-			this.レアリティ.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.レアリティ.Width = 150;
-			// 
-			// 名前
-			// 
-			this.名前.HeaderText = "名前";
-			this.名前.MinimumWidth = 100;
-			this.名前.Name = "名前";
-			this.名前.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.名前.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.名前.Width = 250;
-			// 
-			// 略号
-			// 
-			this.略号.HeaderText = "略号";
-			this.略号.MinimumWidth = 80;
-			this.略号.Name = "略号";
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+			this.未所持.DefaultCellStyle = dataGridViewCellStyle2;
+			this.未所持.HeaderText = "未所持";
+			this.未所持.MinimumWidth = 50;
+			this.未所持.Name = "未所持";
+			this.未所持.Text = "未所持";
+			this.未所持.Width = 60;
 			// 
 			// PackUI
 			// 

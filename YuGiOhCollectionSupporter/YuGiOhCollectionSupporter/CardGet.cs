@@ -59,7 +59,7 @@ namespace YuGiOhCollectionSupporter
 					{
 						//概要を取得
 						string 元文章 = e.InnerText;
-						string 正規表現 = "(.*)↑.{0,10}収録カードリスト";
+						string 正規表現 = "(.*)↑.{0,10}収録カード";
 						MatchCollection mc = Regex.Matches(元文章, 正規表現, RegexOptions.IgnoreCase | RegexOptions.Singleline);
 
 						if (mc.Count == 0)
@@ -138,6 +138,12 @@ namespace YuGiOhCollectionSupporter
 									foreach (var rare in RareArray)
 									{
 										CardData card = GetCardData(略号, CardName, rare, URL, PackName);
+										if (card == null)
+										{
+											AddLog("カード情報取得失敗 "+ 略号 + CardName + rare, LogLevel.警告);
+											continue;
+										}
+
 										PackData result = form.CardDB.PackDB.Find(n => n.Name == PackName);	//旧データを探す
 										if (packdata.AddCardDataBase(card, result) != 0)
 											AddLog("重複データのためスキップ\n", LogLevel.情報);
@@ -188,6 +194,11 @@ namespace YuGiOhCollectionSupporter
 										foreach (var rare in RareArray)
 										{
 											CardData card = GetCardData(略号, CardName, rare, URL, PackName);
+											if (card == null)
+											{
+												AddLog("カード情報取得失敗 " + 略号 + CardName + rare, LogLevel.警告);
+												continue;
+											}
 											PackData result = form.CardDB.PackDB.Find(n => n.Name == PackName); //旧データを探す
 											if (packdata.AddCardDataBase(card, result) != 0)
 												AddLog("重複データのためスキップ\n", LogLevel.情報);
@@ -239,6 +250,7 @@ namespace YuGiOhCollectionSupporter
 					else
 						地域名 += c;
 				}
+				if (番号数字 == null || 番号数字 == "") return null;
 				略号番号 = int.Parse(番号数字);
 				略号番号桁数 = 番号数字.Length;
 			}

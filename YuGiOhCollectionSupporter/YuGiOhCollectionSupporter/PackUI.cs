@@ -43,5 +43,14 @@ namespace YuGiOhCollectionSupporter
 			}
 
 		}
+
+		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			HomeUI homeUI = new HomeUI();
+			homeUI.Init(((Form1)ParentForm).CardDB);
+			((Form1)ParentForm).splitContainer1.Panel2.Controls.Add(homeUI);
+			homeUI.BringToFront();
+			homeUI.Dock = DockStyle.Fill;
+		}
 	}
 }

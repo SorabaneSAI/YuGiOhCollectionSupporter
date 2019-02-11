@@ -15,7 +15,6 @@ namespace YuGiOhCollectionSupporter
 		//左側はシーズンとパック名
 		public static void SetFormPanelLeft(CardDataBase CardDB, Form1 form)
 		{
-			SplitterPanel panel = form.splitContainer1.Panel1;
 			TreeView treeview = form.treeView1;
 			List<PackData> packlist = form.CardDB.PackDB;
 
@@ -72,6 +71,13 @@ namespace YuGiOhCollectionSupporter
 					break;
 				}
 			}
+
+			//ホーム画面
+			HomeUI homeUI = new HomeUI();
+			homeUI.Init(CardDB);
+			homeUI.BringToFront();
+			form.splitContainer1.Panel2.Controls.Add(homeUI);
+
 		}
 	}
 }

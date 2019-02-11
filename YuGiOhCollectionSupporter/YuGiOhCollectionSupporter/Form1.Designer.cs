@@ -51,7 +51,7 @@
             this.これについてToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(979, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(1113, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -112,7 +112,7 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.AutoScroll = true;
-			this.splitContainer1.Size = new System.Drawing.Size(979, 428);
+			this.splitContainer1.Size = new System.Drawing.Size(1113, 428);
 			this.splitContainer1.SplitterDistance = 300;
 			this.splitContainer1.TabIndex = 3;
 			// 
@@ -129,7 +129,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(979, 454);
+			this.ClientSize = new System.Drawing.Size(1113, 454);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.splitContainer1);
