@@ -31,21 +31,24 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.label9 = new System.Windows.Forms.Label();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label11 = new System.Windows.Forms.Label();
 			this.label12 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.label16 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
+			this.label9 = new System.Windows.Forms.Label();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label11 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.button1 = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -96,42 +99,52 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "収集状況";
 			// 
-			// label2
+			// label12
 			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(20, 68);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(57, 20);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "label2";
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(554, 115);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(67, 20);
+			this.label12.TabIndex = 14;
+			this.label12.Text = "label12";
 			// 
-			// label4
+			// label13
 			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(124, 115);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(57, 20);
-			this.label4.TabIndex = 4;
-			this.label4.Text = "label4";
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(450, 68);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(67, 20);
+			this.label13.TabIndex = 13;
+			this.label13.Text = "label13";
 			// 
-			// label5
+			// label14
 			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(67, 179);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(57, 20);
-			this.label5.TabIndex = 5;
-			this.label5.Text = "label5";
+			this.label14.AutoSize = true;
+			this.label14.Font = new System.Drawing.Font("MS UI Gothic", 50F);
+			this.label14.Location = new System.Drawing.Point(489, 68);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(96, 67);
+			this.label14.TabIndex = 16;
+			this.label14.Text = "／";
 			// 
-			// label6
+			// label15
 			// 
-			this.label6.AutoSize = true;
-			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 50F);
-			this.label6.Location = new System.Drawing.Point(59, 68);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(96, 67);
-			this.label6.TabIndex = 6;
-			this.label6.Text = "／";
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(497, 179);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(67, 20);
+			this.label15.TabIndex = 15;
+			this.label15.Text = "label15";
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Font = new System.Drawing.Font("MS UI Gothic", 12F);
+			this.label16.Location = new System.Drawing.Point(451, 36);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(78, 16);
+			this.label16.TabIndex = 12;
+			this.label16.Text = "レアリティ別";
 			// 
 			// label7
 			// 
@@ -180,68 +193,89 @@
 			this.label11.TabIndex = 7;
 			this.label11.Text = "略号別";
 			// 
-			// label12
+			// label4
 			// 
-			this.label12.AutoSize = true;
-			this.label12.Location = new System.Drawing.Point(554, 115);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(67, 20);
-			this.label12.TabIndex = 14;
-			this.label12.Text = "label12";
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(124, 115);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(57, 20);
+			this.label4.TabIndex = 4;
+			this.label4.Text = "label4";
 			// 
-			// label13
+			// label2
 			// 
-			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(450, 68);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(67, 20);
-			this.label13.TabIndex = 13;
-			this.label13.Text = "label13";
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(20, 68);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(57, 20);
+			this.label2.TabIndex = 3;
+			this.label2.Text = "label2";
 			// 
-			// label14
+			// label6
 			// 
-			this.label14.AutoSize = true;
-			this.label14.Font = new System.Drawing.Font("MS UI Gothic", 50F);
-			this.label14.Location = new System.Drawing.Point(489, 68);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(96, 67);
-			this.label14.TabIndex = 16;
-			this.label14.Text = "／";
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 50F);
+			this.label6.Location = new System.Drawing.Point(59, 68);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(96, 67);
+			this.label6.TabIndex = 6;
+			this.label6.Text = "／";
 			// 
-			// label15
+			// label5
 			// 
-			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(497, 179);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(67, 20);
-			this.label15.TabIndex = 15;
-			this.label15.Text = "label15";
-			// 
-			// label16
-			// 
-			this.label16.AutoSize = true;
-			this.label16.Font = new System.Drawing.Font("MS UI Gothic", 12F);
-			this.label16.Location = new System.Drawing.Point(451, 36);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(78, 16);
-			this.label16.TabIndex = 12;
-			this.label16.Text = "レアリティ別";
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(67, 179);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(57, 20);
+			this.label5.TabIndex = 5;
+			this.label5.Text = "label5";
 			// 
 			// linkLabel1
 			// 
 			this.linkLabel1.AutoSize = true;
 			this.linkLabel1.Font = new System.Drawing.Font("MS UI Gothic", 12F);
-			this.linkLabel1.Location = new System.Drawing.Point(6, 340);
+			this.linkLabel1.Location = new System.Drawing.Point(5, 398);
 			this.linkLabel1.Name = "linkLabel1";
 			this.linkLabel1.Size = new System.Drawing.Size(142, 16);
 			this.linkLabel1.TabIndex = 4;
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Text = "持ってないカード一覧";
 			// 
+			// linkLabel2
+			// 
+			this.linkLabel2.AutoSize = true;
+			this.linkLabel2.Font = new System.Drawing.Font("MS UI Gothic", 12F);
+			this.linkLabel2.Location = new System.Drawing.Point(5, 326);
+			this.linkLabel2.Name = "linkLabel2";
+			this.linkLabel2.Size = new System.Drawing.Size(92, 16);
+			this.linkLabel2.TabIndex = 5;
+			this.linkLabel2.TabStop = true;
+			this.linkLabel2.Text = "全カード一覧";
+			// 
+			// textBox1
+			// 
+			this.textBox1.Font = new System.Drawing.Font("MS UI Gothic", 12F);
+			this.textBox1.Location = new System.Drawing.Point(8, 354);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(230, 23);
+			this.textBox1.TabIndex = 6;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(244, 354);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 7;
+			this.button1.Text = "検索";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
 			// HomeUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Controls.Add(this.button1);
+			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.linkLabel2);
 			this.Controls.Add(this.linkLabel1);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.label1);
@@ -274,5 +308,8 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.LinkLabel linkLabel1;
+		private System.Windows.Forms.LinkLabel linkLabel2;
+		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.Button button1;
 	}
 }

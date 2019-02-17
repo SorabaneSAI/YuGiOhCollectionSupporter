@@ -87,7 +87,7 @@
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 433);
+			this.label1.Location = new System.Drawing.Point(12, 636);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(41, 12);
 			this.label1.TabIndex = 2;
@@ -112,7 +112,7 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.AutoScroll = true;
-			this.splitContainer1.Size = new System.Drawing.Size(1113, 428);
+			this.splitContainer1.Size = new System.Drawing.Size(1113, 631);
 			this.splitContainer1.SplitterDistance = 300;
 			this.splitContainer1.TabIndex = 3;
 			// 
@@ -121,7 +121,7 @@
 			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeView1.Location = new System.Drawing.Point(0, 0);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(296, 424);
+			this.treeView1.Size = new System.Drawing.Size(296, 627);
 			this.treeView1.TabIndex = 5;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
@@ -129,7 +129,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1113, 454);
+			this.ClientSize = new System.Drawing.Size(1113, 657);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.splitContainer1);

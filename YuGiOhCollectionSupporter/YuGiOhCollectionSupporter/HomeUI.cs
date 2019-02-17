@@ -55,32 +55,32 @@ namespace YuGiOhCollectionSupporter
 					}
 				}
 
-				カード名全カード = myTable.Count;
-				foreach (var item in myTable)
-				{
-					if (item.Value == true)
-						カード名別持ってるカード++;
-				}
+			}
 
-				label2.Text = カード名別持ってるカード.ToString();
-				label4.Text = カード名全カード.ToString();
-				label8.Text = 略号別持ってるカード.ToString();
-				label7.Text = 略号別全カード.ToString();
-				label13.Text = レアリティ別持ってるカード.ToString();
-				label12.Text = レアリティ別全カード.ToString();
+			カード名全カード = myTable.Count;
+			foreach (var item in myTable)
+			{
+				if (item.Value == true)
+					カード名別持ってるカード++;
+			}
+			label2.Text = カード名別持ってるカード.ToString();
+			label4.Text = カード名全カード.ToString();
+			label8.Text = 略号別持ってるカード.ToString();
+			label7.Text = 略号別全カード.ToString();
+			label13.Text = レアリティ別持ってるカード.ToString();
+			label12.Text = レアリティ別全カード.ToString();
 
-				if (カード名全カード > 0 && 略号別全カード > 0 && レアリティ別全カード > 0)
-				{
-					label5.Text = ((double)カード名別持ってるカード / カード名全カード).ToString("F") +"％";
-					label10.Text = ((double)略号別持ってるカード / 略号別全カード).ToString("F") + "％";
-					label15.Text = ((double)レアリティ別持ってるカード / レアリティ別全カード).ToString("F") + "％";
-				}
-				else
-				{
-					label5.Text = "0%";
-					label10.Text = "0%";
-					label15.Text = "0%";
-				}
+			if (カード名全カード > 0 && 略号別全カード > 0 && レアリティ別全カード > 0)
+			{
+				label5.Text = ((double)カード名別持ってるカード / カード名全カード).ToString("F") + "％";
+				label10.Text = ((double)略号別持ってるカード / 略号別全カード).ToString("F") + "％";
+				label15.Text = ((double)レアリティ別持ってるカード / レアリティ別全カード).ToString("F") + "％";
+			}
+			else
+			{
+				label5.Text = "0%";
+				label10.Text = "0%";
+				label15.Text = "0%";
 			}
 
 		}

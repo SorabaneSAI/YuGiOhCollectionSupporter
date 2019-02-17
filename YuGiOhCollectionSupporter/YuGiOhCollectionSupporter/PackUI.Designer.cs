@@ -28,8 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.label2 = new System.Windows.Forms.Label();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.label1 = new System.Windows.Forms.Label();
@@ -41,8 +40,8 @@
 			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.所持 = new System.Windows.Forms.DataGridViewButtonColumn();
-			this.未所持 = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.所持状態変更 = new System.Windows.Forms.DataGridViewButtonColumn();
+			this.所持フラグ = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.panel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.SuspendLayout();
@@ -98,6 +97,7 @@
 			this.button1.TabIndex = 5;
 			this.button1.Text = "全部所持";
 			this.button1.UseVisualStyleBackColor = false;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// button2
 			// 
@@ -108,6 +108,7 @@
 			this.button2.TabIndex = 6;
 			this.button2.Text = "全部未所持";
 			this.button2.UseVisualStyleBackColor = false;
+			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
 			// panel1
 			// 
@@ -123,19 +124,23 @@
 			// 
 			// dataGridView1
 			// 
+			this.dataGridView1.AllowUserToAddRows = false;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.略号,
             this.名前,
             this.レアリティ,
-            this.所持,
-            this.未所持});
+            this.所持状態変更,
+            this.所持フラグ});
 			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataGridView1.Location = new System.Drawing.Point(0, 0);
 			this.dataGridView1.Name = "dataGridView1";
+			this.dataGridView1.ReadOnly = true;
 			this.dataGridView1.RowTemplate.Height = 21;
+			this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
 			this.dataGridView1.Size = new System.Drawing.Size(808, 467);
 			this.dataGridView1.TabIndex = 0;
+			this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
 			// 
 			// 略号
 			// 
@@ -161,30 +166,26 @@
 			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.レアリティ.Width = 150;
 			// 
-			// 所持
+			// 所持状態変更
 			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Transparent;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.White;
-			this.所持.DefaultCellStyle = dataGridViewCellStyle1;
-			this.所持.HeaderText = "所持";
-			this.所持.MinimumWidth = 50;
-			this.所持.Name = "所持";
-			this.所持.Text = "所持";
-			this.所持.Width = 60;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.Transparent;
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+			this.所持状態変更.DefaultCellStyle = dataGridViewCellStyle4;
+			this.所持状態変更.HeaderText = "所持状態変更";
+			this.所持状態変更.MinimumWidth = 80;
+			this.所持状態変更.Name = "所持状態変更";
+			this.所持状態変更.ReadOnly = true;
+			this.所持状態変更.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.所持状態変更.Text = "ボタン";
 			// 
-			// 未所持
+			// 所持フラグ
 			// 
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-			this.未所持.DefaultCellStyle = dataGridViewCellStyle2;
-			this.未所持.HeaderText = "未所持";
-			this.未所持.MinimumWidth = 50;
-			this.未所持.Name = "未所持";
-			this.未所持.Text = "未所持";
-			this.未所持.Width = 60;
+			this.所持フラグ.HeaderText = "所持フラグ";
+			this.所持フラグ.Name = "所持フラグ";
+			this.所持フラグ.Visible = false;
 			// 
 			// PackUI
 			// 
@@ -219,7 +220,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
 		private System.Windows.Forms.DataGridViewLinkColumn 名前;
 		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
-		private System.Windows.Forms.DataGridViewButtonColumn 所持;
-		private System.Windows.Forms.DataGridViewButtonColumn 未所持;
+		private System.Windows.Forms.DataGridViewButtonColumn 所持状態変更;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn 所持フラグ;
 	}
 }
