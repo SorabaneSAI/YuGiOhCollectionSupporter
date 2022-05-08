@@ -150,7 +150,7 @@ namespace YuGiOhCollectionSupporter
 			}
 		}
 
-		//遊戯王カードwikiのカードリストから、全カードの情報を入手
+		//遊戯王公式サイトのカードリストから、全カードの情報を入手
 		public void getAllData()
 		{
 			try
@@ -165,8 +165,8 @@ namespace YuGiOhCollectionSupporter
 				}));
 
 				//まずカードリストの名前とURLを得る
-				UpdateLabel("遊戯王カードwikiに接続");
-				AddLog("遊戯王カードwikiに接続 :" + config.getCardListURL(), LogLevel.全部);
+				UpdateLabel("遊戯王公式サイトに接続");
+				AddLog("遊戯王公式サイトに接続 :" + config.getCardListURL(), LogLevel.全部);
 
 				Navigate(config.getCardListURL());
 				

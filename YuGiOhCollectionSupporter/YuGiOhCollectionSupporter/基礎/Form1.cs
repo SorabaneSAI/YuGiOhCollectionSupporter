@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace YuGiOhCollectionSupporter
 
 		public List<string> PackList = new List<string>();	//データ取得が終わったかのカウント用
 		public List<PackData> PackDataList = new List<PackData>();
-		public bool PackGotFlag = false;
+		public bool PackGotFlag = false;	//全てのパックの情報収集が終わったフラグ
 
 		public Form1()
 		{
@@ -38,6 +39,7 @@ namespace YuGiOhCollectionSupporter
 			CardDB = CardDataBase.Load();
 			formPanel.SetFormPanelLeft(CardDB,this);
 
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 		}
 
 		//設定を開く
@@ -58,17 +60,34 @@ namespace YuGiOhCollectionSupporter
 		}
 
 
-		private void データ取得ToolStripMenuItem_Click(object sender, EventArgs e)
+
+		public void UpdateLabel(string txt)
 		{
+			label1.Invoke(new Action(() =>
+			{
+				label1.Text = txt;
+				label1.Update();
+			}));
+		}
+
+
+		private async void データ取得ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//公式サイトにアクセスして、全パックを取得する パックのタイプを取得するため必要
+			PackDataList = await GetAllPacks.getAllPackDatasAsync(config.getCardListURL(), this);
+
+			var _ = await GetAllCards.getAllCardsAsync(config,this);
+
+			/*
+			//旧コード
 			DataGet dataget = new DataGet(this);
 
 			PackList.Clear();
 			PackDataList.Clear();
 			PackGotFlag = false;
-			//超重いので別の処理
-			//			Task.Run(() =>	 dataget.getAllData());
 			dataget.getAllData();
 			getCardData();
+			*/
 		}
 
 		private void ログToolStripMenuItem_Click(object sender, EventArgs e)

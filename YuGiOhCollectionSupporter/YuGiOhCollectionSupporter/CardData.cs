@@ -8,28 +8,60 @@ namespace YuGiOhCollectionSupporter
 {
 	public class CardData
 	{
+		public string URL;
 		public string 名前;
-//		public string 読み;
-//		public string 英語名;
+		public string 読み;
+		public string 英語名;
 
-		public string 略号文字 = "";
-		public string 略号地域 = "";
-		public int 略号番号桁数=3;
-		public int No = 0;
 
-		string 発売パック = "";
+		public List<CardVariation> ListVariations = new List<CardVariation>();
 
-		public string Rare;
+		public class Rarity
+        {
+			public Rarity() { }
+			public string Initial;
+			public string Name;
+			public bool 所持フラグ = false;
+		}
 
-		public bool 所持フラグ = false;
+		public class CardVariation
+        {
+			public CardVariation() { }
+			public string 略号文字 = "";
+			public string 略号地域 = "";
+			public int 略号番号桁数 = 3;
+			public int No = 0;
+
+			public PackData 発売パック;
+
+			public List<Rarity> ListRarity = new List<Rarity>();
+
+			public string get略号Full()
+			{
+				if (略号文字 == "")
+					return "";
+				string format = "";
+				for (int i = 0; i < 略号番号桁数; i++)
+				{
+					format += "0";
+				}
+				return 略号文字 + "-" + 略号地域 + string.Format("{0:" + format + "}", No);
+			}
+
+		}
 
 		public CardData() { }
+		public CardData(string url)
+        {
+			URL = url;
+        }
+		/*
 
-		public CardData(string name, /*string yomi, string eng,*/ string mark, string place,int num, int digit, string rare,string pack)
+		public CardData(string name, string yomi, string eng,string mark, string place,int num, int digit, string rare,string pack)
 		{
 			名前 = name;
-//			読み = yomi;
-//			英語名 = eng;
+			読み = yomi;
+			英語名 = eng;
 			略号文字 = mark;
 			略号地域 = place;
 			略号番号桁数 = digit;
@@ -37,19 +69,8 @@ namespace YuGiOhCollectionSupporter
 			No = num;
 			Rare = rare;
 		}
-
-		public string get略号Full()
-		{
-			if (略号文字 == "")
-				return "";
-			string format = "";
-			for (int i = 0; i < 略号番号桁数; i++)
-			{
-				format += "0";
-			}
-			return 略号文字 + "-" + 略号地域 + string.Format("{0:"+format+"}", No);
-		}
-
+		*/
+		/*
 		//objと自分自身が等価のときはtrueを返す
 		public override bool Equals(object obj)
 		{
@@ -77,5 +98,6 @@ namespace YuGiOhCollectionSupporter
 		{
 			return this.No;
 		}
+		*/
 	}
 }

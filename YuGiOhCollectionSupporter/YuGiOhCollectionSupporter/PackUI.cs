@@ -22,6 +22,7 @@ namespace YuGiOhCollectionSupporter
 
 		public void Init(CardDataBase CardDB,PackData pack)
 		{
+			/*
 			cdb = CardDB;
 			Pack = pack;
 			label2.Text = pack.Name;
@@ -48,11 +49,12 @@ namespace YuGiOhCollectionSupporter
 					dataGridView1.Rows[num].Cells["所持状態変更"].Style.BackColor = Color.FromArgb(128, 255, 128);
 				}
 			}
-
+			*/
 		}
 
 		private void Change所持フラグ(bool flag,CardData card, DataGridViewCellCollection cells)
 		{
+			/*
 			card.所持フラグ = flag;
 			if (card.所持フラグ)
 			{
@@ -66,6 +68,7 @@ namespace YuGiOhCollectionSupporter
 			}
 			cells["所持フラグ"].Value = card.所持フラグ;
 			cells["名前"].Style.BackColor = card.所持フラグ == true ? Color.FromArgb(128, 255, 128) : Color.FromArgb(255, 128, 128);
+			*/
 		}
 
 		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -79,6 +82,7 @@ namespace YuGiOhCollectionSupporter
 
 		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
+			/*
 			DataGridView dgv = dataGridView1;
 			for (int i = 0; i < cdb.PackDB.Count; i++)
 			{
@@ -104,11 +108,12 @@ namespace YuGiOhCollectionSupporter
 					break;
 				}
 			}
-				
+				*/
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
+			/*
 			DataGridView dgv = dataGridView1;
 			for (int i = 0; i < cdb.PackDB.Count; i++)
 			{
@@ -130,10 +135,12 @@ namespace YuGiOhCollectionSupporter
 					break;
 				}
 			}
+			*/
 		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
+			/*
 			DataGridView dgv = dataGridView1;
 			for (int i = 0; i < cdb.PackDB.Count; i++)
 			{
@@ -155,6 +162,7 @@ namespace YuGiOhCollectionSupporter
 					break;
 				}
 			}
+			*/
 		}
 	}
 }

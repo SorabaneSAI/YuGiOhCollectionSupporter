@@ -31,7 +31,7 @@ namespace YuGiOhCollectionSupporter
 				{
 					if (item.Equals(card))
 					{
-						card.所持フラグ = item.所持フラグ;
+//						card.所持フラグ = item.所持フラグ;
 					}
 				}
 			}
@@ -74,7 +74,7 @@ namespace YuGiOhCollectionSupporter
 
 			for (int i = 0; i < CardDB.Count; i++)
 			{
-				if (CardDB[i].所持フラグ == true)
+//				if (CardDB[i].所持フラグ == true)
 				{
 					//同じ名前のカードは登録しない
 					if (!namelist.Contains(CardDB[i].名前))
@@ -92,7 +92,7 @@ namespace YuGiOhCollectionSupporter
 			int count = 0;
 			for (int i = 0; i < CardDB.Count; i++)
 			{
-				if (CardDB[i].所持フラグ == true)
+//				if (CardDB[i].所持フラグ == true)
 				{
 					count++;
 				}
