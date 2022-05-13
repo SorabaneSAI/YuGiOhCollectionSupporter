@@ -17,12 +17,18 @@ namespace YuGiOhCollectionSupporter
 			InitializeComponent();
 
 			textBox1.Text = cfg.URL;
+			textBox2.Text = cfg.URL2;
+			numericUpDown1.Value = cfg.CardID_MIN;
+			numericUpDown2.Value = cfg.CardID_MAX;
 		}
 
 		private void button1_Click(object sender, EventArgs e)
 		{
 			Config config = new Config();
 			config.URL = textBox1.Text;
+			config.URL2 = textBox2.Text;
+			config.CardID_MIN = numericUpDown1.Value;
+			config.CardID_MAX = numericUpDown2.Value;
 
 			Config.Save(config);
 

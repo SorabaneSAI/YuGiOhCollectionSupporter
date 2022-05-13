@@ -258,7 +258,7 @@ namespace YuGiOhCollectionSupporter
 			string log = "略号 :" + 略号 + "  カード :《" + CardName + "》 レア :" + Rare + "  URL :" + URL;
 			AddLog(log, LogLevel.情報);
 
-			return new CardData(CardName, 略号文字, 地域名, 略号番号, 略号番号桁数, Rare, PackName);
+			return null;//new CardData(CardName,"" ,"",略号文字, 地域名, 略号番号, 略号番号桁数, Rare, PackName);
 
 			/*
 			//フリガナ取得

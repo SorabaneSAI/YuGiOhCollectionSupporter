@@ -36,6 +36,7 @@ namespace YuGiOhCollectionSupporter
 			return 0;
 		}
 		*/
+		public CardDataBase() {; }
 		public static void Save(CardDataBase cdb)
 		{
 			//＜XMLファイルに書き込む＞

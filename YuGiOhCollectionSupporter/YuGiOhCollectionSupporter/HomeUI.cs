@@ -43,14 +43,14 @@ namespace YuGiOhCollectionSupporter
 					//同じ名前のカードは登録しない
 					if (!myTable.ContainsKey(card.名前))
 					{
-						myTable.Add(card.名前, card.所持フラグ);
+//						myTable.Add(card.名前, card.所持フラグ);
 					}
 					else
 					{
 						//持ってなかったら見てるカードの所持フラグを上書き
 						if (myTable.Contains(new KeyValuePair<string, bool>(card.名前, false)))
 						{
-							myTable[card.名前] = card.所持フラグ;
+//							myTable[card.名前] = card.所持フラグ;
 						}
 					}
 				}
