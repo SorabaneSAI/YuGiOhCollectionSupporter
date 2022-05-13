@@ -6,6 +6,9 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using System.IO;
+using System.Text;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -65,6 +68,38 @@ namespace YuGiOhCollectionSupporter
 			//			WebClient wc = new WebClient();	非推奨らしい
 
 			return null;
+		}
+
+		public static void Save<T>(string path, T data)
+		{
+			//jsonにシリアライズ
+			string json = JsonConvert.SerializeObject(data);
+			using(StreamWriter sw = new StreamWriter(path,false, Encoding.UTF8))
+            {
+				sw.WriteLine(json);
+            }
+		}
+
+		public static void Load<T>(string path,T data)
+		{
+			try
+			{
+				string json;
+				using (StreamReader sr = new StreamReader(path,Encoding.UTF8))
+				{
+					json = sr.ReadToEnd();
+					data = JsonConvert.DeserializeObject<T>(json);
+				}
+			}
+			catch (System.IO.FileNotFoundException) //見つからなかったら作成　ほかは知らん
+			{
+//				File.Create(path);
+				Save(path, data);
+			}
+			catch(System.IO.IOException e)
+            {
+				MessageBox.Show(e.Message, "謎のエラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 	}

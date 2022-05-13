@@ -32,7 +32,45 @@ namespace YuGiOhCollectionSupporter
                 var ListSpanNodes = DivNameNode.QuerySelectorAll("span");
                 string 読み = ListSpanNodes[0].TextContent;
                 string 英語 = ListSpanNodes[1].TextContent;
-                string 名前 = DivNameNode.TextContent.Replace(読み, "").Replace(英語, "").Replace("\n","").Replace("\t","");  //タグないので面倒
+                string 名前 = DivNameNode.TextContent.Replace(読み, "").Replace(英語, "").Trim();  //タグないので面倒
+
+                var CardTextSetNode = html.QuerySelector("div[id='CardTextSet']");
+                var ItemBoxNodes = CardTextSetNode.QuerySelectorAll("div[class='item_box']");
+
+                Dictionary<string, string> dic = new Dictionary<string, string>();
+                string 種族 = "";
+                foreach (var node in ItemBoxNodes)
+                {
+                    //種族欄のとき
+                    var speciesnode = node.QuerySelector("p[class='species']");
+                    if(speciesnode != null)
+                    {
+                        種族 = speciesnode.TextContent;
+                        continue;
+                    }
+                    //その他の欄のとき
+                    string title = node.QuerySelector("span[class='item_box_title']").TextContent.Trim();
+                    string value = node.QuerySelector("span[class='item_box_value']").TextContent.Trim();
+                    if(title != null && value != null)  //ペンデュラムだと中身がないことがある
+                        dic.Add(title,value);
+                }
+
+                //ペンデュラムテキスト
+                var pendulumnode = CardTextSetNode.QuerySelector("div[class='CardText pen']>div[class='item_box_text']");
+
+                //カードテキスト
+                var cardtextnode = CardTextSetNode.QuerySelector("div[class='CardText']>div[class='item_box_text']");
+                string cardtext = CardTextSetNode.QuerySelector("div[class='CardText']>div[class='item_box_text']").TextContent.Replace("カードテキスト", "").Trim();//タグないので面倒
+
+                CardData carddata = new CardData();
+                carddata.URL = url;
+                carddata.読み = 読み;
+                carddata.英語名 = 英語;
+                carddata.名前 = 名前;
+                carddata.テキスト = cardtext;
+                if(pendulumnode != null)
+                    carddata.ペンデュラム効果 = pendulumnode.TextContent;
+                carddata.ValuePairs = dic;
 
             }
 

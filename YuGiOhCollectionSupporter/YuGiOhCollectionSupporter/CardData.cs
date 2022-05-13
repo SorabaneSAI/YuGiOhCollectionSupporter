@@ -13,6 +13,19 @@ namespace YuGiOhCollectionSupporter
 		public string 読み;
 		public string 英語名;
 
+		public Dictionary<string, string> ValuePairs;   //存在するパラメータのペアだけ登録される
+
+		/*
+		public string 属性;
+		public string レベル;
+		public string 攻撃力;
+		public string 守備力;
+		public string 種族;
+		*/
+
+		public string ペンデュラム効果;
+		public string テキスト;
+
 
 		public List<CardVariation> ListVariations = new List<CardVariation>();
 
@@ -24,17 +37,14 @@ namespace YuGiOhCollectionSupporter
 			public bool 所持フラグ = false;
 		}
 
-		public class CardVariation
+		public class Code
         {
-			public CardVariation() { }
+			public Code() { }
+
 			public string 略号文字 = "";
 			public string 略号地域 = "";
 			public int 略号番号桁数 = 3;
 			public int No = 0;
-
-			public PackData 発売パック;
-
-			public List<Rarity> ListRarity = new List<Rarity>();
 
 			public string get略号Full()
 			{
@@ -47,14 +57,21 @@ namespace YuGiOhCollectionSupporter
 				}
 				return 略号文字 + "-" + 略号地域 + string.Format("{0:" + format + "}", No);
 			}
+		}
+
+		public class CardVariation
+        {
+			public CardVariation() { }
+			public Code 略号;
+
+			public PackData 発売パック;
+
+			public List<Rarity> ListRarity = new List<Rarity>();
+
 
 		}
 
 		public CardData() { }
-		public CardData(string url)
-        {
-			URL = url;
-        }
 		/*
 
 		public CardData(string name, string yomi, string eng,string mark, string place,int num, int digit, string rare,string pack)

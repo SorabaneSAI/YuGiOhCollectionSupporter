@@ -36,7 +36,7 @@ namespace YuGiOhCollectionSupporter
 			config = Config.Load();
 			//			webBrowser1.Navigate(config.URL);
 			AddLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
-			CardDB = CardDataBase.Load();
+			Program.Load(CardDB.SaveDataPath, CardDB);
 			formPanel.SetFormPanelLeft(CardDB,this);
 
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
@@ -183,7 +183,7 @@ namespace YuGiOhCollectionSupporter
 			データ取得ToolStripMenuItem.Enabled = true;
 
 			CardDB = cdb;
-			CardDataBase.Save(CardDB);
+			Program.Save(CardDB.SaveDataPath, CardDB);
 			MessageBox.Show("カード情報の取得が終了しました。\n全カード種類:" +CardDB.getAllCardCount(), "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
