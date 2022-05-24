@@ -8,34 +8,22 @@ namespace YuGiOhCollectionSupporter
 {
 	public class CardDataBase
 	{
-		public List<PackData> PackDB = new List<PackData>();
+		public List<CardData> CardDB = new List<CardData>();
 		public string SaveDataPath = "CardDataBase.json";
 
 		public int getAllCardCount()
 		{
-			int num = 0;
-			foreach (var pack in PackDB)
-			{
-				num += pack.CardDB.Count;
-			}
-			return num;
+			return CardDB.Count;
 		}
-		/*
-		public int AddCardDataBase(CardData card , CardDataBase oldDB)
-		{
-			//重複チェック
-			foreach (var pack in PackDB)
-			{
-			}
-			//旧DBとの比較で所持情報を引き継ぐ
-			foreach (var pack in oldDB.PackDB)
-			{
-			}
 
-			CardDB.Add(card);
+		public int AddCardDataBase(CardDataBase oldDB)
+		{
+			//カードがなければ追加
+			//あるなら略号、レアリティ違いを追加
+
 			return 0;
 		}
-		*/
-		public CardDataBase() {}
+		
+
 	}
 }

@@ -15,6 +15,7 @@ namespace YuGiOhCollectionSupporter
 		//左側はシーズンとパック名
 		public static void SetFormPanelLeft(CardDataBase CardDB, Form1 form)
 		{
+			/*
 			TreeView treeview = form.treeView1;
 			List<PackData> packlist = form.CardDB.PackDB;
 
@@ -53,11 +54,13 @@ namespace YuGiOhCollectionSupporter
 
 			}
 			treeview.Nodes.AddRange(TreeNodeList.ToArray());
+			*/
 
 		}
 		//右側はパック選択パックの中身
 		public static void SetFormPanelRight(CardDataBase CardDB, string packname, Form1 form)
 		{
+			/*
 			//中身あったら削除
 			if (form.splitContainer1.Panel2.Controls.Count > 0)
 				form.splitContainer1.Panel2.Controls.Clear();
@@ -77,7 +80,7 @@ namespace YuGiOhCollectionSupporter
 			homeUI.Init(CardDB);
 			homeUI.BringToFront();
 			form.splitContainer1.Panel2.Controls.Add(homeUI);
-
+			*/
 		}
 	}
 }

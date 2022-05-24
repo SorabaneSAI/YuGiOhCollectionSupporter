@@ -11,7 +11,7 @@ namespace YuGiOhCollectionSupporter
         public static async Task<List<PackData>> getAllPackDatasAsync(string URL, Form1 form)
         {
             form.UpdateLabel("パックデータ取得中");
-            form.AddLog("パックデータ取得中", LogLevel.必須項目);
+            form.logform.AddLog("パックデータ取得中", LogLevel.必須項目);
             List<PackData> packDatas = new List<PackData>();
 
             var task = Program.GetHtml(URL);    //taskはwait,resultしてはいけない　awaitするべき
@@ -30,7 +30,7 @@ namespace YuGiOhCollectionSupporter
                 {
                     var ListTitleNode = pacsetnode.QuerySelector("div[class*='list_title open']>span");
                     string ListTitle = ListTitleNode.TextContent;
-                    form.AddLog(ListTitle, LogLevel.情報);
+                    form.logform.AddLog(ListTitle, LogLevel.情報);
 
                     var PackNodes = pacsetnode.QuerySelectorAll("div[class='pack pack_ja']");
                     foreach (var packnode in PackNodes)
@@ -38,8 +38,8 @@ namespace YuGiOhCollectionSupporter
                         string name = packnode.QuerySelector("p").TextContent;
                         string 相対パス = packnode.QuerySelector("input").GetAttribute("value");
 
-                        form.AddLog(name + ":" + 相対パス , LogLevel.情報);
-                        PackData pd = new PackData(Config.Domain+相対パス,name, ListTitle,"");  //シリーズはとりあえず空欄
+                        form.logform.AddLog(name + ":" + 相対パス , LogLevel.情報);
+                        PackData pd = new PackData(Config.Domain+相対パス,name, ListTitle,"","");  //シリーズと誕生日はとりあえず空欄
                         packDatas.Add(pd);
                     }
 
@@ -48,7 +48,7 @@ namespace YuGiOhCollectionSupporter
 
             }
             form.UpdateLabel("パックデータ取得終了");
-            form.AddLog("パックデータ取得終了", LogLevel.必須項目);
+            form.logform.AddLog("パックデータ取得終了", LogLevel.必須項目);
 
             return packDatas;
         }

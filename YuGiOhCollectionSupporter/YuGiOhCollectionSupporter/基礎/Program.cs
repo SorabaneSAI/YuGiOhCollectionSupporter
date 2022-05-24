@@ -73,14 +73,14 @@ namespace YuGiOhCollectionSupporter
 		public static void Save<T>(string path, T data)
 		{
 			//jsonにシリアライズ
-			string json = JsonConvert.SerializeObject(data);
+			string json = JsonConvert.SerializeObject(data,Formatting.Indented);
 			using(StreamWriter sw = new StreamWriter(path,false, Encoding.UTF8))
             {
 				sw.WriteLine(json);
             }
 		}
 
-		public static void Load<T>(string path,T data)
+		public static void Load<T>(string path,ref T data)
 		{
 			try
 			{
@@ -101,6 +101,11 @@ namespace YuGiOhCollectionSupporter
 				MessageBox.Show(e.Message, "謎のエラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
+
+		public static string ToJson(object obj)
+        {
+			return JsonConvert.SerializeObject(obj, Formatting.Indented);
+        }
 
 	}
 }

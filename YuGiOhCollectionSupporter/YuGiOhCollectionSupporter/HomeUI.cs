@@ -29,6 +29,7 @@ namespace YuGiOhCollectionSupporter
 			int レアリティ別全カード = 0;
 
 			var myTable = new Dictionary<string, bool>();
+			/*
 			foreach (var pack in db.PackDB)
 			{
 				略号別全カード += pack.getAllCardNum_Name();
@@ -56,7 +57,7 @@ namespace YuGiOhCollectionSupporter
 				}
 
 			}
-
+			*/
 			カード名全カード = myTable.Count;
 			foreach (var item in myTable)
 			{

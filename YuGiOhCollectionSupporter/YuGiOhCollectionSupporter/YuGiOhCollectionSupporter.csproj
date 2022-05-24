@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code.cs" />
     <Compile Include="GetAllCards.cs" />
     <Compile Include="GetAllPacks.cs" />
     <Compile Include="基礎\AboutForm.cs">
@@ -78,7 +79,7 @@
     <Compile Include="CardDataUI.Designer.cs">
       <DependentUpon>CardDataUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="CardGet.cs">
+    <Compile Include="これいる？\CardGet.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="基礎\Config.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="基礎\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataGet.cs">
+    <Compile Include="これいる？\DataGet.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="基礎\Form1.cs">
