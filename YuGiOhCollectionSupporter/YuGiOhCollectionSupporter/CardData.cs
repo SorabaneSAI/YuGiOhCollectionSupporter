@@ -8,6 +8,9 @@ namespace YuGiOhCollectionSupporter
 {
 	public class CardData
 	{
+		public int ID;
+		public DateTimeOffset 誕生日;
+
 		public string URL;
 		public string 名前;
 		public string 読み;
@@ -29,8 +32,9 @@ namespace YuGiOhCollectionSupporter
 
 		public List<CardVariation> ListVariations = new List<CardVariation>();
 
-		public CardData(string URL, string 名前, string 読み, string 英語名, Dictionary<string, string> valuepairs,string ペンデュラム効果, string テキスト, List<CardVariation> listvariations)
+		public CardData(int id,string URL, string 名前, string 読み, string 英語名, Dictionary<string, string> valuepairs,string ペンデュラム効果, string テキスト, List<CardVariation> listvariations)
         {
+			ID = id;
 			this.URL = URL;
 			this.名前 = 名前;
 			this.読み = 読み;
@@ -39,8 +43,9 @@ namespace YuGiOhCollectionSupporter
 			this.ペンデュラム効果 = ペンデュラム効果;
 			this.テキスト = テキスト;
 			this.ListVariations = listvariations;
-        }
-			
+			誕生日 = getEarlyDate();
+		}
+
 
 		public class Rarity
         {
@@ -74,6 +79,22 @@ namespace YuGiOhCollectionSupporter
 			}
 
 		}
+
+		//最も若い誕生日を返す
+		public DateTimeOffset getEarlyDate()
+        {
+			DateTimeOffset date = DateTimeOffset.Now;
+
+			foreach (var vari in ListVariations)
+            {
+				if(vari.発売パック.BirthDay.CompareTo(date)>0)
+                {
+					date = vari.発売パック.BirthDay;
+
+				}
+            }
+			return date;
+        }
 
 	}
 }

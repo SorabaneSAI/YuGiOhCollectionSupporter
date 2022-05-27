@@ -13,16 +13,11 @@ using System.Windows.Forms;
 
 namespace YuGiOhCollectionSupporter
 {
-	public enum LogLevel
-	{
-		全部,情報,警告,エラー,必須項目
-	}
 
 	public partial class Form1 : Form
 	{
 		public Config config = new Config();
 		public LogForm logform = new LogForm();
-		public bool ProgramEndFlag = false;
 
 		public CardDataBase CardDB = new CardDataBase();
 
@@ -56,6 +51,31 @@ namespace YuGiOhCollectionSupporter
 			AboutForm f = new AboutForm();
 			f.ShowDialog(this);
 			f.Dispose();
+		}
+
+		public void WriteLog(string txt, LogLevel loglevel, Exception e = null)
+        {
+            switch (loglevel)
+            {
+                case LogLevel.情報:
+					logform.AddLog(txt, loglevel);
+					Program.Log.Debug(txt);
+					break;
+                case LogLevel.警告:
+                    break;
+                case LogLevel.エラー:
+                    break;
+                case LogLevel.必須項目:
+					UpdateLabel(txt);
+					logform.AddLog(txt, loglevel);
+					Program.Log.Info(txt);
+					break;
+                default:
+					Program.Log.Error("不明なloglevel");
+					MessageBox.Show("", "不明なloglevel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					break;
+            }
+
 		}
 
 
@@ -109,42 +129,11 @@ namespace YuGiOhCollectionSupporter
 		}
 
 
-		public void AddPack(string name)
-		{
-			lock (PackList)
-			{
-				//重複チェック
-				foreach (var item in PackList)
-				{
-					if (item.Equals(name))
-						return;
-				}
-				PackList.Add(name);
-			}
-		}
-		public void DeletePack(string name)
-		{
-			lock (PackList)
-			{
-				//重複チェック
-				foreach (var item in PackList)
-				{
-					if (item.Equals(name))
-					{
-						PackList.Remove(item);
-						return;
-					}
-				}
-				logform.AddLog("処理済みのパックを処理",LogLevel.警告);
-			}
-		}
-
 
 
 		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Application.Exit();
-			ProgramEndFlag = true;
 		}
 
 		//クリックしたら右側にパックの内容表示

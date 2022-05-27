@@ -9,16 +9,19 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using System.Globalization;
 
 namespace YuGiOhCollectionSupporter
 {
 	static class Program
 	{
-		private static HttpClient hc = new HttpClient();	//これは使い回すのが正しいらしい
+		public static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+		private static HttpClient hc = new HttpClient();    //これは使い回すのが正しいらしい
 
 		[STAThread]
 		static void Main()
 		{
+			log4net.Config.XmlConfigurator.Configure(new System.IO.FileInfo("log4net.config"));
 			hc.DefaultRequestHeaders.Add("Accept-Language", "ja-JP");
 			hc.Timeout = TimeSpan.FromSeconds(10.0);
 
@@ -44,25 +47,19 @@ namespace YuGiOhCollectionSupporter
 			catch (HttpRequestException e)
 			{
 				// 404エラーや、名前解決失敗など
+				Log.Error("例外発生",e);
 				MessageBox.Show(e.Message,	"エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
 
-				/*
-				// InnerExceptionも含めて、再帰的に例外メッセージを表示する
-				Exception ex = e;
-				while (ex != null)
-				{
-					Console.WriteLine("例外メッセージ: {0} ", ex.Message);
-					ex = ex.InnerException;
-				}
-				*/
 			}
 			catch (TaskCanceledException e)
 			{
 				// タスクがキャンセルされたとき（一般的にタイムアウト）
+				Log.Error("例外発生", e);
 				MessageBox.Show(e.Message, "タイムアウトなどでタスクがキャンセルされました", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 			catch (Exception e)
 			{
+				Log.Error("例外発生", e);
 				MessageBox.Show(e.Message, "謎のエラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 			//			WebClient wc = new WebClient();	非推奨らしい
@@ -93,12 +90,15 @@ namespace YuGiOhCollectionSupporter
 			}
 			catch (System.IO.FileNotFoundException) //見つからなかったら作成　ほかは知らん
 			{
-//				File.Create(path);
+				//				File.Create(path);
+				Log.Warn("ファイル作成");
 				Save(path, data);
 			}
 			catch(System.IO.IOException e)
             {
+				Log.Error("例外発生", e);
 				MessageBox.Show(e.Message, "謎のエラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				Application.Exit();
 			}
 		}
 
@@ -106,6 +106,30 @@ namespace YuGiOhCollectionSupporter
         {
 			return JsonConvert.SerializeObject(obj, Formatting.Indented);
         }
+
+		public static DateTimeOffset ConvertDate(string date,string format)
+        {
+			DateTimeOffset output;
+			if (DateTimeOffset.TryParseExact(date, format, null, DateTimeStyles.AssumeLocal, out output))
+            {
+				return output.Date;
+            }
+			Log.Error("日付変換失敗");
+			MessageBox.Show("ConvertDateで日付変換失敗", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			Application.Exit();
+			return output;
+		}
+
+		public static string ToString(DateTimeOffset date)
+        {
+			return date.ToString(@"yyyy\/MM\/dd");
+        }
+
+		//nodeがnullでなければ中身を返す nullなら無をかえす
+		public static string getTextContent(AngleSharp.Dom.IElement node)
+		{
+			return (node != null ? node.TextContent.Trim() : "");
+		}
 
 	}
 }

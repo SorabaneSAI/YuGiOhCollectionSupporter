@@ -11,12 +11,11 @@ namespace YuGiOhCollectionSupporter
     {
         public static async Task<CardDataBase> getAllCardsAsync(Config config, Form1 form)
         {
-            form.UpdateLabel("カードデータ取得中");
-            form.logform.AddLog("カードデータ取得中", LogLevel.必須項目);
+            form.WriteLog("カードデータ取得中", LogLevel.必須項目);
 
             CardDataBase carddatabase = new CardDataBase();
 
-            for (decimal i = config.CardID_MIN; i < config.CardID_MAX + 1; i++)
+            for (int i = (int)config.CardID_MIN; i < config.CardID_MAX + 1; i++)
             {
                 await Task.Delay(1000); //負荷軽減のため１秒待機;
 
@@ -26,7 +25,7 @@ namespace YuGiOhCollectionSupporter
 
                 if (html.Source.Text.IndexOf("カード情報がありません。") >= 0)
                 {
-                    form.logform.AddLog(config.URL2 + i + ":カードデータなし", LogLevel.情報);
+                    form.WriteLog(config.URL2 + i + ":カードデータなし", LogLevel.情報);
                     continue;
                 }
 
@@ -81,18 +80,18 @@ namespace YuGiOhCollectionSupporter
                 foreach (var node in SeriesNodes)
                 {
                     var 誕生日node = node.QuerySelector("div[class='time']");
-                    string 誕生日 = getTextContent(誕生日node);
+                    string 誕生日 = Program.getTextContent(誕生日node);
                     var 略号node = node.QuerySelector("div[class='card_number']");
-                    string 略号 = getTextContent(略号node);
+                    string 略号 = Program.getTextContent(略号node);
                     var パック名node = node.QuerySelector("div[class='pack_name flex_1']");
-                    string パック名 = getTextContent(パック名node);
+                    string パック名 = Program.getTextContent(パック名node);
                     var URLnode = node.QuerySelector("input[class='link_value']");
                     string URL = Config.Domain + URLnode.GetAttribute("value");
                     var Rarenode = node.QuerySelector("div[class*='lr_icon']");
-                    string レア記号 = getTextContent(Rarenode.QuerySelector("p"));
-                    string レアリティ = getTextContent(Rarenode.QuerySelector("span"));
+                    string レア記号 = Program.getTextContent(Rarenode.QuerySelector("p"));
+                    string レアリティ = Program.getTextContent(Rarenode.QuerySelector("span"));
 
-                    PackData packdata = new PackData(URL,パック名,"","",誕生日);
+                    PackData packdata = new PackData(URL,パック名,"","",Program.ConvertDate(誕生日, "yyyy-MM-dd"),0);
                     CardData.Rarity rarity = new CardData.Rarity(レア記号, レアリティ);
 
                     //リストと比較して同じならレアリティ違いに統合
@@ -115,28 +114,25 @@ namespace YuGiOhCollectionSupporter
                 nextloop:;
                 }
 
-                CardData carddata = new CardData(url, 名前,読み, 英語, dic, getTextContent(pendulumnode), cardtext, listvaridations);
+                //varidationのpackdataが、既に存在するpackdataListと矛盾していないかチェック・・・する必要ある？するならここ
 
-                form.logform.AddLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 +" : " +config.URL2 + i, LogLevel.情報);
-                form.logform.AddLog(Program.ToJson(carddata.ValuePairs) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
-                form.logform.AddLog(Program.ToJson(listvaridations) , LogLevel.情報);
+
+                CardData carddata = new CardData(i,url, 名前,読み, 英語, dic, Program.getTextContent(pendulumnode), cardtext, listvaridations);
+
+                form.WriteLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 + " : " + config.URL2 + i, LogLevel.情報);
+                form.WriteLog(Program.ToJson(carddata.ValuePairs) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
+                form.WriteLog(Program.ToJson(listvaridations), LogLevel.情報);
                 form.UpdateLabel((i- config.CardID_MIN) + "/" + (config.CardID_MAX + 1 - config.CardID_MIN) + ":" + carddata.名前);
 
                 carddatabase.CardDB.Add(carddata);
             }
-            form.UpdateLabel("カードデータ取得終了");
-            form.logform.AddLog("カードデータ取得終了", LogLevel.必須項目);
+            form.WriteLog("カードデータ取得終了", LogLevel.必須項目);
 
 
             return carddatabase;
 
         }
 
-        //nodeがnullでなければ中身を返す nullなら無をかえす
-        public static string getTextContent(AngleSharp.Dom.IElement node)
-        {
-            return (node != null ? node.TextContent.Trim() : "");
-        }
 
     }
 }

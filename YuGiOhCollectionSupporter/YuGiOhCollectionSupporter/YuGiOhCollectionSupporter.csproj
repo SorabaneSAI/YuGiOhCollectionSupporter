@@ -36,6 +36,9 @@
     <Reference Include="AngleSharp, Version=0.16.1.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.16.1\lib\net472\AngleSharp.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -43,6 +46,7 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Diagnostics.Contracts" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -51,6 +55,7 @@
     <Reference Include="System.Text.Encoding.CodePages, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.5.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,18 +84,12 @@
     <Compile Include="CardDataUI.Designer.cs">
       <DependentUpon>CardDataUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="これいる？\CardGet.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="基礎\Config.cs" />
     <Compile Include="基礎\ConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="基礎\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="これいる？\DataGet.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="基礎\Form1.cs">
       <SubType>Form</SubType>
@@ -110,9 +109,6 @@
     </Compile>
     <Compile Include="基礎\LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="これいる？\NoneDispBrowser.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="PackData.cs" />
     <Compile Include="PackUI.cs">
@@ -163,6 +159,9 @@
     <EmbeddedResource Include="RarityUI.resx">
       <DependentUpon>RarityUI.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -176,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="これいる？\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

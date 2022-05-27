@@ -10,8 +10,13 @@ using System.Windows.Forms;
 
 namespace YuGiOhCollectionSupporter
 {
+	public enum LogLevel
+	{
+		全部, 情報, 警告, エラー, 必須項目
+	}
 	public partial class LogForm : Form
 	{
+
 		public LogForm()
 		{
 			InitializeComponent();
@@ -75,5 +80,6 @@ namespace YuGiOhCollectionSupporter
 				}
 			}
 		}
-	}
+
+    }
 }
