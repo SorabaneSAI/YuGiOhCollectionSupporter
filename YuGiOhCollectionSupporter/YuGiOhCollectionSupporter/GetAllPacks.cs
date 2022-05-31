@@ -12,13 +12,14 @@ namespace YuGiOhCollectionSupporter
     {
         public static async Task<List<PackData>> getAllPackDatasAsync(string URL, Form1 form)
         {
-            form.WriteLog("パックデータ取得中", LogLevel.必須項目);
+            Program.WriteLog("パックデータ取得中", LogLevel.必須項目);
 
             List<PackData> packDatas = new List<PackData>();
 
             var task = Program.GetHtml(URL);    //taskはwait,resultしてはいけない　awaitするべき
             await task;
             var html = task.Result;
+
 
             //一般商品タブが要素０、特典・同梱系タブが要素２
             var DivNodes = html.QuerySelectorAll("div[class='card_list']");
@@ -32,27 +33,32 @@ namespace YuGiOhCollectionSupporter
                 {
                     var ListTitleNode = pacsetnode.QuerySelector("div[class*='list_title open']>span");
                     string ListTitle = ListTitleNode.TextContent;
-                    form.WriteLog(ListTitle, LogLevel.情報);
+                    Program.WriteLog(ListTitle, LogLevel.情報);
 
                     var PackNodes = pacsetnode.QuerySelectorAll("div[class='pack pack_ja']");
                     foreach (var packnode in PackNodes)
                     {
                         var namenode = packnode.QuerySelector("p");
-                        namenode.RemoveAttribute("rt"); //なんかルビが混ざるので除去
-                        string name = namenode.TextContent;
-                        /*
-                        var rubynodes = packnode.QuerySelectorAll("rt");
-                        foreach (var rubynode in rubynodes)
+                        var rubynodes = namenode.QuerySelectorAll("rt");    //なんかルビが混ざるので除去
+                        foreach (var n in rubynodes)
                         {
-
+                            n.Remove();
                         }
-                        */
+                        string name = namenode.TextContent;
+
                         string 相対パス = packnode.QuerySelector("input").GetAttribute("value");
 
                         await Task.Delay(1000); //負荷軽減のため１秒待機;
                         (int num, DateTimeOffset day) tmp = await getPackData(Config.Domain + 相対パス);
 
-                        form.WriteLog($"{name} : {Program.ToString(tmp.day)} : 全{tmp.num}枚 : {相対パス}", LogLevel.情報);
+                        if(tmp.num == -1)
+                        {
+                            MessageBox.Show("エラーが発生したため、パック収集を終了します。（ログ参照）", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return null;
+                        }
+
+                        Program.WriteLog($"{name} : {Program.ToString(tmp.day)} : 全{tmp.num}枚 : {相対パス}", LogLevel.情報);
+                        form.UpdateLabel($"{name} : {Program.ToString(tmp.day)} : 全{tmp.num}枚 : {相対パス}");
                         PackData pd = new PackData(Config.Domain + 相対パス, name, ListTitle, "", tmp.day,tmp.num);  //シリーズと誕生日はとりあえず空欄
                         packDatas.Add(pd);
                     }
@@ -62,7 +68,7 @@ namespace YuGiOhCollectionSupporter
 
             }
 
-            form.WriteLog("パックデータ取得終了", LogLevel.必須項目);
+            Program.WriteLog("パックデータ取得終了", LogLevel.必須項目);
 
             return packDatas;
         }
@@ -71,6 +77,11 @@ namespace YuGiOhCollectionSupporter
         {
             var html = await Program.GetHtml(url);
 
+            if (html == null)
+            {
+                Program.WriteLog($"エラー発生。ログファイル参照。[{url}]", LogLevel.エラー);
+                return (-1, DateTimeOffset.Now);
+            }
             var DivNode = html.QuerySelector("div[id='bg']");
 
             //誕生日取得
@@ -88,15 +99,10 @@ namespace YuGiOhCollectionSupporter
             string txt = Program.getTextContent(TextNode);
             string numstr = Regex.Match(txt, @"全(.+?)枚").Groups[1].Captures[0].Value;   //正規表現で日付だけ抜き出す
             int num;
-            if(int.TryParse(numstr,out num))
+            if(!int.TryParse(numstr,out num))
             {
-            }
-            else
-            {
-                Program.Log.Error("getPackDataで日付変換失敗");
-                MessageBox.Show("getPackDataで日付変換失敗", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.Exit();
-
+                Program.WriteLog("getPackDataで日付変換失敗",LogLevel.エラー);
+                return (-1, DateTimeOffset.Now);
             }
             return (num, birthday);
 

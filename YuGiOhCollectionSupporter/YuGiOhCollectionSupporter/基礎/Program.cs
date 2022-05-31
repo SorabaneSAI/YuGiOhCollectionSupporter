@@ -15,8 +15,9 @@ namespace YuGiOhCollectionSupporter
 {
 	static class Program
 	{
-		public static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+		private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		private static HttpClient hc = new HttpClient();    //これは使い回すのが正しいらしい
+		private static Form1 form1;
 
 		[STAThread]
 		static void Main()
@@ -27,7 +28,8 @@ namespace YuGiOhCollectionSupporter
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new Form1());
+			form1 = new Form1();
+			Application.Run(form1);
 		}
 
 		public static async Task<AngleSharp.Html.Dom.IHtmlDocument> GetHtml(string URL)
@@ -48,14 +50,12 @@ namespace YuGiOhCollectionSupporter
 			{
 				// 404エラーや、名前解決失敗など
 				Log.Error("例外発生",e);
-				MessageBox.Show(e.Message,	"エラー",MessageBoxButtons.OK,MessageBoxIcon.Error);
 
 			}
 			catch (TaskCanceledException e)
 			{
 				// タスクがキャンセルされたとき（一般的にタイムアウト）
 				Log.Error("例外発生", e);
-				MessageBox.Show(e.Message, "タイムアウトなどでタスクがキャンセルされました", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 			catch (Exception e)
 			{
@@ -102,9 +102,9 @@ namespace YuGiOhCollectionSupporter
 			}
 		}
 
-		public static string ToJson(object obj)
+		public static string ToJson(object obj, Formatting format = Formatting.Indented)
         {
-			return JsonConvert.SerializeObject(obj, Formatting.Indented);
+			return JsonConvert.SerializeObject(obj, format);
         }
 
 		public static DateTimeOffset ConvertDate(string date,string format)
@@ -129,6 +129,45 @@ namespace YuGiOhCollectionSupporter
 		public static string getTextContent(AngleSharp.Dom.IElement node)
 		{
 			return (node != null ? node.TextContent.Trim() : "");
+		}
+
+		public static void WriteLog(string txt, LogLevel loglevel, Exception e = null)
+        {
+			form1.logform.AddLog(txt, loglevel);
+			switch (loglevel)
+			{
+				case LogLevel.情報:
+					Program.Log.Debug(txt);
+					break;
+				case LogLevel.警告:
+					Program.Log.Warn(txt);
+					break;
+				case LogLevel.エラー:
+					Program.Log.Error(txt);
+					break;
+				case LogLevel.必須項目:
+					form1.UpdateLabel(txt);
+					Program.Log.Info(txt);
+					break;
+				default:
+					Program.Log.Error("不明なloglevel");
+					MessageBox.Show("", "不明なloglevel", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					break;
+			}
+		}
+
+		//文字列のnum番目の文字を取得
+		public static string getTextElement(string txt,int num)
+        {
+			StringInfo si = new StringInfo(txt);
+			return si.SubstringByTextElements(num,1);
+		}
+
+		//テキストの長さを取得
+		public static int getTextElementLength(string txt)
+        {
+			StringInfo si = new StringInfo(txt);
+			return si.LengthInTextElements;
 		}
 
 	}

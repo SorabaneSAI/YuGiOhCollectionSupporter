@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace YuGiOhCollectionSupporter
 {
     class GetAllCards
     {
-        public static async Task<CardDataBase> getAllCardsAsync(Config config, Form1 form)
+        public static async Task<CardDataBase> getAllCardsAsync(Config config, Form1 form, List<string> errorlist)
         {
-            form.WriteLog("カードデータ取得中", LogLevel.必須項目);
+            Program.WriteLog("カードデータ取得中", LogLevel.必須項目);
 
             CardDataBase carddatabase = new CardDataBase();
+            int NoCardCount = 0;
 
             for (int i = (int)config.CardID_MIN; i < config.CardID_MAX + 1; i++)
             {
@@ -23,16 +25,43 @@ namespace YuGiOhCollectionSupporter
                 string url = config.URL2 + i;
                 var html = await Program.GetHtml(url);
 
+                if(html ==null)
+                {
+                    errorlist.Add(" id=" + i+" ") ;
+                    Program.WriteLog($"エラー発生。ログファイル参照。[{url}]", LogLevel.エラー);
+
+                    if(errorlist.Count>100)
+                    {
+                        Program.WriteLog($"エラーが多すぎるので強制終了", LogLevel.エラー);
+                        MessageBox.Show("エラーが多すぎたため、カード収集を終了します。（ログ参照）", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return null;
+                    }
+
+                    continue;
+                }
+
                 if (html.Source.Text.IndexOf("カード情報がありません。") >= 0)
                 {
-                    form.WriteLog(config.URL2 + i + ":カードデータなし", LogLevel.情報);
+                    Program.WriteLog(config.URL2 + i + ":カードデータなし", LogLevel.情報);
+                    NoCardCount++;
+                    if(config.Is捜索打ち切り ==true && NoCardCount >= config.捜索打ち切り限界)
+                    {
+                        Program.WriteLog($"カード情報が{NoCardCount}回連続で存在しなかったので捜索終了", LogLevel.必須項目);
+                        break;
+                    }
                     continue;
                 }
 
                 var DivNameNode = html.QuerySelector("div[id='cardname']>h1");
                 var ListSpanNodes = DivNameNode.QuerySelectorAll("span");
-                string 読み = ListSpanNodes[0].TextContent;
-                string 英語 = ListSpanNodes[1].TextContent;
+                string 読み = "";
+                string 英語 = ""; //英語名が存在しないカードがある
+
+                for (int j = 0; j < ListSpanNodes.Count(); j++)
+                {
+                    if(j==0) 読み = ListSpanNodes[0].TextContent;
+                    if (j == 1) 英語 = ListSpanNodes[1].TextContent;
+                }
 
                 //タグがないので面倒だが、正規表現を使って１回だけ置き換える（全部置き換えるとカタカナの名前は全部なくなってしまう）
                 var re1 = new Regex(読み);
@@ -116,17 +145,18 @@ namespace YuGiOhCollectionSupporter
 
                 //varidationのpackdataが、既に存在するpackdataListと矛盾していないかチェック・・・する必要ある？するならここ
 
-
+                読み = Kanaxs.Kana.ToHiragana(読み);    //カタカナはひらがなにする
                 CardData carddata = new CardData(i,url, 名前,読み, 英語, dic, Program.getTextContent(pendulumnode), cardtext, listvaridations);
 
-                form.WriteLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 + " : " + config.URL2 + i, LogLevel.情報);
-                form.WriteLog(Program.ToJson(carddata.ValuePairs) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
-                form.WriteLog(Program.ToJson(listvaridations), LogLevel.情報);
+                Program.WriteLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 + " : " + config.URL2 + i, LogLevel.情報);
+                Program.WriteLog(Program.ToJson(carddata.ValuePairs,Newtonsoft.Json.Formatting.None) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
+                Program.WriteLog(Program.ToJson(listvaridations, Newtonsoft.Json.Formatting.None), LogLevel.情報);
                 form.UpdateLabel((i- config.CardID_MIN) + "/" + (config.CardID_MAX + 1 - config.CardID_MIN) + ":" + carddata.名前);
 
                 carddatabase.CardDB.Add(carddata);
+                NoCardCount = 0;
             }
-            form.WriteLog("カードデータ取得終了", LogLevel.必須項目);
+            Program.WriteLog("カードデータ取得終了", LogLevel.必須項目);
 
 
             return carddatabase;

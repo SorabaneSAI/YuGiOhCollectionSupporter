@@ -31,14 +31,17 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.データ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.パックデータ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.カードデータ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.両方取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ログToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.並び順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.あいうえお順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.パック順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.並び順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.あいうえお順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.パック順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -68,10 +71,34 @@
             // 
             // データ取得ToolStripMenuItem
             // 
+            this.データ取得ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.パックデータ取得ToolStripMenuItem,
+            this.カードデータ取得ToolStripMenuItem,
+            this.両方取得ToolStripMenuItem});
             this.データ取得ToolStripMenuItem.Name = "データ取得ToolStripMenuItem";
             this.データ取得ToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.データ取得ToolStripMenuItem.Text = "データ取得";
-            this.データ取得ToolStripMenuItem.Click += new System.EventHandler(this.データ取得ToolStripMenuItem_Click);
+            // 
+            // パックデータ取得ToolStripMenuItem
+            // 
+            this.パックデータ取得ToolStripMenuItem.Name = "パックデータ取得ToolStripMenuItem";
+            this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.パックデータ取得ToolStripMenuItem.Text = "パックデータ取得";
+            this.パックデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
+            // 
+            // カードデータ取得ToolStripMenuItem
+            // 
+            this.カードデータ取得ToolStripMenuItem.Name = "カードデータ取得ToolStripMenuItem";
+            this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.カードデータ取得ToolStripMenuItem.Text = "カードデータ取得";
+            this.カードデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
+            // 
+            // 両方取得ToolStripMenuItem
+            // 
+            this.両方取得ToolStripMenuItem.Name = "両方（パックカード）取得ToolStripMenuItem";
+            this.両方取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.両方取得ToolStripMenuItem.Text = "両方取得";
+            this.両方取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
             // 
             // ログToolStripMenuItem
             // 
@@ -79,6 +106,29 @@
             this.ログToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.ログToolStripMenuItem.Text = "ログ";
             this.ログToolStripMenuItem.Click += new System.EventHandler(this.ログToolStripMenuItem_Click);
+            // 
+            // 並び順ToolStripMenuItem
+            // 
+            this.並び順ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.あいうえお順ToolStripMenuItem,
+            this.パック順ToolStripMenuItem});
+            this.並び順ToolStripMenuItem.Name = "並び順ToolStripMenuItem";
+            this.並び順ToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
+            this.並び順ToolStripMenuItem.Text = "並び順";
+            // 
+            // あいうえお順ToolStripMenuItem
+            // 
+            this.あいうえお順ToolStripMenuItem.Name = "あいうえお順ToolStripMenuItem";
+            this.あいうえお順ToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.あいうえお順ToolStripMenuItem.Text = "あいうえお順";
+            this.あいうえお順ToolStripMenuItem.Click += new System.EventHandler(this.あいうえお順ToolStripMenuItem_Click);
+            // 
+            // パック順ToolStripMenuItem
+            // 
+            this.パック順ToolStripMenuItem.Name = "パック順ToolStripMenuItem";
+            this.パック順ToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.パック順ToolStripMenuItem.Text = "パック順";
+            this.パック順ToolStripMenuItem.Click += new System.EventHandler(this.パック順ToolStripMenuItem_Click);
             // 
             // これについてToolStripMenuItem
             // 
@@ -129,29 +179,6 @@
             this.treeView1.TabIndex = 5;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
-            // 並び順ToolStripMenuItem
-            // 
-            this.並び順ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.あいうえお順ToolStripMenuItem,
-            this.パック順ToolStripMenuItem});
-            this.並び順ToolStripMenuItem.Name = "並び順ToolStripMenuItem";
-            this.並び順ToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
-            this.並び順ToolStripMenuItem.Text = "並び順";
-            // 
-            // あいうえお順ToolStripMenuItem
-            // 
-            this.あいうえお順ToolStripMenuItem.Name = "あいうえお順ToolStripMenuItem";
-            this.あいうえお順ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.あいうえお順ToolStripMenuItem.Text = "あいうえお順";
-            this.あいうえお順ToolStripMenuItem.Click += new System.EventHandler(this.あいうえお順ToolStripMenuItem_Click);
-            // 
-            // パック順ToolStripMenuItem
-            // 
-            this.パック順ToolStripMenuItem.Name = "パック順ToolStripMenuItem";
-            this.パック順ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.パック順ToolStripMenuItem.Text = "パック順";
-            this.パック順ToolStripMenuItem.Click += new System.EventHandler(this.パック順ToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -164,6 +191,7 @@
             this.Name = "Form1";
             this.Text = "遊戯王カードコレクトサポーター";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -185,8 +213,11 @@
 		public System.Windows.Forms.SplitContainer splitContainer1;
 		public System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.ToolStripMenuItem 並び順ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem あいうえお順ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem パック順ToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem あいうえお順ToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem パック順ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem パックデータ取得ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem カードデータ取得ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 両方取得ToolStripMenuItem;
     }
 }
 

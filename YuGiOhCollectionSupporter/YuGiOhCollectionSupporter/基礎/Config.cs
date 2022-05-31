@@ -13,15 +13,15 @@ namespace YuGiOhCollectionSupporter
 
 		public decimal CardID_MIN = 4000;
 		public decimal CardID_MAX = 20000;
-//		public string SearchOption = "?ope=1&sess=4&mode=1&stype=1&othercon=2&rp=100&page=1";
+
+		public bool Is捜索打ち切り = true;
+		public decimal 捜索打ち切り限界 = 100;
+
+
 		public static string Domain = "https://www.db.yugioh-card.com";
-//		private string CardListURL = @"?%A5%AB%A1%BC%A5%C9%A5%EA%A5%B9%A5%C8";
-//		public string CardDataPass = "CardDataPass.dat";
-//		public string UserDataPass = "UserDataPass.dat";
 		public static string ConfigPass = "Config.dat";
 
-		public string getCardListURL() { return URL; }
-		public string getCardListURL2() { return URL2; }
+
 
 		public static void Save(Config config)
 		{
