@@ -12,44 +12,65 @@ namespace YuGiOhCollectionSupporter
 {
 	public partial class PackUI : UserControl
 	{
-		CardDataBase cdb;
+		CardDataBase CardDB;
 		PackData Pack;
 
-		public PackUI()
+		public PackUI(TreeNode treenode, Form1 form)
 		{
 			InitializeComponent();
+			Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+			Dock = DockStyle.Fill;	//これやばいらしい？
+			Init(treenode, form);
 		}
 
-		public void Init(CardDataBase CardDB,PackData pack)
+		public void Init(TreeNode treenode,Form1 form)
 		{
-			/*
-			cdb = CardDB;
-			Pack = pack;
-			label2.Text = pack.Name;
-			label1.Text = pack.TypeName;
-			label3.Text = pack.getHaveCardNum_Name() + "/" + pack.getAllCardNum_Name() + "枚 ("+ pack.getHaveCardNum_Rare() + "/" + pack.getAllCardNum_Rare() + ")";
-			Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
-			Dock = DockStyle.Fill;
-
-			for (int i = 0; i < pack.CardDB.Count; i++)
+			
+			if (form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
 			{
-				CardData card = pack.CardDB[i];
-				int num = dataGridView1.Rows.Add(card.get略号Full(),card.名前,card.Rare);
-
-				dataGridView1.Rows[num].Cells["所持フラグ"].Value = card.所持フラグ;
-				dataGridView1.Rows[num].Cells["名前"].Style.BackColor = card.所持フラグ == true ? Color.FromArgb(128, 255, 128) : Color.FromArgb(255, 128, 128);
-				if (card.所持フラグ)
-				{
-					dataGridView1.Rows[num].Cells["所持状態変更"].Value = "未所持化";
-					dataGridView1.Rows[num].Cells["所持状態変更"].Style.BackColor = Color.FromArgb(255, 128, 128);
-				}
-				else
-				{
-					dataGridView1.Rows[num].Cells["所持状態変更"].Value = "所持化";
-					dataGridView1.Rows[num].Cells["所持状態変更"].Style.BackColor = Color.FromArgb(128, 255, 128);
-				}
+				CardDB = ((TreeNodeAIUEOTag)treenode.Tag).CardDB;
+				Pack = null;
+				linkLabel1.Visible = false;
+				label1.Visible = false;
+				label4.Visible = false;
 			}
-			*/
+			else if (form.パック順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			{
+				Pack = null;
+				linkLabel1.Text = Pack.Name;
+				label1.Text = Pack.TypeName;
+				label4.Text = Pack.SeriesName;
+			}
+
+			tableLayoutPanel1.Controls.Add(new CollectDataUI(CardDB), 0, 3);
+
+			Color red = Color.FromArgb(255, 128, 128);
+			Color yellow = Color.FromArgb(255, 255, 128);
+			Color green = Color.FromArgb(128, 255, 128);
+
+
+			foreach (var card in CardDB.CardList)
+            {
+				//所持フラグは複雑なものになるのでスキップ
+
+				int num = dataGridView1.Rows.Add(card.IsCardNameHave(), card.名前, $"{card.getCardNumCodeHave()} / {card.getCardNumCode()}", $"{card.getCardNumRarityHave()} / {card.getCardNumRarity()}");
+				dataGridView1.Rows[num].Cells["名前"].Style.BackColor = card.IsCardNameHave() ? green : red;
+				Color c;
+				if (card.getCardNumCodeHave() == 0) c = red;
+				else if (card.getCardNumCodeHave() == card.getCardNumCode()) c = green;
+				else c = yellow;
+
+				dataGridView1.Rows[num].Cells["略号"].Style.BackColor = c;
+
+				if (card.getCardNumRarityHave() == 0) c = red;
+				else if (card.getCardNumRarityHave() == card.getCardNumRarity()) c = green;
+				else c = yellow;
+
+				dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
+
+			}
+
+			
 		}
 
 		private void Change所持フラグ(bool flag,CardData card, DataGridViewCellCollection cells)
@@ -69,15 +90,6 @@ namespace YuGiOhCollectionSupporter
 			cells["所持フラグ"].Value = card.所持フラグ;
 			cells["名前"].Style.BackColor = card.所持フラグ == true ? Color.FromArgb(128, 255, 128) : Color.FromArgb(255, 128, 128);
 			*/
-		}
-
-		private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			HomeUI homeUI = new HomeUI();
-			homeUI.Init(((Form1)ParentForm).CardDB);
-			((Form1)ParentForm).splitContainer1.Panel2.Controls.Add(homeUI);
-			homeUI.BringToFront();
-			homeUI.Dock = DockStyle.Fill;
 		}
 
 		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

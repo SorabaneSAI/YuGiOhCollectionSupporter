@@ -30,7 +30,7 @@ namespace YuGiOhCollectionSupporter
                     errorlist.Add(" id=" + i+" ") ;
                     Program.WriteLog($"エラー発生。ログファイル参照。[{url}]", LogLevel.エラー);
 
-                    if(errorlist.Count>100)
+                    if(errorlist.Count>10)
                     {
                         Program.WriteLog($"エラーが多すぎるので強制終了", LogLevel.エラー);
                         MessageBox.Show("エラーが多すぎたため、カード収集を終了します。（ログ参照）", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -153,7 +153,7 @@ namespace YuGiOhCollectionSupporter
                 Program.WriteLog(Program.ToJson(listvaridations, Newtonsoft.Json.Formatting.None), LogLevel.情報);
                 form.UpdateLabel((i- config.CardID_MIN) + "/" + (config.CardID_MAX + 1 - config.CardID_MIN) + ":" + carddata.名前);
 
-                carddatabase.CardDB.Add(carddata);
+                carddatabase.CardList.Add(carddata);
                 NoCardCount = 0;
             }
             Program.WriteLog("カードデータ取得終了", LogLevel.必須項目);

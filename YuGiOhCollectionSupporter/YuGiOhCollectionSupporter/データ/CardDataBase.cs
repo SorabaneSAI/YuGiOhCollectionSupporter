@@ -8,21 +8,77 @@ namespace YuGiOhCollectionSupporter
 {
 	public class CardDataBase
 	{
-		public List<CardData> CardDB = new List<CardData>();
+		public List<CardData> CardList = new List<CardData>();
 		public string SaveDataPath = "CardDataBase.json";
 
-		public int getAllCardCount()
+		public int getAllCardNum()
 		{
-			return CardDB.Count;
+			return CardList.Count;
 		}
 
-        public (int newnum,int updatenum) AddPackDataList(List<CardData> carddatalist)
+        public int getAllCardNumHave()
+        {
+            int num = 0;
+            foreach (CardData card in CardList)
+            {
+                if (card.IsCardNameHave())
+                    num++;
+            }
+            return num;
+        }
+
+        //略号別で持ってるカード数を返す
+        public int getCardNumCodeHave()
+        {
+            int num = 0;
+            foreach (var card in CardList)
+            {
+                num += card.getCardNumCodeHave();
+            }
+            return num;
+        }
+
+        //略号別で存在するカード数を返す
+        public int getCardNumCode()
+        {
+            int num = 0;
+            foreach (var card in CardList)
+            {
+                num += card.getCardNumCode();
+            }
+            return num;
+        }
+
+        //レアリティ別で持ってるカード数を返す
+        public int getCardNumRarityHave()
+        {
+            int num = 0;
+            foreach (var card in CardList)
+            {
+                num += card.getCardNumRarityHave();
+            }
+            return num;
+        }
+
+        //レアリティ別で存在するカード数を返す
+        public int getCardNumRarity()
+        {
+            int num = 0;
+            foreach (var card in CardList)
+            {
+                num += card.getCardNumRarity();
+            }
+            return num;
+        }
+
+
+        public (int newnum,int updatenum) AddCardDataList(List<CardData> carddatalist)
         {
             int newnum = 0;
             int updatenum = 0;
             foreach (var newdata in carddatalist)
             {
-                foreach (var olddata in CardDB)
+                foreach (var olddata in CardList)
                 {
                     if (newdata.URL == olddata.URL)
                     {
@@ -31,7 +87,7 @@ namespace YuGiOhCollectionSupporter
                     }
                 }
                 //全部違ったら存在しないデータ
-                CardDB.Add(newdata);
+                CardList.Add(newdata);
                 newnum++;
             next:;
             }
@@ -41,7 +97,7 @@ namespace YuGiOhCollectionSupporter
         public void SortAIUEO()
         {
 			Program.WriteLog("あいうえお順にソート開始", LogLevel.必須項目);
-			CardDB.Sort((a,b) => new AIUEOComparer().Compare(a.読み,b.読み));
+			CardList.Sort((a,b) => new AIUEOComparer().Compare(a.読み,b.読み));
 			Program.WriteLog("あいうえお順にソート終了", LogLevel.必須項目);
 		}
 

@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIUEOComparer.cs" />
-    <Compile Include="Code.cs" />
+    <Compile Include="データ\Code.cs" />
     <Compile Include="GetAllCards.cs" />
     <Compile Include="GetAllPacks.cs" />
     <Compile Include="Kanaxs.cs" />
@@ -81,10 +81,10 @@
     </Compile>
     <Compile Include="データ\CardData.cs" />
     <Compile Include="データ\CardDataBase.cs" />
-    <Compile Include="CardDataUI.cs">
+    <Compile Include="これいる？\CardDataUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CardDataUI.Designer.cs">
+    <Compile Include="これいる？\CardDataUI.Designer.cs">
       <DependentUpon>CardDataUI.cs</DependentUpon>
     </Compile>
     <Compile Include="基礎\Config.cs" />
@@ -101,11 +101,11 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="formPanel.cs" />
-    <Compile Include="HomeUI.cs">
+    <Compile Include="CollectDataUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="HomeUI.Designer.cs">
-      <DependentUpon>HomeUI.cs</DependentUpon>
+    <Compile Include="CollectDataUI.Designer.cs">
+      <DependentUpon>CollectDataUI.cs</DependentUpon>
     </Compile>
     <Compile Include="基礎\LogForm.cs">
       <SubType>Form</SubType>
@@ -122,16 +122,16 @@
     </Compile>
     <Compile Include="基礎\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RarityUI.cs">
+    <Compile Include="これいる？\RarityUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="RarityUI.Designer.cs">
+    <Compile Include="これいる？\RarityUI.Designer.cs">
       <DependentUpon>RarityUI.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="基礎\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CardDataUI.resx">
+    <EmbeddedResource Include="これいる？\CardDataUI.resx">
       <DependentUpon>CardDataUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="基礎\ConfigForm.resx">
@@ -140,8 +140,8 @@
     <EmbeddedResource Include="基礎\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HomeUI.resx">
-      <DependentUpon>HomeUI.cs</DependentUpon>
+    <EmbeddedResource Include="CollectDataUI.resx">
+      <DependentUpon>CollectDataUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="基礎\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
@@ -159,7 +159,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="RarityUI.resx">
+    <EmbeddedResource Include="これいる？\RarityUI.resx">
       <DependentUpon>RarityUI.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="log4net.config">
@@ -179,8 +179,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="これいる？\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

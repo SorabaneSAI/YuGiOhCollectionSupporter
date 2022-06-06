@@ -34,6 +34,58 @@ namespace YuGiOhCollectionSupporter
 
 		public List<CardVariation> ListVariations = new List<CardVariation>();
 
+		//そのカード名のカードを持っているかを返す
+		public bool IsCardNameHave()
+        {
+            foreach (var variation in ListVariations)
+            {
+				if (variation.IsCardPackHave())
+					return true;
+            }
+			return false;
+        }
+
+		//略号別で持ってるカード数を返す
+		public int getCardNumCodeHave()
+        {
+			int num = 0;
+            foreach (var variation in ListVariations)
+            {
+				if (variation.IsCardPackHave())
+					num++;
+            }
+			return num;
+        }
+
+		//略号別で存在するカード数を返す
+		public int getCardNumCode()
+        {
+			return ListVariations.Count;
+        }
+
+		//レアリティ別で持ってるカードを返す
+		public int getCardNumRarityHave()
+        {
+			int num = 0;
+            foreach (var variation in ListVariations)
+            {
+				num += variation.getCardNumRarityHave();
+            }
+			return num;
+        }
+
+		//レアリティ別で存在するカードを返す
+		public int getCardNumRarity()
+		{
+			int num = 0;
+			foreach (var variation in ListVariations)
+			{
+				num += variation.getCardNumRarity();
+			}
+			return num;
+		}
+
+
 		public CardData(int id,string URL, string 名前, string 読み, string 英語名, Dictionary<string, string> valuepairs,string ペンデュラム効果, string テキスト, List<CardVariation> listvariations)
         {
 			ID = id;
@@ -136,6 +188,36 @@ namespace YuGiOhCollectionSupporter
 				略号 = new Code(code);
 				ListRarity = rarity;
 			}
+
+			//略号別に持っているかを返す
+			public bool IsCardPackHave()
+            {
+                foreach (var rarity in ListRarity)
+                {
+					if (rarity.所持フラグ)
+						return true;
+                }
+				return false;
+            }
+
+			//持っているレアリティの数を返す
+			public int getCardNumRarityHave()
+            {
+				int num = 0;
+                foreach (var rare in ListRarity)
+                {
+					if (rare.所持フラグ)
+						num++;
+                }
+				return num;
+            }
+
+			//存在するレアリティの数を返す
+			public int getCardNumRarity()
+            {
+				return ListRarity.Count;
+            }
+
 
 			public int AddVariationData(string cardname,CardVariation newvariation)
             {

@@ -35,10 +35,10 @@ namespace YuGiOhCollectionSupporter
 			Program.WriteLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
 			Program.Load(CardDB.SaveDataPath, ref CardDB);
 			Program.Load(PackDB.SaveDataPath, ref PackDB);
-			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
-			formPanel.SetFormPanelLeft(CardDB, this);
-		}
+			formPanel.ShowHome(this);
 
+			//			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
+		}
 		//設定を開く
 		private void toolStripMenuItem1_Click(object sender, EventArgs e)
 		{
@@ -70,7 +70,7 @@ namespace YuGiOhCollectionSupporter
 
 		private void ログToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if(logform.Visible == false)
+			if (logform.Visible == false)
 				logform.Show();
 			else
 				logform.Hide();
@@ -87,26 +87,26 @@ namespace YuGiOhCollectionSupporter
 		//クリックしたら右側にパックの内容表示
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
-			formPanel.SetFormPanelRight(CardDB, e.Node.Text,this);
+			formPanel.SetFormPanelRight(e.Node, this);
 		}
 
-        private void あいうえお順ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+		private void あいうえお順ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			パック順ToolStripMenuItem.CheckState = CheckState.Unchecked;
 			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 
+			formPanel.SetFormPanelLeft(CardDB, this);
+		}
 
-        }
-
-        private void パック順ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+		private void パック順ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			あいうえお順ToolStripMenuItem.CheckState = CheckState.Unchecked;
 			パック順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 		}
 
 
-        private async void 両方取得ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+		private async void 両方取得ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
 			var menuitem = (ToolStripMenuItem)sender;
 			bool IsPackSearch = false;
 			bool IsCardSearch = false;
@@ -115,10 +115,10 @@ namespace YuGiOhCollectionSupporter
 
 			int 推測探索秒 = 0;
 			if (IsPackSearch) 推測探索秒 += 1800;
-			if (IsCardSearch) 推測探索秒 += (int)(config.CardID_MAX- config.CardID_MIN);
+			if (IsCardSearch) 推測探索秒 += (int)(config.CardID_MAX - config.CardID_MIN);
 
 			//メッセージボックスを表示する
-			DialogResult result = MessageBox.Show($"捜索には{推測探索秒/60}分程度かかることが予測されます。\n本当に始めますか？",	"",
+			DialogResult result = MessageBox.Show($"捜索には{推測探索秒 / 60}分程度かかることが予測されます。\n本当に始めますか？", "",
 				MessageBoxButtons.YesNo,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button2);
@@ -128,11 +128,7 @@ namespace YuGiOhCollectionSupporter
 			var sw = new System.Diagnostics.Stopwatch();
 			sw.Start();
 
-			label1.Visible = true;  //左下のラベルをON
-			toolStripMenuItem1.Enabled = false; //設定を触れないように
-			データ取得ToolStripMenuItem.Enabled = false; //このボタンも触れないように
-
-
+			InvalidMenuItem();
 
 			string ans = "";
 			List<string> ErrorList = new List<string>();
@@ -141,7 +137,7 @@ namespace YuGiOhCollectionSupporter
 			do
 			{
 
-				if(IsPackSearch)
+				if (IsPackSearch)
 				{
 					//公式サイトにアクセスして、全パックを取得する パックのタイプを取得するため必要
 					var newdatalist = await GetAllPacks.getAllPackDatasAsync(config.URL, this);
@@ -162,31 +158,56 @@ namespace YuGiOhCollectionSupporter
 
 					if (newcardDB == null) break;
 
-					(int newnum, int updatenum) tmp = CardDB.AddPackDataList(newcardDB.CardDB);
+					(int newnum, int updatenum) tmp = CardDB.AddCardDataList(newcardDB.CardList);
 
 					Program.Save(CardDB.SaveDataPath, CardDB);
 
-					ans += "カード情報の取得が終了しました。\n全カード種類:" + CardDB.getAllCardCount() + 
+					ans += "カード情報の取得が終了しました。\n全カード種類:" + CardDB.getAllCardNum() +
 						$"\nうち{tmp.newnum}件が新しいデータとして登録され、\n{tmp.updatenum}件が更新されました。\n";
 				}
 
 			} while (false);
 
 
-
-
-			label1.Visible = false;  //左下のラベル非表示
-			toolStripMenuItem1.Enabled = true;  //設定を触れるように
-			データ取得ToolStripMenuItem.Enabled = true;  //このボタンも触れるように
+			ValidMenuItem();
 
 			sw.Stop();
 			TimeSpan ts = sw.Elapsed;
 
-			string msg = ans + $"エラー件数:{ErrorList.Count}件\n" +Program.ToJson(ErrorList, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
+			string msg = ans + $"エラー件数:{ErrorList.Count}件\n" + Program.ToJson(ErrorList, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
 			Program.WriteLog(msg, LogLevel.必須項目);
 			MessageBox.Show(msg
 				, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
-	}
+
+		public void InvalidMenuItem()
+		{
+			Invoke(new Action(() =>
+			{
+				label1.Visible = true;  //左下のラベルをON
+				toolStripMenuItem1.Enabled = false; //設定を触れないように
+				データ取得ToolStripMenuItem.Enabled = false; //このボタンも触れないように
+				並び順ToolStripMenuItem.Enabled = false;
+			}));
+
+		}
+
+		public void ValidMenuItem()
+		{
+			Invoke(new Action(() =>
+			{
+				label1.Visible = false;  //左下のラベル非表示
+				toolStripMenuItem1.Enabled = true;  //設定を触れるように
+				データ取得ToolStripMenuItem.Enabled = true;  //このボタンも触れるように
+				並び順ToolStripMenuItem.Enabled = true;
+			}));
+
+		}
+
+        private void ホームToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			formPanel.ShowHome(this);
+        }
+    }
 }

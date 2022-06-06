@@ -41,7 +41,7 @@ namespace YuGiOhCollectionSupporter
         {
             foreach (var gyou in 行リスト)
             {
-                for (int i = 0; i < Program.getTextElementLength(gyou.文字); i++)
+                for (int i = 0; i < Program.getTextLength(gyou.文字); i++)
                 {
                     var nextstr = Program.getTextElement(gyou.文字, i); 
                     if(nextstr == one_txt)
@@ -54,7 +54,7 @@ namespace YuGiOhCollectionSupporter
         }
 
     }
-    class 行
+    public class 行
     {
         public string 名前;
         public string 文字;

@@ -164,7 +164,7 @@ namespace YuGiOhCollectionSupporter
 		}
 
 		//テキストの長さを取得
-		public static int getTextElementLength(string txt)
+		public static int getTextLength(string txt)
         {
 			StringInfo si = new StringInfo(txt);
 			return si.LengthInTextElements;
