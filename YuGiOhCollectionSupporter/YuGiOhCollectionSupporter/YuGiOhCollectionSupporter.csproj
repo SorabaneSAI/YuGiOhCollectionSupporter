@@ -36,6 +36,9 @@
     <Reference Include="AngleSharp, Version=0.16.1.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.16.1\lib\net472\AngleSharp.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.14.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.14\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -43,6 +46,7 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Diagnostics.Contracts" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -51,6 +55,7 @@
     <Reference Include="System.Text.Encoding.CodePages, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encoding.CodePages.5.0.0\lib\net461\System.Text.Encoding.CodePages.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -62,24 +67,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIUEOComparer.cs" />
+    <Compile Include="データ\Code.cs" />
     <Compile Include="GetAllCards.cs" />
     <Compile Include="GetAllPacks.cs" />
+    <Compile Include="Kanaxs.cs" />
+    <Compile Include="データ\PackDataBase.cs" />
     <Compile Include="基礎\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="基礎\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CardData.cs" />
-    <Compile Include="CardDataBase.cs" />
-    <Compile Include="CardDataUI.cs">
+    <Compile Include="データ\CardData.cs" />
+    <Compile Include="データ\CardDataBase.cs" />
+    <Compile Include="これいる？\CardHeaderUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CardDataUI.Designer.cs">
-      <DependentUpon>CardDataUI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CardGet.cs">
-      <SubType>Component</SubType>
+    <Compile Include="これいる？\CardHeaderUI.Designer.cs">
+      <DependentUpon>CardHeaderUI.cs</DependentUpon>
     </Compile>
     <Compile Include="基礎\Config.cs" />
     <Compile Include="基礎\ConfigForm.cs">
@@ -88,9 +94,6 @@
     <Compile Include="基礎\ConfigForm.Designer.cs">
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataGet.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="基礎\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,11 +101,9 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="formPanel.cs" />
-    <Compile Include="HomeUI.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="HomeUI.Designer.cs">
-      <DependentUpon>HomeUI.cs</DependentUpon>
+    <Compile Include="CollectDataUI.cs" />
+    <Compile Include="CollectDataUI.Designer.cs">
+      <DependentUpon>CollectDataUI.cs</DependentUpon>
     </Compile>
     <Compile Include="基礎\LogForm.cs">
       <SubType>Form</SubType>
@@ -110,10 +111,7 @@
     <Compile Include="基礎\LogForm.Designer.cs">
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="これいる？\NoneDispBrowser.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="PackData.cs" />
+    <Compile Include="データ\PackData.cs" />
     <Compile Include="PackUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -122,17 +120,15 @@
     </Compile>
     <Compile Include="基礎\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RarityUI.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="RarityUI.Designer.cs">
+    <Compile Include="これいる？\RarityUI.cs" />
+    <Compile Include="これいる？\RarityUI.Designer.cs">
       <DependentUpon>RarityUI.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="基礎\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CardDataUI.resx">
-      <DependentUpon>CardDataUI.cs</DependentUpon>
+    <EmbeddedResource Include="これいる？\CardHeaderUI.resx">
+      <DependentUpon>CardHeaderUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="基礎\ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -140,8 +136,8 @@
     <EmbeddedResource Include="基礎\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HomeUI.resx">
-      <DependentUpon>HomeUI.cs</DependentUpon>
+    <EmbeddedResource Include="CollectDataUI.resx">
+      <DependentUpon>CollectDataUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="基礎\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
@@ -159,9 +155,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="RarityUI.resx">
+    <EmbeddedResource Include="これいる？\RarityUI.resx">
       <DependentUpon>RarityUI.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -176,5 +175,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -22,6 +22,7 @@ namespace YuGiOhCollectionSupporter
 
 		public void Init(CardDataBase CardDB,PackData pack)
 		{
+<<<<<<< Updated upstream
 			/*
 			cdb = CardDB;
 			Pack = pack;
@@ -50,6 +51,38 @@ namespace YuGiOhCollectionSupporter
 				}
 			}
 			*/
+=======
+			
+			if (form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			{
+				CardDB = ((TreeNodeAIUEOTag)treenode.Tag).CardDB;
+				Pack = null;
+				linkLabel1.Visible = false;
+				label1.Visible = false;
+				label4.Visible = false;
+			}
+			else if (form.パック順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			{
+				Pack = null;
+				linkLabel1.Text = Pack.Name;
+				label1.Text = Pack.TypeName;
+				label4.Text = Pack.SeriesName;
+			}
+
+			tableLayoutPanel1.Controls.Add(new CollectDataUI(CardDB), 0, 3);
+
+
+
+			flowLayoutPanel1.Controls.Add(new CardHeaderUI(null));
+			foreach (var card in CardDB.CardList)
+            {
+				flowLayoutPanel1.Controls.Add(new CardHeaderUI(card));
+			}
+
+			int height = new CardHeaderUI(CardDB.CardList[0]).Height;
+			flowLayoutPanel1.Size = new Size(flowLayoutPanel1.Size.Width, height * (CardDB.CardList.Count +1));
+
+>>>>>>> Stashed changes
 		}
 
 		private void Change所持フラグ(bool flag,CardData card, DataGridViewCellCollection cells)
