@@ -147,7 +147,7 @@ namespace YuGiOhCollectionSupporter
 					int newnum = PackDB.AddPackDataList(newdatalist);
 
 
-					Program.Save(PackDB.SaveDataPath, PackDB);
+					Program.SavePackData();
 
 					ans += "パックの情報の取得が完了しました。\n全パック種類:" + PackDB.PackDataList.Count + $"\nうち{newnum}件が新しいデータとして登録されました。\n";
 				}
@@ -160,7 +160,7 @@ namespace YuGiOhCollectionSupporter
 
 					(int newnum, int updatenum) tmp = CardDB.AddCardDataList(newcardDB.CardList);
 
-					Program.Save(CardDB.SaveDataPath, CardDB);
+					Program.SaveCardData();
 
 					ans += "カード情報の取得が終了しました。\n全カード種類:" + CardDB.getAllCardNum() +
 						$"\nうち{tmp.newnum}件が新しいデータとして登録され、\n{tmp.updatenum}件が更新されました。\n";
@@ -209,5 +209,6 @@ namespace YuGiOhCollectionSupporter
         {
 			formPanel.ShowHome(this);
         }
-    }
+
+	}
 }

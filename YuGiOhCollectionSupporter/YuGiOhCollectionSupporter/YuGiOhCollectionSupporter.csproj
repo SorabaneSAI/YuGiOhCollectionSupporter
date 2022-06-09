@@ -68,6 +68,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIUEOComparer.cs" />
+    <Compile Include="CardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CardForm.Designer.cs">
+      <DependentUpon>CardForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="データ\Code.cs" />
     <Compile Include="GetAllCards.cs" />
     <Compile Include="GetAllPacks.cs" />
@@ -81,12 +87,6 @@
     </Compile>
     <Compile Include="データ\CardData.cs" />
     <Compile Include="データ\CardDataBase.cs" />
-    <Compile Include="これいる？\CardDataUI.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="これいる？\CardDataUI.Designer.cs">
-      <DependentUpon>CardDataUI.cs</DependentUpon>
-    </Compile>
     <Compile Include="基礎\Config.cs" />
     <Compile Include="基礎\ConfigForm.cs">
       <SubType>Form</SubType>
@@ -100,11 +100,11 @@
     <Compile Include="基礎\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="formPanel.cs" />
-    <Compile Include="CollectDataUI.cs">
+    <Compile Include="基礎\formPanel.cs" />
+    <Compile Include="UI\CollectDataUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CollectDataUI.Designer.cs">
+    <Compile Include="UI\CollectDataUI.Designer.cs">
       <DependentUpon>CollectDataUI.cs</DependentUpon>
     </Compile>
     <Compile Include="基礎\LogForm.cs">
@@ -114,10 +114,10 @@
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="データ\PackData.cs" />
-    <Compile Include="PackUI.cs">
+    <Compile Include="UI\PackUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PackUI.Designer.cs">
+    <Compile Include="UI\PackUI.Designer.cs">
       <DependentUpon>PackUI.cs</DependentUpon>
     </Compile>
     <Compile Include="基礎\Program.cs" />
@@ -128,11 +128,11 @@
     <Compile Include="これいる？\RarityUI.Designer.cs">
       <DependentUpon>RarityUI.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CardForm.resx">
+      <DependentUpon>CardForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="基礎\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="これいる？\CardDataUI.resx">
-      <DependentUpon>CardDataUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="基礎\ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
@@ -140,13 +140,13 @@
     <EmbeddedResource Include="基礎\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CollectDataUI.resx">
+    <EmbeddedResource Include="UI\CollectDataUI.resx">
       <DependentUpon>CollectDataUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="基礎\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PackUI.resx">
+    <EmbeddedResource Include="UI\PackUI.resx">
       <DependentUpon>PackUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

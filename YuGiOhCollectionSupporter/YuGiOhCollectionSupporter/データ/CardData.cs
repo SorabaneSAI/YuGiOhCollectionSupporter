@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace YuGiOhCollectionSupporter
 
 		public string URL;
 		public string 名前;
-		public string 読み;	//カタカナはひらがなに直される
+		public string 読み;	//ひらがなはカタカナに直される
 		public string 英語名;
 
 		public Dictionary<string, string> ValuePairs;   //存在するパラメータのペアだけ登録される
@@ -28,11 +29,14 @@ namespace YuGiOhCollectionSupporter
 		public string 種族;
 		*/
 
+		public string 種族;
 		public string ペンデュラム効果;
 		public string テキスト;
 
 
 		public List<CardVariation> ListVariations = new List<CardVariation>();
+
+		public bool 表示フラグ = true;
 
 		//そのカード名のカードを持っているかを返す
 		public bool IsCardNameHave()
@@ -85,8 +89,14 @@ namespace YuGiOhCollectionSupporter
 			return num;
 		}
 
+		public (Brushes upcolor,Brushes downcolor) getCardColor()
+        {
+			return (null,null);
+        }
 
-		public CardData(int id,string URL, string 名前, string 読み, string 英語名, Dictionary<string, string> valuepairs,string ペンデュラム効果, string テキスト, List<CardVariation> listvariations)
+
+
+		public CardData(int id,string URL, string 名前, string 読み, string 英語名, Dictionary<string, string> valuepairs,string ペンデュラム効果, string テキスト,string 種族,List<CardVariation> listvariations)
         {
 			ID = id;
 			this.URL = URL;
@@ -97,6 +107,7 @@ namespace YuGiOhCollectionSupporter
 			this.ペンデュラム効果 = ペンデュラム効果;
 			this.テキスト = テキスト;
 			this.ListVariations = listvariations;
+			this.種族 = 種族;
 			誕生日 = getEarlyDate();
 		}
 

@@ -102,7 +102,16 @@ namespace YuGiOhCollectionSupporter
 			if (Depth ==0)
 			{
 				//最初だけ非表示ノードも追加
-				treenodes.Add($"非表示").Tag = new TreeNodeAIUEOTag(null);
+				TreeNode node = treenodes.Add($"非表示");
+				node.Tag = new TreeNodeAIUEOTag(null);
+
+				foreach (var card in carddb.CardList)
+                {
+					if (card.表示フラグ == false)
+                    {
+						((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Add(card);
+					}
+				}
 			}
 
 
@@ -110,6 +119,7 @@ namespace YuGiOhCollectionSupporter
 			//カードをツリーに登録する
 			foreach (var card in carddb.CardList)
 			{
+				if (card.表示フラグ == false) continue;
 				//文字数をオーバーしたらスキップ
 				if (Program.getTextLength(card.読み) <= Depth)
 					continue;
@@ -123,25 +133,21 @@ namespace YuGiOhCollectionSupporter
 						//行ノードとその下のかなノード両方登録
 						((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Add(card);
 						((TreeNodeAIUEOTag)node.Parent.Tag).CardDB.CardList.Add(card);
-						break;
+						goto nextloop;
                     }
                 }
 
-				/*
-				//カードの読みが何行に含まれるかを取得
-				var gyou = かな.get行(one_txt);
-
-				//その行を持つtreenodeを探す
-				foreach (TreeNode node in treenodes)
-				{
-					var treenodetag = (TreeNodeAIUEOTag)node.Tag;
-					if (treenodetag.Gyou.Equals(gyou))
-					{
-						treenodetag.CardList.Add(card);
+                //どこにも所属出来ない場合、その他に
+                foreach (TreeNode node in treenodes)
+                {
+					if(node.Text.Contains("その他"))
+                    {
+						((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Add(card);
 						break;
 					}
 				}
-				*/
+
+			nextloop:;
 			}
 
             //要素がないツリーを削除
@@ -239,6 +245,7 @@ namespace YuGiOhCollectionSupporter
 
 		public static void ShowHome(Form1 form)
         {
+			form.splitContainer1.Panel2.Controls.Clear();
 			//ホーム画面
 			CollectDataUI homeUI = new CollectDataUI(form.CardDB);
 			form.splitContainer1.Panel2.Controls.Add(homeUI);

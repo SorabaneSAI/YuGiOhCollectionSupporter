@@ -102,6 +102,16 @@ namespace YuGiOhCollectionSupporter
 			}
 		}
 
+		public static void SaveCardData()
+        {
+			Save(form1.CardDB.SaveDataPath, form1.CardDB);
+		}
+
+		public static void SavePackData()
+		{
+			Save(form1.PackDB.SaveDataPath, form1.PackDB);
+		}
+
 		public static string ToJson(object obj, Formatting format = Formatting.Indented)
         {
 			return JsonConvert.SerializeObject(obj, format);

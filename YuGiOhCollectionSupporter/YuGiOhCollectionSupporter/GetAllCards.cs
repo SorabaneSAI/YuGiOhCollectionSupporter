@@ -25,12 +25,12 @@ namespace YuGiOhCollectionSupporter
                 string url = config.URL2 + i;
                 var html = await Program.GetHtml(url);
 
-                if(html ==null)
+                if (html == null)
                 {
-                    errorlist.Add(" id=" + i+" ") ;
+                    errorlist.Add(" id=" + i + " ");
                     Program.WriteLog($"エラー発生。ログファイル参照。[{url}]", LogLevel.エラー);
 
-                    if(errorlist.Count>10)
+                    if (errorlist.Count > 10)
                     {
                         Program.WriteLog($"エラーが多すぎるので強制終了", LogLevel.エラー);
                         MessageBox.Show("エラーが多すぎたため、カード収集を終了します。（ログ参照）", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -44,7 +44,7 @@ namespace YuGiOhCollectionSupporter
                 {
                     Program.WriteLog(config.URL2 + i + ":カードデータなし", LogLevel.情報);
                     NoCardCount++;
-                    if(config.Is捜索打ち切り ==true && NoCardCount >= config.捜索打ち切り限界)
+                    if (config.Is捜索打ち切り == true && NoCardCount >= config.捜索打ち切り限界)
                     {
                         Program.WriteLog($"カード情報が{NoCardCount}回連続で存在しなかったので捜索終了", LogLevel.必須項目);
                         break;
@@ -59,16 +59,17 @@ namespace YuGiOhCollectionSupporter
 
                 for (int j = 0; j < ListSpanNodes.Count(); j++)
                 {
-                    if(j==0) 読み = ListSpanNodes[0].TextContent;
+                    if (j == 0) 読み = ListSpanNodes[0].TextContent;
                     if (j == 1) 英語 = ListSpanNodes[1].TextContent;
                 }
 
+
                 //タグがないので面倒だが、正規表現を使って１回だけ置き換える（全部置き換えるとカタカナの名前は全部なくなってしまう）
                 var re1 = new Regex(読み);
-                var re2 = new Regex(英語);
+                var re2 = new Regex(Regex.Escape(英語));  //カッコなどのメタ文字があるのでエスケープを追加する
                 string str1 = re1.Replace(DivNameNode.TextContent, "", 1);
                 string str2 = re2.Replace(str1, "", 1);
-                string 名前 = str2.Trim(); 
+                string 名前 = str2.Trim();
 
                 var CardTextSetNode = html.QuerySelector("div[id='CardTextSet']");
                 var ItemBoxNodes = CardTextSetNode.QuerySelectorAll("div[class*='item_box']");
@@ -96,7 +97,7 @@ namespace YuGiOhCollectionSupporter
 
                 //カードテキスト
                 var cardtextnode = CardTextSetNode.QuerySelector("div[class='CardText']>div[class='item_box_text']");
-                string cardtext = CardTextSetNode.QuerySelector("div[class='CardText']>div[class='item_box_text']").TextContent.Replace("カードテキスト", "").Trim();//タグないので面倒
+                string cardtext = cardtextnode.TextContent.Replace("カードテキスト", "").Trim();//タグないので面倒
 
 
                 //カード情報を取得したので、次は収録シリーズを取得
@@ -120,13 +121,13 @@ namespace YuGiOhCollectionSupporter
                     string レア記号 = Program.getTextContent(Rarenode.QuerySelector("p"));
                     string レアリティ = Program.getTextContent(Rarenode.QuerySelector("span"));
 
-                    PackData packdata = new PackData(URL,パック名,"","",Program.ConvertDate(誕生日, "yyyy-MM-dd"),0);
+                    PackData packdata = new PackData(URL, パック名, "", "", Program.ConvertDate(誕生日, "yyyy-MM-dd"), 0);
                     CardData.Rarity rarity = new CardData.Rarity(レア記号, レアリティ);
 
                     //リストと比較して同じならレアリティ違いに統合
                     foreach (var vari in listvaridations)
                     {
-                        if(packdata.Name == vari.発売パック.Name)
+                        if (packdata.Name == vari.発売パック.Name)
                         {
                             vari.ListRarity.Add(rarity);
                             goto nextloop;
@@ -145,13 +146,16 @@ namespace YuGiOhCollectionSupporter
 
                 //varidationのpackdataが、既に存在するpackdataListと矛盾していないかチェック・・・する必要ある？するならここ
 
-                読み = Kanaxs.Kana.ToHiragana(読み);    //カタカナはひらがなにする
-                CardData carddata = new CardData(i,url, 名前,読み, 英語, dic, Program.getTextContent(pendulumnode), cardtext, listvaridations);
+                
+                読み = Kanaxs.Kana.ToKatakana(読み);    //ひらがなはカタカナにする
+                読み = RemoveSymbol(読み);  //読みに紛れ込む記号などを排除
+
+                CardData carddata = new CardData(i, url, 名前, 読み, 英語, dic, Program.getTextContent(pendulumnode), cardtext, 種族, listvaridations);
 
                 Program.WriteLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 + " : " + config.URL2 + i, LogLevel.情報);
-                Program.WriteLog(Program.ToJson(carddata.ValuePairs,Newtonsoft.Json.Formatting.None) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
+                Program.WriteLog(Program.ToJson(carddata.ValuePairs, Newtonsoft.Json.Formatting.None) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
                 Program.WriteLog(Program.ToJson(listvaridations, Newtonsoft.Json.Formatting.None), LogLevel.情報);
-                form.UpdateLabel((i- config.CardID_MIN) + "/" + (config.CardID_MAX + 1 - config.CardID_MIN) + ":" + carddata.名前);
+                form.UpdateLabel((i - config.CardID_MIN) + "/" + (config.CardID_MAX + 1 - config.CardID_MIN) + ":" + carddata.名前);
 
                 carddatabase.CardList.Add(carddata);
                 NoCardCount = 0;
@@ -163,6 +167,16 @@ namespace YuGiOhCollectionSupporter
 
         }
 
+        public static string RemoveSymbol(string name)
+        {
+            string removesymbol = "「」『』・ 　";
 
+            for (int i = 0; i < Program.getTextLength(removesymbol); i++)
+            {
+                name = name.Replace(Program.getTextElement(removesymbol, i),"");
+            }
+
+            return name;
+        }
     }
 }

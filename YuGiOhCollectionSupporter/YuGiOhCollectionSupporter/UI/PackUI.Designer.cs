@@ -33,7 +33,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.所持フラグ = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.type = new System.Windows.Forms.DataGridViewImageColumn();
             this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,8 +67,8 @@
             // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.AutoScroll = true;
             this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 2);
@@ -83,7 +83,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(685, 622);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(685, 426);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // linkLabel1
@@ -103,11 +103,12 @@
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.所持フラグ,
+            this.type,
             this.名前,
             this.略号,
             this.レアリティ});
             this.dataGridView1.Location = new System.Drawing.Point(3, 90);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
@@ -118,15 +119,15 @@
             this.dataGridView1.Size = new System.Drawing.Size(679, 333);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
-            // 所持フラグ
+            // type
             // 
-            this.所持フラグ.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.所持フラグ.HeaderText = "所持";
-            this.所持フラグ.Name = "所持フラグ";
-            this.所持フラグ.ReadOnly = true;
-            this.所持フラグ.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.所持フラグ.Width = 35;
+            this.type.HeaderText = "";
+            this.type.Name = "type";
+            this.type.ReadOnly = true;
+            this.type.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.type.Width = 30;
             // 
             // 名前
             // 
@@ -163,9 +164,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "PackUI";
-            this.Size = new System.Drawing.Size(691, 628);
+            this.Size = new System.Drawing.Size(691, 432);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -180,7 +182,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 所持フラグ;
+        private System.Windows.Forms.DataGridViewImageColumn type;
         private System.Windows.Forms.DataGridViewLinkColumn 名前;
         private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
         private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
