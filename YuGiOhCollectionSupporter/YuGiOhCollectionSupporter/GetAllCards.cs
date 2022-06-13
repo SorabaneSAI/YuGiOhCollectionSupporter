@@ -121,7 +121,10 @@ namespace YuGiOhCollectionSupporter
                     string レア記号 = Program.getTextContent(Rarenode.QuerySelector("p"));
                     string レアリティ = Program.getTextContent(Rarenode.QuerySelector("span"));
 
+                    //これは仮のパックデータ　本物はパック情報を開くときに特定する
                     PackData packdata = new PackData(URL, パック名, "", "", Program.ConvertDate(誕生日, "yyyy-MM-dd"), 0);
+
+
                     CardData.Rarity rarity = new CardData.Rarity(レア記号, レアリティ);
 
                     //リストと比較して同じならレアリティ違いに統合

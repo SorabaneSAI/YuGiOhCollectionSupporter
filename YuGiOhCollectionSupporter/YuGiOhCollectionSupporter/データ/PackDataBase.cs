@@ -33,5 +33,12 @@ namespace YuGiOhCollectionSupporter
             return count;
         }
 
+        public PackData SearchPackData(string URL)
+        {
+            var list = PackDataList.Where(x => x.URL == URL).ToList();
+            if(list.Count >0) return list[0];
+            return null;
+        }
+
     }
 }

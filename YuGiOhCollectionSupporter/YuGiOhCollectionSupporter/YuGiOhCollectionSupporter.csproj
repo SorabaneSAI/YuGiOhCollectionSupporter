@@ -68,10 +68,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIUEOComparer.cs" />
-    <Compile Include="CardForm.cs">
+    <Compile Include="UI\CardForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CardForm.Designer.cs">
+    <Compile Include="UI\CardForm.Designer.cs">
       <DependentUpon>CardForm.cs</DependentUpon>
     </Compile>
     <Compile Include="データ\Code.cs" />
@@ -114,21 +114,15 @@
       <DependentUpon>LogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="データ\PackData.cs" />
-    <Compile Include="UI\PackUI.cs">
+    <Compile Include="UI\CardListUI.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\PackUI.Designer.cs">
-      <DependentUpon>PackUI.cs</DependentUpon>
+    <Compile Include="UI\CardListUI.Designer.cs">
+      <DependentUpon>CardListUI.cs</DependentUpon>
     </Compile>
     <Compile Include="基礎\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="これいる？\RarityUI.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="これいる？\RarityUI.Designer.cs">
-      <DependentUpon>RarityUI.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="CardForm.resx">
+    <EmbeddedResource Include="UI\CardForm.resx">
       <DependentUpon>CardForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="基礎\AboutForm.resx">
@@ -146,8 +140,8 @@
     <EmbeddedResource Include="基礎\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\PackUI.resx">
-      <DependentUpon>PackUI.cs</DependentUpon>
+    <EmbeddedResource Include="UI\CardListUI.resx">
+      <DependentUpon>CardListUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -159,9 +153,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="これいる？\RarityUI.resx">
-      <DependentUpon>RarityUI.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -179,6 +170,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="これいる？\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

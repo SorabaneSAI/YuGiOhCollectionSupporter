@@ -12,10 +12,14 @@ namespace YuGiOhCollectionSupporter
 {
 	public partial class CollectDataUI : UserControl
 	{
+		public CollectDataUI()
+        {
+			InitializeComponent();
+		}
 		public CollectDataUI(CardDataBase carddb)
 		{
 			InitializeComponent();
-			BringToFront();
+//			BringToFront();
 //			Dock = DockStyle.Fill;
 			Init(carddb);
 		}

@@ -10,25 +10,26 @@ using System.Windows.Forms;
 
 namespace YuGiOhCollectionSupporter
 {
-	public partial class PackUI : UserControl
+	public partial class CardListUI : UserControl
 	{
 		CardDataBase CardDB;
 		PackData Pack;
+		Form1 form;
 
-		public PackUI(TreeNode treenode, Form1 form)
+		public CardListUI(TreeNode treenode, Form1 form1)
 		{
 			InitializeComponent();
 			Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
 			Dock = DockStyle.Fill;	//これやばいらしい？
-			Init(treenode, form);
+			Init(((TreeNodeAIUEOTag)treenode.Tag).CardDB, form1);
 		}
 
-		public void Init(TreeNode treenode,Form1 form)
+		public void Init(CardDataBase cardDB,Form1 form1)
 		{
-			
+			form = form1;
 			if (form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
 			{
-				CardDB = ((TreeNodeAIUEOTag)treenode.Tag).CardDB;
+				CardDB = cardDB;
 				Pack = null;
 				linkLabel1.Visible = false;
 				label1.Visible = false;
@@ -42,13 +43,13 @@ namespace YuGiOhCollectionSupporter
 				label4.Text = Pack.SeriesName;
 			}
 
-			tableLayoutPanel1.Controls.Add(new CollectDataUI(CardDB), 0, 3);
+			collectDataUI1.Init(CardDB);	//埋め込むのに引数のないコンストラクタが必要なので初期化
 
 			Color red = Color.FromArgb(255, 128, 128);
 			Color yellow = Color.FromArgb(255, 255, 128);
 			Color green = Color.FromArgb(128, 255, 128);
 
-
+			dataGridView1.Rows.Clear();
 			foreach (var card in CardDB.CardList)
             {
 				int num = dataGridView1.Rows.Add(card.IsCardNameHave(), card.名前, $"{card.getCardNumCodeHave()} / {card.getCardNumCode()}", $"{card.getCardNumRarityHave()} / {card.getCardNumRarity()}");
@@ -84,6 +85,7 @@ namespace YuGiOhCollectionSupporter
 				dgvcell.Value = canvas;
 			}
 
+			//DGVの内容物に合わせてサイズを大きくする
 			dataGridView1.Size = new Size(dataGridView1.Size.Width, dataGridView1.ColumnHeadersHeight + CardDB.CardList.Count * dataGridView1.RowTemplate.Height);
 
 		}
@@ -181,6 +183,11 @@ namespace YuGiOhCollectionSupporter
         protected override Point ScrollToControl(Control activeControl)
         {
 			return AutoScrollPosition;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+			Init(CardDB,form);
         }
     }
 }

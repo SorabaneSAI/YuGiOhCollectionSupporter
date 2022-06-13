@@ -37,12 +37,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.パック名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label6 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.パック名 = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.所持 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -58,6 +59,7 @@
             this.linkLabel1.TabIndex = 0;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "linkLabel1";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label1
             // 
@@ -107,6 +109,7 @@
             this.textBox1.Margin = new System.Windows.Forms.Padding(10, 5, 3, 3);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(637, 60);
             this.textBox1.TabIndex = 5;
             // 
@@ -123,12 +126,12 @@
             // 
             // textBox2
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Right;
             this.textBox2.Location = new System.Drawing.Point(10, 268);
             this.textBox2.Margin = new System.Windows.Forms.Padding(10, 5, 3, 3);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(637, 60);
             this.textBox2.TabIndex = 7;
             // 
@@ -142,40 +145,20 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.略号,
             this.パック名,
-            this.レアリティ});
+            this.レアリティ,
+            this.所持});
             this.dataGridView1.Location = new System.Drawing.Point(10, 341);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(10, 10, 3, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
+            this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.dataGridView1.Size = new System.Drawing.Size(637, 97);
             this.dataGridView1.TabIndex = 8;
-            // 
-            // 略号
-            // 
-            this.略号.HeaderText = "略号";
-            this.略号.Name = "略号";
-            this.略号.ReadOnly = true;
-            this.略号.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.略号.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // パック名
-            // 
-            this.パック名.HeaderText = "パック名";
-            this.パック名.Name = "パック名";
-            this.パック名.ReadOnly = true;
-            this.パック名.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.パック名.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.パック名.Width = 300;
-            // 
-            // レアリティ
-            // 
-            this.レアリティ.HeaderText = "レアリティ";
-            this.レアリティ.Name = "レアリティ";
-            this.レアリティ.ReadOnly = true;
-            this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // label6
             // 
@@ -222,6 +205,35 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(658, 450);
             this.flowLayoutPanel1.TabIndex = 11;
             // 
+            // 略号
+            // 
+            this.略号.HeaderText = "略号";
+            this.略号.Name = "略号";
+            this.略号.ReadOnly = true;
+            this.略号.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.略号.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // パック名
+            // 
+            this.パック名.HeaderText = "パック名";
+            this.パック名.Name = "パック名";
+            this.パック名.ReadOnly = true;
+            this.パック名.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.パック名.Width = 300;
+            // 
+            // レアリティ
+            // 
+            this.レアリティ.HeaderText = "レアリティ";
+            this.レアリティ.Name = "レアリティ";
+            this.レアリティ.ReadOnly = true;
+            this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // 所持
+            // 
+            this.所持.HeaderText = "所持";
+            this.所持.Name = "所持";
+            this.所持.Width = 50;
+            // 
             // CardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -251,11 +263,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
-        private System.Windows.Forms.DataGridViewTextBoxColumn パック名;
-        private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
+        private System.Windows.Forms.DataGridViewLinkColumn パック名;
+        private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn 所持;
     }
 }

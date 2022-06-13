@@ -238,7 +238,7 @@ namespace YuGiOhCollectionSupporter
 
 			}
 
-			PackUI packUI = new PackUI(treenode, form);
+			CardListUI packUI = new CardListUI(treenode, form);
 			form.splitContainer1.Panel2.Controls.Add(packUI);
 
 		}

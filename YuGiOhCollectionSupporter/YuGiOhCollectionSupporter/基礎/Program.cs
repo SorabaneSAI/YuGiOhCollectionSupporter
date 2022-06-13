@@ -77,6 +77,22 @@ namespace YuGiOhCollectionSupporter
             }
 		}
 
+		public async static Task SaveAsync<T>(string path, T data)
+		{
+			try
+			{
+
+				await Task.Run(() => Save(path, data));
+			}
+			catch(Exception ex)
+            {
+				Log.Error("例外発生", ex);
+				MessageBox.Show(ex.Message, "謎のエラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				form1.logform.AddLog(ex.Message, LogLevel.エラー);
+			}
+
+		}
+
 		public static void Load<T>(string path,ref T data)
 		{
 			try
@@ -105,6 +121,14 @@ namespace YuGiOhCollectionSupporter
 		public static void SaveCardData()
         {
 			Save(form1.CardDB.SaveDataPath, form1.CardDB);
+		}
+
+		public async static Task SaveCardDataAsync()
+        {
+			form1.label1.Visible = true;
+			form1.UpdateLabel("カードデータセーブ中...");
+			await SaveAsync(form1.CardDB.SaveDataPath, form1.CardDB);
+			form1.label1.Visible = false;
 		}
 
 		public static void SavePackData()

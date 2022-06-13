@@ -1,6 +1,6 @@
 ﻿namespace YuGiOhCollectionSupporter
 {
-	partial class PackUI
+	partial class CardListUI
 	{
 		/// <summary> 
 		/// 必要なデザイナー変数です。
@@ -37,6 +37,8 @@
             this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
+            this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -74,16 +76,19 @@
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.button1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.collectDataUI1, 0, 4);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowCount = 6;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(685, 426);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(685, 692);
             this.tableLayoutPanel1.TabIndex = 9;
             // 
             // linkLabel1
@@ -107,7 +112,7 @@
             this.名前,
             this.略号,
             this.レアリティ});
-            this.dataGridView1.Location = new System.Drawing.Point(3, 90);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 356);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -158,7 +163,24 @@
             this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.レアリティ.Width = 70;
             // 
-            // PackUI
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(3, 90);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "リスト更新";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // collectDataUI1
+            // 
+            this.collectDataUI1.Location = new System.Drawing.Point(3, 119);
+            this.collectDataUI1.Name = "collectDataUI1";
+            this.collectDataUI1.Size = new System.Drawing.Size(679, 231);
+            this.collectDataUI1.TabIndex = 11;
+            // 
+            // CardListUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -166,8 +188,8 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "PackUI";
-            this.Size = new System.Drawing.Size(691, 432);
+            this.Name = "CardListUI";
+            this.Size = new System.Drawing.Size(691, 698);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -186,5 +208,7 @@
         private System.Windows.Forms.DataGridViewLinkColumn 名前;
         private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
         private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
+        private System.Windows.Forms.Button button1;
+        private CollectDataUI collectDataUI1;
     }
 }
