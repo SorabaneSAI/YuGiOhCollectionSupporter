@@ -94,7 +94,7 @@ namespace YuGiOhCollectionSupporter
 			return (null,null);
         }
 
-
+		public CardData() { }
 
 		public CardData(int id,string URL, string 名前, string 読み, string 英語名, Dictionary<string, string> valuepairs,string ペンデュラム効果, string テキスト,string 種族,List<CardVariation> listvariations)
         {
@@ -111,6 +111,13 @@ namespace YuGiOhCollectionSupporter
 			誕生日 = getEarlyDate();
 		}
 
+		//単一variationのカード作成
+		public CardData(CardData card,CardVariation variation) :this(card.ID, card.URL,card.名前 ,card.読み, card.英語名, card.ValuePairs, card.ペンデュラム効果, card.テキスト, card.種族,null)
+        {
+			ListVariations = new List<CardVariation>();
+			ListVariations.Add(variation);
+		}
+
         internal int AddNewData(CardData newdata)
         {
 			int updatenum = 1;	//かけ算するのであったときが０ないときが１　最後に反転する
@@ -124,7 +131,7 @@ namespace YuGiOhCollectionSupporter
 			warnnum *= ConflictMsg("ステータス", ValuePairs, newdata.ValuePairs);
 			チェックいらなくね？
 			*/
-
+			/*新しいものは無条件更新
 			//テキストは普通に変わることあるし
 			if(!ペンデュラム効果.Equals(newdata.ペンデュラム効果))
             {
@@ -138,15 +145,17 @@ namespace YuGiOhCollectionSupporter
 				テキスト = newdata.テキスト;
 				updatenum = 0;
 			}
-
+			*/
             //パックを比較
             foreach (var newval in newdata.ListVariations)
             {
-                foreach (var oldval in ListVariations)
+                for(int i=0; i<ListVariations.Count; i++)
                 {
+					var oldval = ListVariations[i];
 					if (oldval.発売パック.URL.Equals(newval.発売パック.URL))
 					{
-						updatenum *= oldval.AddVariationData(名前,newval);
+						updatenum *= oldval.AddVariationData(名前,newval);    //ここで所持フラグをコピー
+						oldval = newval;										//データを新しいものに
 						goto next;
 					}
                 }
@@ -238,10 +247,13 @@ namespace YuGiOhCollectionSupporter
 
 				foreach (var newrarity in newvariation.ListRarity)
 				{
-					foreach (var oldrarity in ListRarity)
+					for(int i=0; i< ListRarity.Count; i++) 
 					{
+						var oldrarity = ListRarity[i];
 						if (oldrarity.Name.Equals(newrarity.Name))
 						{
+							newrarity.所持フラグ = oldrarity.所持フラグ;	//所持フラグ引き継ぎ
+							oldrarity = newrarity;			//データを新しいものに
 							goto next;
 						}
 					}
@@ -261,6 +273,7 @@ namespace YuGiOhCollectionSupporter
         {
 			DateTimeOffset date = DateTimeOffset.Now;
 
+			if (ListVariations == null) return date;
 			foreach (var vari in ListVariations)
             {
 				if(vari.発売パック.BirthDay.CompareTo(date)<0)

@@ -33,12 +33,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
+            this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
             this.type = new System.Windows.Forms.DataGridViewImageColumn();
             this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
-            this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
+            this.クイック = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -111,11 +112,11 @@
             this.type,
             this.名前,
             this.略号,
-            this.レアリティ});
+            this.レアリティ,
+            this.クイック});
             this.dataGridView1.Location = new System.Drawing.Point(3, 356);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -124,7 +125,26 @@
             this.dataGridView1.Size = new System.Drawing.Size(679, 333);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(3, 90);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "リスト更新";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // collectDataUI1
+            // 
+            this.collectDataUI1.Location = new System.Drawing.Point(3, 119);
+            this.collectDataUI1.Name = "collectDataUI1";
+            this.collectDataUI1.Size = new System.Drawing.Size(679, 231);
+            this.collectDataUI1.TabIndex = 11;
             // 
             // type
             // 
@@ -151,7 +171,7 @@
             this.略号.Name = "略号";
             this.略号.ReadOnly = true;
             this.略号.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.略号.Width = 70;
+            this.略号.Width = 120;
             // 
             // レアリティ
             // 
@@ -163,22 +183,12 @@
             this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.レアリティ.Width = 70;
             // 
-            // button1
+            // クイック
             // 
-            this.button1.Location = new System.Drawing.Point(3, 90);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "リスト更新";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // collectDataUI1
-            // 
-            this.collectDataUI1.Location = new System.Drawing.Point(3, 119);
-            this.collectDataUI1.Name = "collectDataUI1";
-            this.collectDataUI1.Size = new System.Drawing.Size(679, 231);
-            this.collectDataUI1.TabIndex = 11;
+            this.クイック.HeaderText = "クイック";
+            this.クイック.Name = "クイック";
+            this.クイック.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.クイック.Width = 50;
             // 
             // CardListUI
             // 
@@ -204,11 +214,12 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.Button button1;
+        private CollectDataUI collectDataUI1;
         private System.Windows.Forms.DataGridViewImageColumn type;
         private System.Windows.Forms.DataGridViewLinkColumn 名前;
         private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
         private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
-        private System.Windows.Forms.Button button1;
-        private CollectDataUI collectDataUI1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn クイック;
     }
 }

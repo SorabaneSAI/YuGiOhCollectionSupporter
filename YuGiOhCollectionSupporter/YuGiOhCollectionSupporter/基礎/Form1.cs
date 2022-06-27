@@ -95,13 +95,15 @@ namespace YuGiOhCollectionSupporter
 			パック順ToolStripMenuItem.CheckState = CheckState.Unchecked;
 			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 
-			formPanel.SetFormPanelLeft(CardDB, this);
+			formPanel.SetFormPanelLeft( this);
 		}
 
 		private void パック順ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			あいうえお順ToolStripMenuItem.CheckState = CheckState.Unchecked;
 			パック順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
+
+			formPanel.SetFormPanelLeft(this);
 		}
 
 
@@ -143,13 +145,13 @@ namespace YuGiOhCollectionSupporter
 					var newdatalist = await GetAllPacks.getAllPackDatasAsync(config.URL, this);
 					if (newdatalist == null) break;
 
-					//新しいデータのみ追加
-					int newnum = PackDB.AddPackDataList(newdatalist);
+					//新しいデータを追加し、古いデータは上書きする
+					(int newnum, int updatenum) = PackDB.AddPackDataList(newdatalist);
 
 
 					Program.SavePackData();
 
-					ans += "パックの情報の取得が完了しました。\n全パック種類:" + PackDB.PackDataList.Count + $"\nうち{newnum}件が新しいデータとして登録されました。\n";
+					ans += "パックの情報の取得が完了しました。\n全パック種類:" + PackDB.PackDataList.Count + $"\nうち{newnum}件が新しいデータとして登録され、{updatenum}件が更新されました。\n";
 				}
 
 				if (IsCardSearch)
@@ -158,6 +160,7 @@ namespace YuGiOhCollectionSupporter
 
 					if (newcardDB == null) break;
 
+					//新しいデータを追加し、古いデータは上書きする
 					(int newnum, int updatenum) tmp = CardDB.AddCardDataList(newcardDB.CardList);
 
 					Program.SaveCardData();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace YuGiOhCollectionSupporter
 {
-	public class Code
+	public class Code : IComparer<int>
 	{
 		public bool Have略号 = true;
 		public string 略号文字 = "";
@@ -56,6 +56,14 @@ namespace YuGiOhCollectionSupporter
 				Have略号 = false;
 
 			}
+		}
+
+		public int Compare(int x, int y)
+        {
+			if (x < y) return -1;
+			if (x > y) return 1;
+
+			return 0;
 		}
 	}
 }

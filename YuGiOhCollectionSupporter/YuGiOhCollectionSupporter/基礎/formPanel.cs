@@ -22,7 +22,7 @@ namespace YuGiOhCollectionSupporter
 		//パネルにいろいろ設置する
 
 
-		public async static void SetFormPanelLeft(CardDataBase CardDB, Form1 form)
+		public async static void SetFormPanelLeft(Form1 form)
 		{
 			Program.WriteLog("ツリーノード作成中",LogLevel.必須項目);
 			form.InvalidMenuItem();
@@ -37,9 +37,9 @@ namespace YuGiOhCollectionSupporter
 			//チェック次第でソートする
 			if (form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
             {
-				CardDB.SortAIUEO();
+				form.CardDB.SortAIUEO();
 
-				await RecursiveAddTreeNodeAIUEO(tmptreeview.Nodes, CardDB, 0);
+				await RecursiveAddTreeNodeAIUEO(tmptreeview.Nodes, form.CardDB, 0,"");
 				/*
 				//別スレッドで動かすためにTask.Run
 				var task = Task.Run(() => RecursiveAddTreeNode(tmptreeview.Nodes, CardDB.CardDB, 0));
@@ -55,17 +55,54 @@ namespace YuGiOhCollectionSupporter
 				});
 				*/
 
+				//面倒だけどTreeNodeCollectionのせいでこうするしかない！
+				foreach (TreeNode node in tmptreeview.Nodes)
+				{
+					treeview.Nodes.Add((TreeNode)node.Clone()); //クローンしないとなぜか表示されない
+				}
 			}
 			else if(form.パック順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
             {
+				//typenameの種類を全部取得
+				List<string> typenameList = new List<string>();
 
-            }
+                foreach (var pack in form.PackDB.PackDataList)
+                {
+                    foreach (var typename in typenameList)
+                    {
+						if(pack.TypeName == typename)
+                        {
+							goto nextloop;
+						}
+					}
+					typenameList.Add(pack.TypeName);
+					
+				nextloop:;
+                }
 
-			//面倒だけどTreeNodeCollectionのせいでこうするしかない！
-			foreach (TreeNode node in tmptreeview.Nodes)
-            {
-				treeview.Nodes.Add((TreeNode)node.Clone());	//クローンしないとなぜか表示されない
+                //typenameのツリーを作成
+                foreach (var typename in typenameList)
+                {
+					treeview.Nodes.Add(typename);
+				}
+				treeview.Nodes.Add("非表示");
+
+				//そのツリーにパック名をくっつける
+				foreach (var pack in form.PackDB.PackDataList)
+                {
+					foreach (TreeNode node in treeview.Nodes)
+					{
+						if (node.Text == pack.TypeName)
+                        {
+							var n = node.Nodes.Add(pack.Name);
+							n.Tag = pack;
+							n.Text += $"({pack.CardCount})";
+							break;
+                        }
+                    }
+                }
 			}
+
 
 
 			Program.WriteLog("ツリーノード作成終了", LogLevel.必須項目);
@@ -74,27 +111,23 @@ namespace YuGiOhCollectionSupporter
 		}
 
 		//Depthは読み取る文字数であり再帰回数 
-		public async static Task RecursiveAddTreeNodeAIUEO(TreeNodeCollection treenodes, CardDataBase carddb, int Depth)
+		public async static Task RecursiveAddTreeNodeAIUEO(TreeNodeCollection treenodes, CardDataBase carddb, int Depth,string ParentName)
         {
 			//あ～んなどまでの全部のNodeをここにも保存
 			List<TreeNode> AIUEONodeList = new List<TreeNode>();
 
-			//親のノードの名前を持ってくる
-			string ParentName = "";
-			if(treenodes.Count >0)
-				ParentName = treenodes[0].Text;
 
 			//あ行～その他までのnodeを追加
 			foreach (var gyou in かな.行リスト)
 			{
-				var GyouNode = treenodes.Add($"{ParentName}[{gyou.名前}]");
+				var GyouNode = treenodes.Add($"{ParentName} 【{gyou.名前}】");
 				GyouNode.Tag = new TreeNodeAIUEOTag(gyou);
 
 				//各行のひらがなをノードとして行ノードに追加
                 for (int i = 0; i < Program.getTextLength(gyou.文字); i++)
                 {
 					string one_text = Program.getTextElement(gyou.文字,i);
-					var KanaNode = GyouNode.Nodes.Add(one_text);
+					var KanaNode = GyouNode.Nodes.Add(ParentName + one_text);
 					KanaNode.Tag = new TreeNodeAIUEOTag(new 行(ParentName + one_text, one_text));  //１文字だけの行扱いだけど特に意味はない
 					AIUEONodeList.Add(KanaNode);
 				}
@@ -128,7 +161,7 @@ namespace YuGiOhCollectionSupporter
 
                 foreach (var node in AIUEONodeList)
                 {
-					if(node.Text.Equals(one_txt))
+					if(((TreeNodeAIUEOTag)(node.Tag)).Gyou.文字.Equals(one_txt))
                     {
 						//行ノードとその下のかなノード両方登録
 						((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Add(card);
@@ -175,13 +208,13 @@ namespace YuGiOhCollectionSupporter
 			{
 				var treenodetag = (TreeNodeAIUEOTag)node.Tag;
 				int num = treenodetag.CardDB.CardList.Count;
-				node.Text += $"({num})";
+				node.Text += $" ({num})";
 
                 foreach (TreeNode childnode in node.Nodes)
                 {
 					var childnodetag = (TreeNodeAIUEOTag)childnode.Tag;
 					int childnum = childnodetag.CardDB.CardList.Count;
-					childnode.Text += $"({childnum})";
+					childnode.Text += $" ({childnum})";
 				}
 			}
 
@@ -196,7 +229,7 @@ namespace YuGiOhCollectionSupporter
 					var treenodetag = (TreeNodeAIUEOTag)childnode.Tag;
 					if (treenodetag.Gyou.名前 != "非表示" && treenodetag.CardDB.CardList.Count > 50)    //50しかなかったらツリーを作成しない
 					{
-						await RecursiveAddTreeNodeAIUEO(childnode.Nodes, treenodetag.CardDB, Depth + 1);
+						await RecursiveAddTreeNodeAIUEO(childnode.Nodes, treenodetag.CardDB, Depth + 1, ((TreeNodeAIUEOTag)childnode.Tag).Gyou.名前);
 
 						//１つしか子を持っていない場合、自分を削除して親は孫を子にする
 						NodeUp(childnode,node.Nodes);                
@@ -227,18 +260,41 @@ namespace YuGiOhCollectionSupporter
 		//右側は左側で何をクリックしたかで変わる
 		public static void SetFormPanelRight(TreeNode treenode, Form1 form)
 		{
+			if (treenode.Tag == null) return;
 			form.splitContainer1.Panel2.Controls.Clear();
+
+			CardDataBase cardDB;
+			PackData pack;
 
 			if (form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
 			{
-
+				cardDB = ((TreeNodeAIUEOTag)treenode.Tag).CardDB;
+				pack = null;
 			}
-			else if (form.パック順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			else 
 			{
+				pack = (PackData)treenode.Tag;
+
+				cardDB = new CardDataBase();
+
+				//全カードからそのパックにあるカードを探す
+                foreach (var card in form.CardDB.CardList)
+                {
+                    foreach (var variation in card.ListVariations)
+                    {
+						if(variation.発売パック.Name == pack.Name)
+                        {
+							cardDB.CardList.Add(card);
+							break;
+						}
+                    }
+                }
+
+				//順番はめちゃくちゃになってるので略号順にソート
 
 			}
 
-			CardListUI packUI = new CardListUI(treenode, form);
+			CardListUI packUI = new CardListUI(cardDB,pack, form) ;
 			form.splitContainer1.Panel2.Controls.Add(packUI);
 
 		}

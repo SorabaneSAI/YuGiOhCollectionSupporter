@@ -82,7 +82,7 @@ namespace YuGiOhCollectionSupporter
                     var speciesnode = node.QuerySelector("p[class='species']");
                     if (speciesnode != null)
                     {
-                        種族 = speciesnode.TextContent;
+                        種族 = speciesnode.TextContent.Replace("\t","").Replace("\n","");
                         continue;
                     }
                     //その他の欄のとき
@@ -93,7 +93,8 @@ namespace YuGiOhCollectionSupporter
                 }
 
                 //ペンデュラムテキスト
-                var pendulumnode = CardTextSetNode.QuerySelector("div[class='CardText pen']>div[class='item_box_text']");
+                var pendulumnode1 = CardTextSetNode.QuerySelector("div[class='CardText pen']");
+                var pendulumnode2 = pendulumnode1.QuerySelector("div[class='item_box_text']");
 
                 //カードテキスト
                 var cardtextnode = CardTextSetNode.QuerySelector("div[class='CardText']>div[class='item_box_text']");
@@ -153,7 +154,7 @@ namespace YuGiOhCollectionSupporter
                 読み = Kanaxs.Kana.ToKatakana(読み);    //ひらがなはカタカナにする
                 読み = RemoveSymbol(読み);  //読みに紛れ込む記号などを排除
 
-                CardData carddata = new CardData(i, url, 名前, 読み, 英語, dic, Program.getTextContent(pendulumnode), cardtext, 種族, listvaridations);
+                CardData carddata = new CardData(i, url, 名前, 読み, 英語, dic, Program.getTextContent(pendulumnode2), cardtext, 種族, listvaridations);
 
                 Program.WriteLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 + " : " + config.URL2 + i, LogLevel.情報);
                 Program.WriteLog(Program.ToJson(carddata.ValuePairs, Newtonsoft.Json.Formatting.None) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
@@ -172,7 +173,7 @@ namespace YuGiOhCollectionSupporter
 
         public static string RemoveSymbol(string name)
         {
-            string removesymbol = "「」『』・ 　";
+            string removesymbol = "「」『』・ 　－";
 
             for (int i = 0; i < Program.getTextLength(removesymbol); i++)
             {

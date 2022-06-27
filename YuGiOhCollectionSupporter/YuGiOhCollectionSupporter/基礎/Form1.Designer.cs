@@ -33,7 +33,7 @@
             this.データ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.パックデータ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.カードデータ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.両方取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.パックカード両方取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ログToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.並び順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.あいうえお順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +76,7 @@
             this.データ取得ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.パックデータ取得ToolStripMenuItem,
             this.カードデータ取得ToolStripMenuItem,
-            this.両方取得ToolStripMenuItem});
+            this.パックカード両方取得ToolStripMenuItem});
             this.データ取得ToolStripMenuItem.Name = "データ取得ToolStripMenuItem";
             this.データ取得ToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.データ取得ToolStripMenuItem.Text = "データ取得";
@@ -84,23 +84,23 @@
             // パックデータ取得ToolStripMenuItem
             // 
             this.パックデータ取得ToolStripMenuItem.Name = "パックデータ取得ToolStripMenuItem";
-            this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.パックデータ取得ToolStripMenuItem.Text = "パックデータ取得";
             this.パックデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
             // 
             // カードデータ取得ToolStripMenuItem
             // 
             this.カードデータ取得ToolStripMenuItem.Name = "カードデータ取得ToolStripMenuItem";
-            this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.カードデータ取得ToolStripMenuItem.Text = "カードデータ取得";
             this.カードデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
             // 
-            // 両方取得ToolStripMenuItem
+            // パックカード両方取得ToolStripMenuItem
             // 
-            this.両方取得ToolStripMenuItem.Name = "両方取得ToolStripMenuItem";
-            this.両方取得ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.両方取得ToolStripMenuItem.Text = "両方取得";
-            this.両方取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
+            this.パックカード両方取得ToolStripMenuItem.Name = "パックカード両方取得ToolStripMenuItem";
+            this.パックカード両方取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.パックカード両方取得ToolStripMenuItem.Text = "両方取得";
+            this.パックカード両方取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
             // 
             // ログToolStripMenuItem
             // 
@@ -121,14 +121,14 @@
             // あいうえお順ToolStripMenuItem
             // 
             this.あいうえお順ToolStripMenuItem.Name = "あいうえお順ToolStripMenuItem";
-            this.あいうえお順ToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.あいうえお順ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.あいうえお順ToolStripMenuItem.Text = "あいうえお順";
             this.あいうえお順ToolStripMenuItem.Click += new System.EventHandler(this.あいうえお順ToolStripMenuItem_Click);
             // 
             // パック順ToolStripMenuItem
             // 
             this.パック順ToolStripMenuItem.Name = "パック順ToolStripMenuItem";
-            this.パック順ToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.パック順ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.パック順ToolStripMenuItem.Text = "パック順";
             this.パック順ToolStripMenuItem.Click += new System.EventHandler(this.パック順ToolStripMenuItem_Click);
             // 
@@ -171,9 +171,6 @@
             // 
             this.splitContainer1.Panel1.AutoScroll = true;
             this.splitContainer1.Panel1.Controls.Add(this.treeView1);
-            // 
-            // splitContainer1.Panel2
-            // 
             this.splitContainer1.Size = new System.Drawing.Size(1113, 635);
             this.splitContainer1.SplitterDistance = 300;
             this.splitContainer1.TabIndex = 3;
@@ -225,7 +222,7 @@
         public System.Windows.Forms.ToolStripMenuItem パック順ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem パックデータ取得ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem カードデータ取得ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 両方取得ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem パックカード両方取得ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ホームToolStripMenuItem;
     }
 }

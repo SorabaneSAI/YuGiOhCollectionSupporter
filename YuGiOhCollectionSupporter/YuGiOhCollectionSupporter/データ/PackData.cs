@@ -16,6 +16,7 @@ namespace YuGiOhCollectionSupporter
 
         public int CardCount;   //取得したカード枚数
 
+        public bool 表示フラグ = true;
 
         public PackData(string url, string name, string type, string series, DateTimeOffset birthDay, int cardCount)
         {

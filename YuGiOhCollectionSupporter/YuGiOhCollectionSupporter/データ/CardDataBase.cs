@@ -11,6 +11,16 @@ namespace YuGiOhCollectionSupporter
 		public List<CardData> CardList = new List<CardData>();
 		public string SaveDataPath = "CardDataBase.json";
 
+        public CardData getCard(int ID)
+        {
+            foreach (var card in CardList)
+            {
+                if(card.ID == ID)
+                    return card;
+            }
+            return null;
+        }
+
 		public int getAllCardNum()
 		{
 			return CardList.Count;
@@ -78,11 +88,13 @@ namespace YuGiOhCollectionSupporter
             int updatenum = 0;
             foreach (var newdata in carddatalist)
             {
-                foreach (var olddata in CardList)
+                for(int i=0; i< CardList.Count; i++)
                 {
+                    var olddata = CardList[i];
                     if (newdata.URL == olddata.URL)
                     {
                         updatenum += olddata.AddNewData(newdata);
+                        olddata = newdata;                              //データを新しいものに更新
                         goto next;
                     }
                 }
