@@ -113,5 +113,24 @@ namespace YuGiOhCollectionSupporter
 			Program.WriteLog("あいうえお順にソート終了", LogLevel.必須項目);
 		}
 
-	}
+        //カードリストからそのパックに入っているカードを返す
+        public List<CardData> getPackCardList(PackData pack)
+        {
+            List<CardData> list = new List<CardData>();
+            foreach (var card in CardList)
+            {
+                foreach (var variation in card.ListVariations)
+                {
+                    if (variation.発売パック.URL == pack.URL)
+                    {
+                        list.Add(card);
+                        break;
+                    }
+                }
+            }
+
+            return list;
+        }
+
+    }
 }

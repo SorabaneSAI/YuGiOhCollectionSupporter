@@ -13,15 +13,17 @@ namespace YuGiOhCollectionSupporter
     public partial class CardForm : Form
     {
         CardData carddata;
-        public CardForm(CardData data)
+        Form1 form; //パックをクリックした時用
+        public CardForm(CardData data,Form1 form)
         {
             InitializeComponent();
-            Init(data);
+            Init(data,form);
         }
 
-        public void Init(CardData data)
+        public void Init(CardData data, Form1 form)
         {
             carddata = data;
+            this.form = form;
             linkLabel1.Text = data.名前;
             label1.Text = data.読み;
             label2.Text = data.英語名;
@@ -124,11 +126,37 @@ namespace YuGiOhCollectionSupporter
 
                 checkBox1.Enabled = false;
                 dataGridView1.Enabled = false;
-                Init(carddata);
+                Init(carddata,form);
                 await Program.SaveCardDataAsync();
                 checkBox1.Enabled = true;
                 dataGridView1.Enabled = true;
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            if (dgv.Columns[e.ColumnIndex].Name == "パック名")
+            {
+                string url = (string)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
+                var pack = form.PackDB.SearchPackData(url);
+                var cardDB = new CardDataBase();   
+
+                cardDB.CardList = form.CardDB.getPackCardList(pack);
+
+
+                CardListUI packUI = new CardListUI(cardDB, pack, form,false);
+ //               var data = (CardData)dgv.Rows[e.RowIndex].Tag;
+                var f = new Form();
+                f.Controls.Add(packUI);
+                f.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+                f.AutoScroll = true;
+                f.Size = new Size(700,700);
+                f.Text = "パック情報";
+ //               f.FormBorderStyle = FormBorderStyle.Sizable;
+                f.Show();
+            }
+
         }
     }
 }

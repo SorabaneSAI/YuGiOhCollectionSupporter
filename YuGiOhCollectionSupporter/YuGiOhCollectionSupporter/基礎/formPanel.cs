@@ -275,26 +275,13 @@ namespace YuGiOhCollectionSupporter
 			{
 				pack = (PackData)treenode.Tag;
 
-				cardDB = new CardDataBase();
+				cardDB = new CardDataBase();    //新しく作成してはいるが改造されていないCardDataBase
 
-				//全カードからそのパックにあるカードを探す
-                foreach (var card in form.CardDB.CardList)
-                {
-                    foreach (var variation in card.ListVariations)
-                    {
-						if(variation.発売パック.Name == pack.Name)
-                        {
-							cardDB.CardList.Add(card);
-							break;
-						}
-                    }
-                }
-
-				//順番はめちゃくちゃになってるので略号順にソート
+				cardDB.CardList = form.CardDB.getPackCardList(pack);
 
 			}
 
-			CardListUI packUI = new CardListUI(cardDB,pack, form) ;
+			CardListUI packUI = new CardListUI(cardDB,pack, form, form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate) ;
 			form.splitContainer1.Panel2.Controls.Add(packUI);
 
 		}

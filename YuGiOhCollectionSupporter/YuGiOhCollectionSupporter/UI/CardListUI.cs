@@ -16,20 +16,22 @@ namespace YuGiOhCollectionSupporter
 		PackData Pack;
 		CardDataBase PackCardDB = new CardDataBase();	//パック表示のとき変更される
 		Form1 form;
+		bool あいうえお順Flag;
 
-		public CardListUI(CardDataBase cardDB, PackData pack, Form1 form1)
+		public CardListUI(CardDataBase cardDB, PackData pack, Form1 form1,bool あいうえお順フラグ)
 		{
 			InitializeComponent();
 			Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
 			Dock = DockStyle.Fill;	//これやばいらしい？
-			Init(cardDB, pack,form1);
+			Init(cardDB, pack,form1,あいうえお順フラグ);
 		}
 
-		public void Init(CardDataBase cardDB, PackData pack, Form1 form1)
+		public void Init(CardDataBase cardDB, PackData pack, Form1 form1,bool あいうえお順フラグ)
 		{
 			form = form1;
 			CardDB = cardDB;
-			if (form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			あいうえお順Flag = あいうえお順フラグ;
+			if (あいうえお順フラグ)
 			{
 				Pack = null;
 				linkLabel1.Visible = false;
@@ -38,7 +40,7 @@ namespace YuGiOhCollectionSupporter
 
 				PackCardDB = cardDB;
 			}
-			else if (form.パック順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			else if (true)
 			{
 				Pack = pack;
 				linkLabel1.Text = Pack.Name;
@@ -60,6 +62,20 @@ namespace YuGiOhCollectionSupporter
 						}
 					}
                 }
+
+				//略号ソートのためにパックデータの完全なものが必要
+				foreach (var card in PackCardDB.CardList)
+				{
+					foreach (var variation in card.ListVariations)
+					{
+						variation.発売パック = form.PackDB.SearchPackData(variation.発売パック.URL);
+					}
+				}
+
+				//順番はめちゃくちゃになってるので略号順にソート
+				PackCardDB.CardList.Sort((a, b) => new CardData.CardVariation().Compare(a.ListVariations[0], b.ListVariations[0]));
+
+
 			}
 			collectDataUI1.Init(PackCardDB);    //埋め込むのに引数のないコンストラクタが必要なので初期化
 
@@ -74,16 +90,16 @@ namespace YuGiOhCollectionSupporter
 				string ryakugou = "";
 				string rarity = "";
 
-				if(card.getCardNumRarity() == 1)    //１枚しか存在しない場合はクイックチェックが可能に
-                {
-					ryakugou = card.ListVariations[0].略号.get略号Full();
+				//１つしか存在しない略号、レアリティは文字にする
+				if(card.getCardNumRarity() == 1)   
 					rarity = card.ListVariations[0].ListRarity[0].Initial;
-                }
 				else
-                {
-					ryakugou = $"{card.getCardNumCodeHave()} / {card.getCardNumCode()}";
 					rarity = $"{card.getCardNumRarityHave()} / {card.getCardNumRarity()}";
-				}
+				if(card.getCardNumCode()==1)
+					ryakugou = card.ListVariations[0].略号.get略号Full();
+				else
+					ryakugou = $"{card.getCardNumCodeHave()} / {card.getCardNumCode()}";
+
 
 				int num = dataGridView1.Rows.Add(card.IsCardNameHave(), card.名前, ryakugou, rarity, card.ListVariations[0].ListRarity[0].所持フラグ);
 				dataGridView1.Rows[num].Tag = CardDB.getCard(card.ID); //行のタグにカード情報を埋め込む  cardは変更されてる可能性があるのでCardDBから同じのを持ってくる
@@ -117,6 +133,7 @@ namespace YuGiOhCollectionSupporter
 					dataGridView1.Rows[num].Cells["クイック"] = new DataGridViewTextBoxCell();  //テキストボックスを消すためにタイプを変更
 					dataGridView1.Rows[num].Cells["クイック"].Value = "";
 					dataGridView1.Rows[num].Cells["クイック"].ReadOnly = true;
+					dataGridView1.Rows[num].Cells["クイック"].Style.BackColor = Color.FromArgb(171, 171, 173);
 				}
 			}
 
@@ -219,7 +236,7 @@ namespace YuGiOhCollectionSupporter
 				//				var f = new CardForm(form.CardDB.getCard(id));
 				//と思ったがやっぱ簡易所持チェックのことを考えると削らないほうが都合がいい
 				var data = (CardData)dgv.Rows[e.RowIndex].Tag;
-				var f = new CardForm(data);
+				var f = new CardForm(data,form);
 				f.Show();
             }
 		}
@@ -291,7 +308,7 @@ namespace YuGiOhCollectionSupporter
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-			Init(CardDB, Pack,form);
+			Init(CardDB, Pack,form,あいうえお順Flag);
         }
 
         private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
@@ -315,11 +332,16 @@ namespace YuGiOhCollectionSupporter
 				rarity.所持フラグ = (bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value;
 
 				dataGridView1.Enabled = false;
-				Init(CardDB, Pack, form);
+				Init(CardDB, Pack, form,あいうえお順Flag);
 				await Program.SaveCardDataAsync();
 				dataGridView1.Enabled = true;
 			}
 
+		}
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+			System.Diagnostics.Process.Start(Pack.URL);
 		}
 	}
 }

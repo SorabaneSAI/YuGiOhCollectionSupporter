@@ -34,12 +34,12 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
-            this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
             this.type = new System.Windows.Forms.DataGridViewImageColumn();
             this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.クイック = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -102,6 +102,7 @@
             this.linkLabel1.TabIndex = 9;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "パック名";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // dataGridView1
             // 
@@ -139,13 +140,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
-            // collectDataUI1
-            // 
-            this.collectDataUI1.Location = new System.Drawing.Point(3, 119);
-            this.collectDataUI1.Name = "collectDataUI1";
-            this.collectDataUI1.Size = new System.Drawing.Size(679, 231);
-            this.collectDataUI1.TabIndex = 11;
-            // 
             // type
             // 
             this.type.HeaderText = "";
@@ -171,7 +165,6 @@
             this.略号.Name = "略号";
             this.略号.ReadOnly = true;
             this.略号.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.略号.Width = 120;
             // 
             // レアリティ
             // 
@@ -185,10 +178,17 @@
             // 
             // クイック
             // 
-            this.クイック.HeaderText = "クイック";
+            this.クイック.HeaderText = "クイック所持";
             this.クイック.Name = "クイック";
             this.クイック.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.クイック.Width = 50;
+            this.クイック.Width = 80;
+            // 
+            // collectDataUI1
+            // 
+            this.collectDataUI1.Location = new System.Drawing.Point(3, 119);
+            this.collectDataUI1.Name = "collectDataUI1";
+            this.collectDataUI1.Size = new System.Drawing.Size(679, 231);
+            this.collectDataUI1.TabIndex = 11;
             // 
             // CardListUI
             // 
