@@ -158,5 +158,12 @@ namespace YuGiOhCollectionSupporter
             }
 
         }
+
+        //なぜかセルをクリックするとDGVの先頭にスクロールしてしまうので現在のスクロールポジションを返して回避
+        protected override Point ScrollToControl(Control activeControl)
+        {
+            return AutoScrollPosition;
+        }
+
     }
 }
