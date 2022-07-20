@@ -16,23 +16,24 @@ namespace YuGiOhCollectionSupporter
         {
 			InitializeComponent();
 		}
-		public CollectDataUI(CardDataBase carddb)
+		public CollectDataUI(int カード名別持ってるカード, int カード名全カード, int 略号別持ってるカード, int 略号別全カード, int レアリティ別持ってるカード, int レアリティ別全カード)
 		{
 			InitializeComponent();
 //			BringToFront();
 //			Dock = DockStyle.Fill;
-			Init(carddb);
+			Init(カード名別持ってるカード, カード名全カード, 略号別持ってるカード, 略号別全カード, レアリティ別持ってるカード, レアリティ別全カード);
 		}
 
-		public void Init(CardDataBase carddb)
+		public void Init(int カード名別持ってるカード, int カード名全カード, int 略号別持ってるカード, int 略号別全カード, int レアリティ別持ってるカード, int レアリティ別全カード)
 		{
+			/*
 			int カード名別持ってるカード = carddb.getAllCardNumHave();
 			int カード名全カード = carddb.getAllCardNum();
-			int 略号別持ってるカード = carddb.getCardNumCodeHave();
-			int 略号別全カード = carddb.getCardNumCode();
-			int レアリティ別持ってるカード = carddb.getCardNumRarityHave();
-			int レアリティ別全カード = carddb.getCardNumRarity();
-
+			int 略号別持ってるカード = carddb.getCardHaveNumCode().Item1;
+			int 略号別全カード = carddb.getCardHaveNumCode().Item2;
+			int レアリティ別持ってるカード = carddb.getCardHaveNumRarity().Item1;
+			int レアリティ別全カード = carddb.getCardHaveNumRarity().Item2;
+			*/
 			/*
             foreach (var card in cardlist)
             {

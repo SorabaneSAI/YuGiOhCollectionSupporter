@@ -10,11 +10,13 @@ namespace YuGiOhCollectionSupporter
 {
     class GetAllCards
     {
-        public static async Task<CardDataBase> getAllCardsAsync(Config config, Form1 form, List<string> errorlist)
+        public static async Task<(CardDataBase,UserCardDataBase)> getAllCardsAsync(Config config, Form1 form, List<string> errorlist)
         {
             Program.WriteLog("カードデータ取得中", LogLevel.必須項目);
 
             CardDataBase carddatabase = new CardDataBase();
+            UserCardDataBase usercarddatabase = new UserCardDataBase();
+
             int NoCardCount = 0;
 
             for (int i = (int)config.CardID_MIN; i < config.CardID_MAX + 1; i++)
@@ -34,7 +36,7 @@ namespace YuGiOhCollectionSupporter
                     {
                         Program.WriteLog($"エラーが多すぎるので強制終了", LogLevel.エラー);
                         MessageBox.Show("エラーが多すぎたため、カード収集を終了します。（ログ参照）", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return null;
+                        return (null,null);
                     }
 
                     continue;
@@ -94,7 +96,7 @@ namespace YuGiOhCollectionSupporter
 
                 //ペンデュラムテキスト
                 var pendulumnode1 = CardTextSetNode.QuerySelector("div[class='CardText pen']");
-                var pendulumnode2 = pendulumnode1.QuerySelector("div[class='item_box_text']");
+                var pendulumnode2 = pendulumnode1?.QuerySelector("div[class='item_box_text']");
 
                 //カードテキスト
                 var cardtextnode = CardTextSetNode.QuerySelector("div[class='CardText']>div[class='item_box_text']");
@@ -103,7 +105,7 @@ namespace YuGiOhCollectionSupporter
 
                 //カード情報を取得したので、次は収録シリーズを取得
 
-                List<CardData.CardVariation> listvaridations = new List<CardData.CardVariation>();
+                List<CardVariation> listvaridations = new List<CardVariation>();
 
                 var SeriesNode = html.QuerySelector("div[id='update_list']");
                 var SeriesNodes = SeriesNode.QuerySelectorAll("div[class='t_row']");
@@ -126,35 +128,21 @@ namespace YuGiOhCollectionSupporter
                     PackData packdata = new PackData(URL, パック名, "", "", Program.ConvertDate(誕生日, "yyyy-MM-dd"), 0);
 
 
-                    CardData.Rarity rarity = new CardData.Rarity(レア記号, レアリティ);
+                    Rarity rarity = new Rarity(レア記号, レアリティ);
 
-                    //リストと比較して同じならレアリティ違いに統合
-                    foreach (var vari in listvaridations)
-                    {
-                        if (packdata.Name == vari.発売パック.Name)
-                        {
-                            vari.ListRarity.Add(rarity);
-                            goto nextloop;
-                        }
-                    }
 
-                    //なかったら追加
-                    List<CardData.Rarity> listrarity = new List<CardData.Rarity>();
-                    listrarity.Add(rarity);
-
-                    CardData.CardVariation variation = new CardData.CardVariation(packdata, 略号, listrarity);
+                    CardVariation variation = new CardVariation(packdata, 略号, rarity);
                     listvaridations.Add(variation);
 
-                nextloop:;
                 }
 
-                //varidationのpackdataが、既に存在するpackdataListと矛盾していないかチェック・・・する必要ある？するならここ
 
                 
                 読み = Kanaxs.Kana.ToKatakana(読み);    //ひらがなはカタカナにする
                 読み = RemoveSymbol(読み);  //読みに紛れ込む記号などを排除
 
                 CardData carddata = new CardData(i, url, 名前, 読み, 英語, dic, Program.getTextContent(pendulumnode2), cardtext, 種族, listvaridations);
+                UserCardData usercarddata = new UserCardData(carddata);
 
                 Program.WriteLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 + " : " + config.URL2 + i, LogLevel.情報);
                 Program.WriteLog(Program.ToJson(carddata.ValuePairs, Newtonsoft.Json.Formatting.None) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
@@ -162,12 +150,13 @@ namespace YuGiOhCollectionSupporter
                 form.UpdateLabel((i - config.CardID_MIN) + "/" + (config.CardID_MAX + 1 - config.CardID_MIN) + ":" + carddata.名前);
 
                 carddatabase.CardList.Add(carddata);
+                usercarddatabase.UserCardDataList.Add(usercarddata);
                 NoCardCount = 0;
             }
             Program.WriteLog("カードデータ取得終了", LogLevel.必須項目);
 
 
-            return carddatabase;
+            return (carddatabase, usercarddatabase);
 
         }
 

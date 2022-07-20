@@ -39,7 +39,7 @@ namespace YuGiOhCollectionSupporter
             {
 				form.CardDB.SortAIUEO();
 
-				await RecursiveAddTreeNodeAIUEO(tmptreeview.Nodes, form.CardDB, 0,"");
+				await RecursiveAddTreeNodeAIUEO(tmptreeview.Nodes, form.CardDB, 0,"",form);
 				/*
 				//別スレッドで動かすためにTask.Run
 				var task = Task.Run(() => RecursiveAddTreeNode(tmptreeview.Nodes, CardDB.CardDB, 0));
@@ -111,7 +111,7 @@ namespace YuGiOhCollectionSupporter
 		}
 
 		//Depthは読み取る文字数であり再帰回数 
-		public async static Task RecursiveAddTreeNodeAIUEO(TreeNodeCollection treenodes, CardDataBase carddb, int Depth,string ParentName)
+		public async static Task RecursiveAddTreeNodeAIUEO(TreeNodeCollection treenodes, CardDataBase carddb, int Depth,string ParentName, Form1 form)
         {
 			//あ～んなどまでの全部のNodeをここにも保存
 			List<TreeNode> AIUEONodeList = new List<TreeNode>();
@@ -140,7 +140,8 @@ namespace YuGiOhCollectionSupporter
 
 				foreach (var card in carddb.CardList)
                 {
-					if (card.表示フラグ == false)
+					var twincarddata = form.getTwinCardData(card);
+					if (twincarddata.get表示フラグ() == false)
                     {
 						((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Add(card);
 					}
@@ -152,7 +153,8 @@ namespace YuGiOhCollectionSupporter
 			//カードをツリーに登録する
 			foreach (var card in carddb.CardList)
 			{
-				if (card.表示フラグ == false) continue;
+				var twincarddata = form.getTwinCardData(card);
+				if (twincarddata.get表示フラグ() == false) continue;
 				//文字数をオーバーしたらスキップ
 				if (Program.getTextLength(card.読み) <= Depth)
 					continue;
@@ -229,7 +231,7 @@ namespace YuGiOhCollectionSupporter
 					var treenodetag = (TreeNodeAIUEOTag)childnode.Tag;
 					if (treenodetag.Gyou.名前 != "非表示" && treenodetag.CardDB.CardList.Count > 50)    //50しかなかったらツリーを作成しない
 					{
-						await RecursiveAddTreeNodeAIUEO(childnode.Nodes, treenodetag.CardDB, Depth + 1, ((TreeNodeAIUEOTag)childnode.Tag).Gyou.名前);
+						await RecursiveAddTreeNodeAIUEO(childnode.Nodes, treenodetag.CardDB, Depth + 1, ((TreeNodeAIUEOTag)childnode.Tag).Gyou.名前,form);
 
 						//１つしか子を持っていない場合、自分を削除して親は孫を子にする
 						NodeUp(childnode,node.Nodes);                
@@ -290,7 +292,9 @@ namespace YuGiOhCollectionSupporter
         {
 			form.splitContainer1.Panel2.Controls.Clear();
 			//ホーム画面
-			CollectDataUI homeUI = new CollectDataUI(form.CardDB);
+			
+			CollectDataUI homeUI = new CollectDataUI(form.getAllCardNumHave(form.CardDB), form.CardDB.getAllCardNum(),form.getCardHaveNumCode(form.CardDB).Item1, 
+				form.getCardHaveNumCode(form.CardDB).Item2, form.getCardHaveNumRarity(form.CardDB).Item1, form.getCardHaveNumRarity(form.CardDB).Item2);
 			form.splitContainer1.Panel2.Controls.Add(homeUI);
 		}
 	}

@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Text;
 using System.Globalization;
+using Newtonsoft.Json.Serialization;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -67,22 +68,27 @@ namespace YuGiOhCollectionSupporter
 			return null;
 		}
 
-		public static void Save<T>(string path, T data)
+		public static void Save<T>(string path, T data, DefaultContractResolver cr = null)
 		{
 			//jsonにシリアライズ
-			string json = JsonConvert.SerializeObject(data,Formatting.Indented);
-			using(StreamWriter sw = new StreamWriter(path,false, Encoding.UTF8))
+			string json = "";
+			if(cr == null)
+				json = JsonConvert.SerializeObject(data,Formatting.Indented);
+			else
+				json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings { ContractResolver = cr });
+
+			using (StreamWriter sw = new StreamWriter(path,false, Encoding.UTF8))
             {
 				sw.WriteLine(json);
             }
 		}
 
-		public async static Task SaveAsync<T>(string path, T data)
+		public async static Task SaveAsync<T>(string path, T data, DefaultContractResolver cr = null)
 		{
 			try
 			{
 
-				await Task.Run(() => Save(path, data));
+				await Task.Run(() => Save(path, data,cr));
 			}
 			catch(Exception ex)
             {
@@ -117,17 +123,28 @@ namespace YuGiOhCollectionSupporter
 				Application.Exit();
 			}
 		}
-
+		/*
 		public static void SaveCardData()
         {
 			Save(form1.CardDB.SaveDataPath, form1.CardDB);
 		}
-
+		*/
 		public async static Task SaveCardDataAsync()
         {
 			form1.label1.Visible = true;
 			form1.UpdateLabel("カードデータセーブ中...");
-			await SaveAsync(form1.CardDB.SaveDataPath, form1.CardDB);
+			await SaveAsync(form1.CardDB.SaveDataPath, form1.CardDB, null/*new CardDataContractResolver(UserDataFlag)*/);
+
+			form1.label1.Visible = false;
+		}
+
+		public async static Task SaveUserDataAsync()
+        {
+			form1.label1.Visible = true;
+			form1.UpdateLabel("ユーザーデータセーブ中...");
+
+			await SaveAsync(form1.UserCardDB.SaveUserDataPath, form1.UserCardDB, null/*new CardDataContractResolver(UserDataFlag)*/);
+
 			form1.label1.Visible = false;
 		}
 
@@ -205,4 +222,5 @@ namespace YuGiOhCollectionSupporter
 		}
 
 	}
+
 }

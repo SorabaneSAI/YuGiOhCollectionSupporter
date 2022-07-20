@@ -85,7 +85,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("MS UI Gothic", 15F);
-            this.label3.Location = new System.Drawing.Point(10, 91);
+            this.label3.Location = new System.Drawing.Point(10, 121);
             this.label3.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(0, 20);
@@ -95,7 +95,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-            this.label4.Location = new System.Drawing.Point(10, 156);
+            this.label4.Location = new System.Drawing.Point(10, 178);
             this.label4.Margin = new System.Windows.Forms.Padding(10, 15, 3, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(84, 12);
@@ -105,7 +105,7 @@
             // textBox1
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.textBox1.Location = new System.Drawing.Point(10, 173);
+            this.textBox1.Location = new System.Drawing.Point(10, 195);
             this.textBox1.Margin = new System.Windows.Forms.Padding(10, 5, 3, 3);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
@@ -117,7 +117,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-            this.label5.Location = new System.Drawing.Point(10, 251);
+            this.label5.Location = new System.Drawing.Point(10, 273);
             this.label5.Margin = new System.Windows.Forms.Padding(10, 15, 3, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(69, 12);
@@ -127,7 +127,7 @@
             // textBox2
             // 
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.textBox2.Location = new System.Drawing.Point(10, 268);
+            this.textBox2.Location = new System.Drawing.Point(10, 290);
             this.textBox2.Margin = new System.Windows.Forms.Padding(10, 5, 3, 3);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
@@ -147,7 +147,7 @@
             this.パック名,
             this.レアリティ,
             this.所持});
-            this.dataGridView1.Location = new System.Drawing.Point(10, 341);
+            this.dataGridView1.Location = new System.Drawing.Point(10, 363);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(10, 10, 3, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
@@ -193,7 +193,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("MS UI Gothic", 15F);
-            this.label6.Location = new System.Drawing.Point(10, 121);
+            this.label6.Location = new System.Drawing.Point(10, 91);
             this.label6.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 20);
@@ -206,7 +206,7 @@
             this.checkBox1.AutoSize = true;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(1069, 48);
+            this.checkBox1.Location = new System.Drawing.Point(492, 144);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(155, 16);
             this.checkBox1.TabIndex = 10;
@@ -216,13 +216,15 @@
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel1.Controls.Add(this.linkLabel1);
             this.flowLayoutPanel1.Controls.Add(this.label1);
             this.flowLayoutPanel1.Controls.Add(this.label2);
-            this.flowLayoutPanel1.Controls.Add(this.label3);
             this.flowLayoutPanel1.Controls.Add(this.label6);
+            this.flowLayoutPanel1.Controls.Add(this.label3);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox1);
             this.flowLayoutPanel1.Controls.Add(this.label4);
             this.flowLayoutPanel1.Controls.Add(this.textBox1);
             this.flowLayoutPanel1.Controls.Add(this.label5);
@@ -232,7 +234,7 @@
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(698, 454);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(681, 486);
             this.flowLayoutPanel1.TabIndex = 11;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -242,11 +244,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(698, 454);
-            this.Controls.Add(this.checkBox1);
+            this.ClientSize = new System.Drawing.Size(681, 486);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.MaximumSize = new System.Drawing.Size(1000, 600);
-            this.MinimumSize = new System.Drawing.Size(714, 0);
+            this.MaximumSize = new System.Drawing.Size(1000, 800);
+            this.MinimumSize = new System.Drawing.Size(0, 39);
             this.Name = "CardForm";
             this.Text = "カード情報";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

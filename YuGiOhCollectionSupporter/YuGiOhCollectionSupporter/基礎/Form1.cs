@@ -21,6 +21,7 @@ namespace YuGiOhCollectionSupporter
 
 		public CardDataBase CardDB = new CardDataBase();
 		public PackDataBase PackDB = new PackDataBase();
+		public UserCardDataBase UserCardDB = new UserCardDataBase();
 
 		public Form1()
 		{
@@ -35,6 +36,7 @@ namespace YuGiOhCollectionSupporter
 			Program.WriteLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
 			Program.Load(CardDB.SaveDataPath, ref CardDB);
 			Program.Load(PackDB.SaveDataPath, ref PackDB);
+			Program.Load(UserCardDB.SaveUserDataPath, ref UserCardDB);
 			formPanel.ShowHome(this);
 
 			//			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
@@ -156,17 +158,19 @@ namespace YuGiOhCollectionSupporter
 
 				if (IsCardSearch)
 				{
-					var newcardDB = await GetAllCards.getAllCardsAsync(config, this, ErrorList);
+					var (newcardDB, newuserDB) = await GetAllCards.getAllCardsAsync(config, this, ErrorList);
 
 					if (newcardDB == null) break;
 
 					//新しいデータを追加し、古いデータは上書きする
-					(int newnum, int updatenum) tmp = CardDB.AddCardDataList(newcardDB.CardList);
+					(int newnum, int updatenum) = CardDB.AddCardDataList(newcardDB.CardList);
+					UserCardDB.AddCardDataList(newuserDB.UserCardDataList);
 
-					Program.SaveCardData();
+					await Program.SaveCardDataAsync();
+					await Program.SaveUserDataAsync();
 
 					ans += "カード情報の取得が終了しました。\n全カード種類:" + CardDB.getAllCardNum() +
-						$"\nうち{tmp.newnum}件が新しいデータとして登録され、\n{tmp.updatenum}件が更新されました。\n";
+						$"\nうち{newnum}件が新しいデータとして登録され、\n{updatenum}件が更新されました。\n";
 				}
 
 			} while (false);
@@ -212,6 +216,58 @@ namespace YuGiOhCollectionSupporter
         {
 			formPanel.ShowHome(this);
         }
+
+		public int getAllCardNumHave(CardDataBase cardDB)
+		{
+			int num = 0;
+			foreach (CardData card in cardDB.CardList)
+			{
+				var twincarddata = getTwinCardData(card);
+				if (twincarddata.IsCardNameHave())
+					num++;
+			}
+			return num;
+		}
+
+		//略号別で持ってるカード数と存在するカード数を返す	
+		public (int, int) getCardHaveNumCode(CardDataBase cardDB)
+		{
+			(int havenum, int allnum) num = (0, 0);
+			foreach (var card in cardDB.CardList)
+			{
+				var twincarddata = getTwinCardData(card);
+				var num2 = twincarddata.getCardHaveNumCode();
+				num = (num.havenum + num2.Item1, num.allnum + num2.Item2);
+			}
+			return num;
+		}
+
+		//レアリティ別で持ってる数と存在するカードを返す	
+		public (int, int) getCardHaveNumRarity(CardDataBase cardDB)
+		{
+			(int havenum, int allnum) num = (0, 0);
+			foreach (var card in cardDB.CardList)
+			{
+				var twincarddata = getTwinCardData(card);
+				var num2 = twincarddata.getCardHaveNumRarity();
+				num = (num.havenum + num2.Item1, num.allnum + num2.Item2);
+			}
+			return num;
+		}
+
+		//二種類の記録データを統合したデータを返す
+		public TwinCardData getTwinCardData(CardData carddata)
+        {
+            foreach (var usercarddata in UserCardDB.UserCardDataList)
+            {
+				if(carddata.ID == usercarddata.ID)
+                {
+					return new TwinCardData(carddata,usercarddata);
+                }
+            }
+			Program.WriteLog("不明なcarddata(form1.getTwinCardData)", LogLevel.エラー);
+			return null;
+		}
 
 	}
 }

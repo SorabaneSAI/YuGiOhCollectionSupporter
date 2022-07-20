@@ -12,7 +12,7 @@ namespace YuGiOhCollectionSupporter
 {
     public partial class CardForm : Form
     {
-        CardData carddata;
+        TwinCardData twincarddata;
         Form1 form; //パックをクリックした時用
         public CardForm(CardData data,Form1 form)
         {
@@ -22,7 +22,7 @@ namespace YuGiOhCollectionSupporter
 
         public void Init(CardData data, Form1 form)
         {
-            carddata = data;
+            twincarddata = form.getTwinCardData(data);
             this.form = form;
             linkLabel1.Text = data.名前;
             label1.Text = data.読み;
@@ -48,7 +48,7 @@ namespace YuGiOhCollectionSupporter
 
             label6.Text = data.種族;
 
-            checkBox1.Checked = data.表示フラグ;
+            checkBox1.Checked = twincarddata.get表示フラグ();
 
             dataGridView1.Rows.Clear();
             //DGVに略号とレアリティを追加していく
@@ -56,24 +56,24 @@ namespace YuGiOhCollectionSupporter
             Color yellow = Color.FromArgb(255, 255, 128);
             Color green = Color.FromArgb(128, 255, 128);
 
-            foreach (var variation in data.ListVariations)
+            foreach (var variation in twincarddata.carddata.ListVariations)
             {
-                foreach (var rarity in variation.ListRarity)
                 {
-                    int num = dataGridView1.Rows.Add(variation.略号.get略号Full(), variation.発売パック.Name, rarity.Initial, rarity.所持フラグ);
+                    int num = dataGridView1.Rows.Add(variation.略号.get略号Full(), variation.発売パック.Name, variation.rarity.Initial, twincarddata.get所持フラグ(variation));
                     dataGridView1.Rows[num].Cells["パック名"].Tag = variation.発売パック.URL; //タグに情報を埋め込む
-                    dataGridView1.Rows[num].Cells["所持"].Tag = rarity; //タグに情報を埋め込む
-                    dataGridView1.Rows[num].Cells["レアリティ"].ToolTipText = rarity.Name;   //マウスホバーでレアの正式名称
+                    dataGridView1.Rows[num].Cells["所持"].Tag = variation; //タグに情報を埋め込む
+                    dataGridView1.Rows[num].Cells["レアリティ"].ToolTipText = variation.rarity.Name;   //マウスホバーでレアの正式名称
 
                     Color c;
-                    if (variation.getCardNumRarityHave() == 0) c = red;
-                    else if (variation.getCardNumRarityHave() == variation.getCardNumRarity()) c = green;
+                    (int havenum, int allnum) = twincarddata.getCardHaveNumCodebyCode(variation.略号);
+                    if (havenum == 0) c = red;
+                    else if (havenum == allnum) c = green;
                     else c = yellow;
 
                     dataGridView1.Rows[num].Cells["略号"].Style.BackColor = c;
                     dataGridView1.Rows[num].Cells["パック名"].Style.BackColor = c;
 
-                    if (rarity.所持フラグ) c = green;
+                    if (twincarddata.get所持フラグ(variation)) c = green;
                     else c = red;
                     dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
                     dataGridView1.Rows[num].Cells["所持"].Style.BackColor = c;
@@ -86,18 +86,18 @@ namespace YuGiOhCollectionSupporter
 
         private async void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            carddata.表示フラグ = checkBox1.Checked;
+            twincarddata.set表示フラグ(checkBox1.Checked) ;
 
             checkBox1.Enabled = false;
             dataGridView1.Enabled = false;
-            await Program.SaveCardDataAsync();
+            await Program.SaveUserDataAsync();
             checkBox1.Enabled = true;
             dataGridView1.Enabled = true;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(carddata.URL);
+            System.Diagnostics.Process.Start(twincarddata.carddata.URL);
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -121,13 +121,13 @@ namespace YuGiOhCollectionSupporter
             //チェックボックスの列かどうか調べる
             if (dataGridView1.Columns[e.ColumnIndex].Name == "所持")
             {
-                var rarity = (CardData.Rarity)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
-                rarity.所持フラグ = (bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value;
+                var variation = (CardVariation)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
+                twincarddata.set所持フラグ(variation,(bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
 
                 checkBox1.Enabled = false;
                 dataGridView1.Enabled = false;
-                Init(carddata,form);
-                await Program.SaveCardDataAsync();
+                Init(twincarddata.carddata,form);
+                await Program.SaveUserDataAsync();
                 checkBox1.Enabled = true;
                 dataGridView1.Enabled = true;
             }

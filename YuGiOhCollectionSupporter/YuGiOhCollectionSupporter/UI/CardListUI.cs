@@ -73,11 +73,15 @@ namespace YuGiOhCollectionSupporter
 				}
 
 				//順番はめちゃくちゃになってるので略号順にソート
-				PackCardDB.CardList.Sort((a, b) => new CardData.CardVariation().Compare(a.ListVariations[0], b.ListVariations[0]));
+				PackCardDB.CardList.Sort((a, b) => new CardVariation().Compare(a.ListVariations[0], b.ListVariations[0]));
 
 
 			}
-			collectDataUI1.Init(PackCardDB);    //埋め込むのに引数のないコンストラクタが必要なので初期化
+
+			
+
+			collectDataUI1.Init(form.getAllCardNumHave(PackCardDB), PackCardDB.getAllCardNum(),form.getCardHaveNumCode(PackCardDB).Item1, form.getCardHaveNumCode(PackCardDB).Item2,
+				form.getCardHaveNumRarity(PackCardDB).Item1,form.getCardHaveNumRarity(PackCardDB).Item2);    //埋め込むのに引数のないコンストラクタが必要なので初期化
 
 
 			Color red = Color.FromArgb(255, 128, 128);
@@ -87,32 +91,35 @@ namespace YuGiOhCollectionSupporter
 			dataGridView1.Rows.Clear();
 			foreach (var card in PackCardDB.CardList)
             {
+				var twincarddata = form.getTwinCardData(card);
 				string ryakugou = "";
 				string rarity = "";
 
+				(int rarity_havenum, int rarity_allnum) = twincarddata.getCardHaveNumRarity();
+				(int code_havenum, int code_allnum) = twincarddata.getCardHaveNumCode();
 				//１つしか存在しない略号、レアリティは文字にする
-				if(card.getCardNumRarity() == 1)   
-					rarity = card.ListVariations[0].ListRarity[0].Initial;
+				if (rarity_allnum == 1)   
+					rarity = card.ListVariations[0].rarity.Initial;
 				else
-					rarity = $"{card.getCardNumRarityHave()} / {card.getCardNumRarity()}";
-				if(card.getCardNumCode()==1)
+					rarity = $"{rarity_havenum} / {rarity_allnum}";
+				if(code_allnum == 1)
 					ryakugou = card.ListVariations[0].略号.get略号Full();
 				else
-					ryakugou = $"{card.getCardNumCodeHave()} / {card.getCardNumCode()}";
+					ryakugou = $"{code_havenum} / {code_allnum}";
 
 
-				int num = dataGridView1.Rows.Add(card.IsCardNameHave(), card.名前, ryakugou, rarity, card.ListVariations[0].ListRarity[0].所持フラグ);
+				int num = dataGridView1.Rows.Add(twincarddata.IsCardNameHave(), card.名前, ryakugou, rarity, twincarddata.usercarddata.UserVariationDataList[0].所持フラグ);
 				dataGridView1.Rows[num].Tag = CardDB.getCard(card.ID); //行のタグにカード情報を埋め込む  cardは変更されてる可能性があるのでCardDBから同じのを持ってくる
-				dataGridView1.Rows[num].Cells["名前"].Style.BackColor = card.IsCardNameHave() ? green : red;
+				dataGridView1.Rows[num].Cells["名前"].Style.BackColor = twincarddata.IsCardNameHave() ? green : red;
 				Color c;
-				if (card.getCardNumCodeHave() == 0) c = red;
-				else if (card.getCardNumCodeHave() == card.getCardNumCode()) c = green;
+				if (code_havenum == 0) c = red;
+				else if (code_havenum == code_allnum) c = green;
 				else c = yellow;
 
 				dataGridView1.Rows[num].Cells["略号"].Style.BackColor = c;
 
-				if (card.getCardNumRarityHave() == 0) c = red;
-				else if (card.getCardNumRarityHave() == card.getCardNumRarity()) c = green;
+				if (rarity_havenum == 0) c = red;
+				else if (rarity_havenum == rarity_allnum) c = green;
 				else c = yellow;
 
 				dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
@@ -122,9 +129,9 @@ namespace YuGiOhCollectionSupporter
 
 				var quickcell = dataGridView1.Rows[num].Cells["クイック"];
 
-				if (card.getCardNumRarity() == 1)    //１枚しか存在しない場合はクイックチェックが可能に
+				if (rarity_allnum == 1)    //１枚しか存在しない場合はクイックチェックが可能に
                 {
-					quickcell.Tag = card.ListVariations[0].ListRarity[0];
+					quickcell.Tag = card.ListVariations[0];
 					quickcell.Style.BackColor = c;
 				}
 				else
@@ -327,14 +334,15 @@ namespace YuGiOhCollectionSupporter
 			//チェックボックスの列かどうか調べる
 			if (dataGridView1.Columns[e.ColumnIndex].Name == "クイック" && dataGridView1[e.ColumnIndex, e.RowIndex].GetType() == typeof(DataGridViewCheckBoxCell))
 			{
-				var rarity = (CardData.Rarity)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
-				if (rarity == null) return;	//init中でvalueを書き換えるときの誤爆を防ぐ苦肉の策
+				var variation = (CardVariation)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
+				if (variation == null) return;  //init中でvalueを書き換えるときの誤爆を防ぐ苦肉の策
 
-				rarity.所持フラグ = (bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value;
+				var twincarddata = form.getTwinCardData((CardData)dataGridView1.Rows[e.RowIndex].Tag);
+				twincarddata.set所持フラグ(variation, (bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
 
 				dataGridView1.Enabled = false;
 				Init(CardDB, Pack, form,あいうえお順Flag);
-				await Program.SaveCardDataAsync();
+				await Program.SaveUserDataAsync();
 				dataGridView1.Enabled = true;
 			}
 

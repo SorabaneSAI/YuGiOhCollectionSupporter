@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,14 +22,6 @@ namespace YuGiOhCollectionSupporter
 
 		public Dictionary<string, string> ValuePairs;   //存在するパラメータのペアだけ登録される
 
-		/*
-		public string 属性;
-		public string レベル;
-		public string 攻撃力;
-		public string 守備力;
-		public string 種族;
-		*/
-
 		public string 種族;
 		public string ペンデュラム効果;
 		public string テキスト;
@@ -36,58 +29,11 @@ namespace YuGiOhCollectionSupporter
 
 		public List<CardVariation> ListVariations = new List<CardVariation>();
 
-		public bool 表示フラグ = true;
+//		[JsonIgnore]
+//		public bool 表示フラグ = true;
 
-		//そのカード名のカードを持っているかを返す
-		public bool IsCardNameHave()
-        {
-            foreach (var variation in ListVariations)
-            {
-				if (variation.IsCardPackHave())
-					return true;
-            }
-			return false;
-        }
 
-		//略号別で持ってるカード数を返す
-		public int getCardNumCodeHave()
-        {
-			int num = 0;
-            foreach (var variation in ListVariations)
-            {
-				if (variation.IsCardPackHave())
-					num++;
-            }
-			return num;
-        }
 
-		//略号別で存在するカード数を返す
-		public int getCardNumCode()
-        {
-			return ListVariations.Count;
-        }
-
-		//レアリティ別で持ってるカードを返す
-		public int getCardNumRarityHave()
-        {
-			int num = 0;
-            foreach (var variation in ListVariations)
-            {
-				num += variation.getCardNumRarityHave();
-            }
-			return num;
-        }
-
-		//レアリティ別で存在するカードを返す
-		public int getCardNumRarity()
-		{
-			int num = 0;
-			foreach (var variation in ListVariations)
-			{
-				num += variation.getCardNumRarity();
-			}
-			return num;
-		}
 
 		public (Brushes upcolor,Brushes downcolor) getCardColor()
         {
@@ -122,30 +68,7 @@ namespace YuGiOhCollectionSupporter
         {
 			int updatenum = 1;	//かけ算するのであったときが０ないときが１　最後に反転する
 
-			/*
-			warnnum *= ConflictMsg("誕生日", 誕生日, newdata.誕生日);
-			warnnum *= ConflictMsg("ID", ID, newdata.ID);   //これはありえない
-			warnnum *= ConflictMsg("名前", 名前, newdata.名前);
-			warnnum *= ConflictMsg("読み", 読み, newdata.読み);
-			warnnum *= ConflictMsg("英語名", 英語名, newdata.英語名);
-			warnnum *= ConflictMsg("ステータス", ValuePairs, newdata.ValuePairs);
-			チェックいらなくね？
-			*/
-			/*新しいものは無条件更新
-			//テキストは普通に変わることあるし
-			if(!ペンデュラム効果.Equals(newdata.ペンデュラム効果))
-            {
-				Program.WriteLog($"{名前}のペンデュラム効果を更新しました[{ペンデュラム効果}]↔[{newdata.ペンデュラム効果}]", LogLevel.必須項目);
-				ペンデュラム効果 = newdata.ペンデュラム効果;
-				updatenum = 0;
-			}
-			if (!テキスト.Equals(newdata.テキスト))
-			{
-				Program.WriteLog($"{名前}のテキストを更新しました[{テキスト}]↔[{newdata.テキスト}]", LogLevel.必須項目);
-				テキスト = newdata.テキスト;
-				updatenum = 0;
-			}
-			*/
+
             //パックを比較
             foreach (var newval in newdata.ListVariations)
             {
@@ -154,7 +77,8 @@ namespace YuGiOhCollectionSupporter
 					var oldval = ListVariations[i];
 					if (oldval.発売パック.URL.Equals(newval.発売パック.URL))
 					{
-						updatenum *= oldval.AddVariationData(名前,newval);    //ここで所持フラグをコピー
+						//						updatenum *= oldval.AddVariationData(名前,newval);    //ここで所持フラグをコピー
+//						newval.所持フラグ = oldval.所持フラグ;
 						oldval = newval;										//データを新しいものに
 						goto next;
 					}
@@ -178,110 +102,6 @@ namespace YuGiOhCollectionSupporter
 			return 1;
 		}
 
-		public class Rarity
-        {
-			public string Initial;
-			public string Name;
-			public bool 所持フラグ = false;
-
-			public Rarity(string initial, string name)
-            {
-                Initial = initial;
-                Name = name;
-            }
-        }
-
-
-		public class CardVariation : IComparer<CardVariation>
-        {
-
-			public PackData 発売パック;
-			public Code 略号;
-
-			public List<Rarity> ListRarity = new List<Rarity>();
-
-			public CardVariation() { }
-
-			public CardVariation(PackData packdata, string code, List<Rarity> rarity)
-            {
-				発売パック = packdata;
-				略号 = new Code(code);
-				ListRarity = rarity;
-			}
-
-			//略号別に持っているかを返す
-			public bool IsCardPackHave()
-            {
-                foreach (var rarity in ListRarity)
-                {
-					if (rarity.所持フラグ)
-						return true;
-                }
-				return false;
-            }
-
-			//持っているレアリティの数を返す
-			public int getCardNumRarityHave()
-            {
-				int num = 0;
-                foreach (var rare in ListRarity)
-                {
-					if (rare.所持フラグ)
-						num++;
-                }
-				return num;
-            }
-
-			//存在するレアリティの数を返す
-			public int getCardNumRarity()
-            {
-				return ListRarity.Count;
-            }
-
-
-			public int AddVariationData(string cardname,CardVariation newvariation)
-            {
-				int updatenum = 1;  //紛らわしいけどアプデしてたら０してなかったら１
-
-				//なんかめんどくさくなったので略号、パックデータ、レアリティの違いのチェックはしない
-
-				foreach (var newrarity in newvariation.ListRarity)
-				{
-					for(int i=0; i< ListRarity.Count; i++) 
-					{
-						var oldrarity = ListRarity[i];
-						if (oldrarity.Name.Equals(newrarity.Name))
-						{
-							newrarity.所持フラグ = oldrarity.所持フラグ;	//所持フラグ引き継ぎ
-							oldrarity = newrarity;			//データを新しいものに
-							goto next;
-						}
-					}
-					ListRarity.Add(newrarity);
-					Program.WriteLog($"{cardname}のあるパック{newvariation.発売パック.Name}のレアリティを追加しました[{newrarity}]", LogLevel.必須項目);
-					updatenum = 0;
-				next:;
-				}
-
-				return updatenum;
-            }
-
-			public int Compare(CardVariation x, CardVariation y)
-			{
-				//その略号のパックの発売日順にする
-				int num = x.発売パック.BirthDay.CompareTo(y.発売パック.BirthDay);
-				if (num > 0) return 1;
-				if (num < 0) return -1;
-
-
-				//略号記号が同じ場合は数字で決める
-				if (x.略号.No < y.略号.No) return -1;
-				if (x.略号.No > y.略号.No) return 1;
-
-				return 0;
-			}
-
-		}
 
 		//最も若い誕生日を返す
 		public DateTimeOffset getEarlyDate()
@@ -300,6 +120,222 @@ namespace YuGiOhCollectionSupporter
 			return date;
         }
 
+
+	}
+
+	public class CardVariation : IComparer<CardVariation>
+	{
+
+		public PackData 発売パック;
+		public Code 略号;
+
+		//			public List<Rarity> ListRarity = new List<Rarity>();
+		public Rarity rarity;
+		//           [JsonIgnore]
+		//			public bool 所持フラグ = false;
+
+		public CardVariation() { }
+
+		public CardVariation(PackData packdata, string code, Rarity rarity)
+		{
+			発売パック = packdata;
+			略号 = new Code(code);
+			this.rarity = rarity;
+		}
+
+
+		public int Compare(CardVariation x, CardVariation y)
+		{
+			//その略号のパックの発売日順にする
+			int num = x.発売パック.BirthDay.CompareTo(y.発売パック.BirthDay);
+			if (num > 0) return 1;
+			if (num < 0) return -1;
+
+
+			//略号記号が同じ場合は数字で決める
+			if (x.略号.No < y.略号.No) return -1;
+			if (x.略号.No > y.略号.No) return 1;
+
+			return 0;
+		}
+
+
+	}
+
+	public class Rarity
+	{
+		public string Initial;
+		public string Name;
+
+		public Rarity(string initial, string name)
+		{
+			Initial = initial;
+			Name = name;
+		}
+	}
+
+
+	//カードデータとユーザーデータを分ける苦肉の策
+	public class UserCardData
+    {
+		public int ID;
+		public bool 表示フラグ = true;
+		public List<UserVariationData> UserVariationDataList = new List<UserVariationData>();
+		public class UserVariationData
+        {
+			public bool 所持フラグ = false;
+			public string 発売パックURL;
+			public Rarity rarity;
+		}
+
+		public UserCardData() { }
+		public UserCardData(CardData card)
+        {
+			ID = card.ID;
+            foreach (var variation in card.ListVariations)
+            {
+				UserVariationData vardata = new UserVariationData();
+				vardata.発売パックURL = variation.発売パック.URL;
+				vardata.rarity = variation.rarity;
+				UserVariationDataList.Add(vardata);
+            }
+        }
+
+	}
+
+	//カードデータとユーザーデータの統合
+	public class TwinCardData
+    {
+		public CardData carddata;
+		public UserCardData usercarddata;
+
+		public TwinCardData(CardData carddata, UserCardData usercarddata)
+        {
+            this.carddata = carddata;
+            this.usercarddata = usercarddata;
+        }
+
+		public bool get表示フラグ() { return usercarddata.表示フラグ; }
+		public void set表示フラグ(bool flag) { usercarddata.表示フラグ = flag; }
+
+		public bool get所持フラグ(CardVariation variation)
+        {
+            foreach (var uservariation in usercarddata.UserVariationDataList)
+            {
+				if(uservariation.発売パックURL == variation.発売パック.URL && uservariation.rarity.Name == variation.rarity.Name)
+                {
+					return uservariation.所持フラグ;
+                }
+            }
+			Program.WriteLog("不明なvariation(TwinCardData.get所持フラグ)",LogLevel.エラー);
+			return false;
+        }
+
+		public void set所持フラグ(CardVariation variation,bool flag)
+        {
+			foreach (var uservariation in usercarddata.UserVariationDataList)
+			{
+				if (uservariation.発売パックURL == variation.発売パック.URL && uservariation.rarity.Name == variation.rarity.Name)
+				{
+					uservariation.所持フラグ = flag;
+					return ;
+				}
+			}
+			Program.WriteLog("不明なvariation(TwinCardData.set所持フラグ)", LogLevel.エラー);
+		}
+
+		//そのカード名のカードを持っているかを返す
+		public bool IsCardNameHave()
+		{
+			foreach (var variation in carddata.ListVariations)
+			{
+				if (get所持フラグ(variation))
+					return true;
+			}
+			return false;
+		}
+
+		private (int, int) getNumBase(int pattern, Code code)
+		{
+			List<List<CardVariation>> varlist2 = new List<List<CardVariation>>();    //略号が同じものは同じリストにいれたもののリスト
+			foreach (var base_variation in carddata.ListVariations)
+			{
+				foreach (var varlist in varlist2)
+				{
+					switch (pattern)
+					{
+						case 1:
+							if (base_variation.略号.get略号Full() == varlist[0].略号.get略号Full())
+							{
+								varlist.Add(base_variation);
+								goto next;
+							}
+							break;
+					}
+				}
+				var newvarlist = new List<CardVariation>();
+				newvarlist.Add(base_variation);
+				varlist2.Add(newvarlist);
+			next:;
+			}
+
+			int num = 0;
+			foreach (var varlist in varlist2)
+			{
+				//その完全略号カード中で１つでも持ってれば加算
+				bool 所持フラグ = false;
+                foreach (var variation in varlist)
+                {
+					if (get所持フラグ(variation))
+						所持フラグ = true;
+				}
+
+				if (所持フラグ)
+					num++;
+			}
+
+			return (num, varlist2.Count);
+		}
+
+
+		//略号別で持ってるカード数と存在するカード数を返す	
+		public (int, int) getCardHaveNumCode()
+		{
+			return getNumBase(1, null);	//あんまり関数化した意味なかった
+		}
+
+		//レアリティ別で持ってる数と存在するカードを返す	
+		public (int, int) getCardHaveNumRarity()
+		{
+			int num = 0;
+
+			foreach (var variation in carddata.ListVariations)
+			{
+				if (get所持フラグ(variation))
+					num++;
+			}
+			return (num, carddata.ListVariations.Count);
+		}
+
+		//その略号のカードを持っている数と存在する数を返す
+		public (int, int) getCardHaveNumCodebyCode(Code code)
+		{
+			int allnum = 0;
+			int havenum = 0;
+
+			foreach (var variation in carddata.ListVariations)
+            {
+				if(variation.略号.get略号Full() == code.get略号Full())
+                {
+					allnum++;
+					if (get所持フラグ(variation))
+						havenum++;
+                }
+            }
+
+			return (havenum, allnum);
+
+		}
 
 	}
 }
