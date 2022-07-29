@@ -23,11 +23,51 @@ namespace YuGiOhCollectionSupporter
 		public PackDataBase PackDB = new PackDataBase();
 		public UserCardDataBase UserCardDB = new UserCardDataBase();
 
+		public BindingList<PackGroupData> PackGroupDataList = new BindingList<PackGroupData>();
+		public string PackGroupSavePath = "PackGroupData.json";
+
 		public Form1()
 		{
 			InitializeComponent();
 
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+			PackGroupDataList.Add(new PackGroupData("構築済みデッキ", "スターターデッキ", "STARTER DECK"));
+			PackGroupDataList.Add(new PackGroupData("構築済みデッキ", "ストラクチャーデッキ", "STRUCTURE DECK"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "デッキビルドパック", "デッキビルドパック"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "ブースターSP", "ブースターSP"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "コレクターズパック", "コレクターズパック"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "デュエリストエディション", "DUELIST EDITION"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "ビギナーズエディション", "BEGINNER'S EDITION"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "エキスパートエディション", "EXPERT EDITION"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "ゴールドシリーズ", "GOLD"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "デュエリストパック", "デュエリストパック"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "プレミアムパック", "PREMIUM PACK"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "エクストラパック", "EXTRA PACK"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "デュエリストレガシー", "DUELIST LEGACY"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "ベンダー版", "ベンダー版"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "ブースター", "Booster"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "Vジャンプ", "Vジャンプ"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "遊戯王OCGストラクチャーズ", "遊戯王OCGストラクチャーズ"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "ザ・ヴァリュアブル・ブック", "ザ・ヴァリュアブル・ブック"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "マスターガイド", "MASTER GUIDE"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "V JUMPエディション", "V JUMP EDITION"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "リミテッドエディション", "LIMITED EDITION"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "週刊少年ジャンプ", "週刊少年ジャンプ"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "最強ジャンプ", "最強ジャンプ"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "漫画　遊戯王R", "遊戯王R"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "漫画　遊戯王GX", "遊戯王GX"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "漫画　遊戯王5D's", "遊戯王5D's"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "漫画　遊戯王ZEXAL", "遊戯王ZEXAL"));
+			PackGroupDataList.Add(new PackGroupData("書籍", "漫画　遊戯王ARC-V", "遊戯王ARC-V 第"));
+			PackGroupDataList.Add(new PackGroupData("大会", "トーナメントパック", "トーナメントパック"));
+			PackGroupDataList.Add(new PackGroupData("大会", "ワールドチャンピオンシップ", "Yu-Gi-Oh! WORLD CHAMPIONSHIP"));
+			PackGroupDataList.Add(new PackGroupData("プロモーション", "ジャンプフェスタ", "ジャンプフェスタ"));
+			PackGroupDataList.Add(new PackGroupData("プロモーション", "スペシャルパック", "SPECIAL PACK"));
+			PackGroupDataList.Add(new PackGroupData("プロモーション", "プロモーションパック", "プロモーションパック"));
+
+			PackGroupDataList.AllowNew = true;
+
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -37,6 +77,8 @@ namespace YuGiOhCollectionSupporter
 			Program.Load(CardDB.SaveDataPath, ref CardDB);
 			Program.Load(PackDB.SaveDataPath, ref PackDB);
 			Program.Load(UserCardDB.SaveUserDataPath, ref UserCardDB);
+			Program.Load(PackGroupSavePath, ref PackGroupDataList);
+
 			formPanel.ShowHome(this);
 
 			//			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
@@ -269,5 +311,13 @@ namespace YuGiOhCollectionSupporter
 			return null;
 		}
 
+        private void パック分類設定ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+			PackGroupForm f = new PackGroupForm(PackGroupDataList);
+			f.ShowDialog(this);
+			f.Dispose();
+			Program.Save(PackGroupSavePath, PackGroupDataList);
+
+		}
 	}
 }

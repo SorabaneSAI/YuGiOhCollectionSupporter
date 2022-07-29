@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("遊戯王カードコレクションサポーター")]
-[assembly: AssemblyDescription("C#とVisualStudioがあると楽ねー")]
+[assembly: AssemblyDescription("C#とVisualStudioがあると楽ねー \n https://github.com/SorabaneSAI/YuGiOhCollectionSupporter")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("遊戯王カードコレクションサポーター")]

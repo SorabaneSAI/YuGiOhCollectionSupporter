@@ -39,6 +39,7 @@
             this.あいうえお順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.パック順ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ホームToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.パック分類設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -57,6 +58,7 @@
             this.ログToolStripMenuItem,
             this.並び順ToolStripMenuItem,
             this.ホームToolStripMenuItem,
+            this.パック分類設定ToolStripMenuItem,
             this.これについてToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -84,21 +86,21 @@
             // パックデータ取得ToolStripMenuItem
             // 
             this.パックデータ取得ToolStripMenuItem.Name = "パックデータ取得ToolStripMenuItem";
-            this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.パックデータ取得ToolStripMenuItem.Text = "パックデータ取得";
             this.パックデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
             // 
             // カードデータ取得ToolStripMenuItem
             // 
             this.カードデータ取得ToolStripMenuItem.Name = "カードデータ取得ToolStripMenuItem";
-            this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.カードデータ取得ToolStripMenuItem.Text = "カードデータ取得";
             this.カードデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
             // 
             // パックカード両方取得ToolStripMenuItem
             // 
             this.パックカード両方取得ToolStripMenuItem.Name = "パックカード両方取得ToolStripMenuItem";
-            this.パックカード両方取得ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.パックカード両方取得ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.パックカード両方取得ToolStripMenuItem.Text = "両方取得";
             this.パックカード両方取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
             // 
@@ -121,14 +123,14 @@
             // あいうえお順ToolStripMenuItem
             // 
             this.あいうえお順ToolStripMenuItem.Name = "あいうえお順ToolStripMenuItem";
-            this.あいうえお順ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.あいうえお順ToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.あいうえお順ToolStripMenuItem.Text = "あいうえお順";
             this.あいうえお順ToolStripMenuItem.Click += new System.EventHandler(this.あいうえお順ToolStripMenuItem_Click);
             // 
             // パック順ToolStripMenuItem
             // 
             this.パック順ToolStripMenuItem.Name = "パック順ToolStripMenuItem";
-            this.パック順ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.パック順ToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.パック順ToolStripMenuItem.Text = "パック順";
             this.パック順ToolStripMenuItem.Click += new System.EventHandler(this.パック順ToolStripMenuItem_Click);
             // 
@@ -138,6 +140,13 @@
             this.ホームToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.ホームToolStripMenuItem.Text = "ホーム";
             this.ホームToolStripMenuItem.Click += new System.EventHandler(this.ホームToolStripMenuItem_Click);
+            // 
+            // パック分類設定ToolStripMenuItem
+            // 
+            this.パック分類設定ToolStripMenuItem.Name = "パック分類設定ToolStripMenuItem";
+            this.パック分類設定ToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.パック分類設定ToolStripMenuItem.Text = "パック分類設定";
+            this.パック分類設定ToolStripMenuItem.Click += new System.EventHandler(this.パック分類設定ToolStripMenuItem_Click);
             // 
             // これについてToolStripMenuItem
             // 
@@ -172,7 +181,7 @@
             this.splitContainer1.Panel1.AutoScroll = true;
             this.splitContainer1.Panel1.Controls.Add(this.treeView1);
             this.splitContainer1.Size = new System.Drawing.Size(1113, 635);
-            this.splitContainer1.SplitterDistance = 300;
+            this.splitContainer1.SplitterDistance = 370;
             this.splitContainer1.TabIndex = 3;
             // 
             // treeView1
@@ -180,7 +189,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(296, 631);
+            this.treeView1.Size = new System.Drawing.Size(366, 631);
             this.treeView1.TabIndex = 5;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -224,6 +233,7 @@
         private System.Windows.Forms.ToolStripMenuItem カードデータ取得ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem パックカード両方取得ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ホームToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem パック分類設定ToolStripMenuItem;
     }
 }
 

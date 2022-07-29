@@ -131,6 +131,7 @@ namespace YuGiOhCollectionSupporter
 
 				if (rarity_allnum == 1)    //１枚しか存在しない場合はクイックチェックが可能に
                 {
+					quickcell.Value = (rarity_havenum == 1);
 					quickcell.Tag = card.ListVariations[0];
 					quickcell.Style.BackColor = c;
 				}

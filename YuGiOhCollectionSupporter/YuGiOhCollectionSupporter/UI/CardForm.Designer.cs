@@ -153,6 +153,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 21;
             this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dataGridView1.Size = new System.Drawing.Size(637, 101);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -247,7 +248,7 @@
             this.ClientSize = new System.Drawing.Size(681, 486);
             this.Controls.Add(this.flowLayoutPanel1);
             this.MaximumSize = new System.Drawing.Size(1000, 800);
-            this.MinimumSize = new System.Drawing.Size(0, 39);
+            this.MinimumSize = new System.Drawing.Size(16, 39);
             this.Name = "CardForm";
             this.Text = "カード情報";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

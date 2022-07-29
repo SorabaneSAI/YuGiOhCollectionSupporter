@@ -87,6 +87,24 @@ namespace YuGiOhCollectionSupporter
 				}
 				treeview.Nodes.Add("非表示");
 
+                //typenameのツリーにPackGroupのツリーをくっつける
+                foreach (var packgroup in form.PackGroupDataList)
+                {
+					if (packgroup.有効フラグ == false) continue;
+
+					foreach (TreeNode node in treeview.Nodes)
+					{
+						if(packgroup.親ノード名 == node.Text)
+                        {
+							var n =node.Nodes.Add(packgroup.子ノード名);
+							n.Tag = packgroup;
+							break;
+                        }
+					}
+				}
+
+
+
 				//そのツリーにパック名をくっつける
 				foreach (var pack in form.PackDB.PackDataList)
                 {
@@ -94,12 +112,22 @@ namespace YuGiOhCollectionSupporter
 					{
 						if (node.Text == pack.TypeName)
                         {
-							var n = node.Nodes.Add(pack.Name);
-							n.Tag = pack;
-							n.Text += $"({pack.CardCount})";
+                            foreach (TreeNode node2 in node.Nodes)
+                            {
+								PackGroupData packgroupdata = node2.Tag as PackGroupData;
+								if (packgroupdata == null) break;	//今追加したパックだとキャストできない
+								if (pack.Name.Contains(packgroupdata.含まれる文字))
+                                {
+									AddTreeNode(node2,pack);
+									goto next;
+                                }
+									
+                            }
+							AddTreeNode(node, pack);
 							break;
                         }
                     }
+				next:;
                 }
 			}
 
@@ -108,6 +136,13 @@ namespace YuGiOhCollectionSupporter
 			Program.WriteLog("ツリーノード作成終了", LogLevel.必須項目);
 			form.ValidMenuItem();
 
+		}
+
+		static void AddTreeNode(TreeNode node, PackData pack)
+        {
+			var n = node.Nodes.Add(pack.Name);
+			n.Tag = pack;
+			n.Text += $"({pack.CardCount})";
 		}
 
 		//Depthは読み取る文字数であり再帰回数 
@@ -275,7 +310,8 @@ namespace YuGiOhCollectionSupporter
 			}
 			else 
 			{
-				pack = (PackData)treenode.Tag;
+				pack = treenode.Tag as PackData;
+				if (pack == null) return;	//PackGroupDataの可能性あり
 
 				cardDB = new CardDataBase();    //新しく作成してはいるが改造されていないCardDataBase
 
