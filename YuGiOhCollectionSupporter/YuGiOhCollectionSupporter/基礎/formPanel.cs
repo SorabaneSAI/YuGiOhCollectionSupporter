@@ -328,10 +328,34 @@ namespace YuGiOhCollectionSupporter
         {
 			form.splitContainer1.Panel2.Controls.Clear();
 			//ホーム画面
-			
-			CollectDataUI homeUI = new CollectDataUI(form.getAllCardNumHave(form.CardDB), form.CardDB.getAllCardNum(),form.getCardHaveNumCode(form.CardDB).Item1, 
+
+			//FlowLayoutPanelに埋め込む（そのままだとうまくいかなかった）
+			FlowLayoutPanel panel = new FlowLayoutPanel();
+			panel.FlowDirection = FlowDirection.TopDown;
+			panel.Dock = DockStyle.Fill;
+			form.splitContainer1.Panel2.Controls.Add(panel);
+
+			CollectDataUI homeUI = new CollectDataUI(form.getAllCardNumHave(form.CardDB), form.CardDB.getAllCardNum(), form.getCardHaveNumCode(form.CardDB).Item1,
 				form.getCardHaveNumCode(form.CardDB).Item2, form.getCardHaveNumRarity(form.CardDB).Item1, form.getCardHaveNumRarity(form.CardDB).Item2);
-			form.splitContainer1.Panel2.Controls.Add(homeUI);
+			panel.Controls.Add(homeUI);
+
+			Button button = new Button();
+			button.Text = "持ってないカードをPDF出力";
+			button.Size = new System.Drawing.Size(200,30);
+			button.Click += form.button_Click;	//変数の都合でformにイベントあり
+			button.BringToFront();
+			panel.Controls.Add(button);
+
+			ComboBox comboBox = new ComboBox();
+			comboBox.Items.Add("カード名別");
+			comboBox.Items.Add("略号別");
+			comboBox.Items.Add("レアリティ別");
+			comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboBox.SelectedIndex = 0;
+			panel.Controls.Add(comboBox);
+
+			button.Tag = comboBox;
 		}
+
 	}
 }

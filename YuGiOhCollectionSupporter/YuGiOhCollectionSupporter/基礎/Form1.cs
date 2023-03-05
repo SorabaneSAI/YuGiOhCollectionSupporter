@@ -225,8 +225,7 @@ namespace YuGiOhCollectionSupporter
 
 			string msg = ans + $"エラー件数:{ErrorList.Count}件\n" + Program.ToJson(ErrorList, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
 			Program.WriteLog(msg, LogLevel.必須項目);
-			MessageBox.Show(msg
-				, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show(msg	, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 
@@ -319,5 +318,30 @@ namespace YuGiOhCollectionSupporter
 			Program.Save(PackGroupSavePath, PackGroupDataList);
 
 		}
+
+		//本当はformPanelのボタンなんだけど都合によりここにある
+		public void button_Click(object sender, EventArgs e)
+		{
+			//senderからcomboboxデータを取り出す
+			Button button = (Button)sender;
+			ComboBox combobox = (ComboBox)button.Tag;
+			int num = combobox.SelectedIndex;
+
+			List<TwinCardData> TwinCardDataList = new List<TwinCardData>();
+
+
+			foreach (var carddata in CardDB.CardList)
+			{
+				var twincarddata = getTwinCardData(carddata);
+
+				TwinCardDataList.Add(twincarddata);
+			}
+
+
+			PrintPDF.Print(TwinCardDataList,num);
+
+			MessageBox.Show("PDFの出力が終わりました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
 	}
 }

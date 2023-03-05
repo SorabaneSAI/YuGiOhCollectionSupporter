@@ -59,5 +59,15 @@ namespace YuGiOhCollectionSupporter.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   型 System.Byte[] のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static byte[] GenShinGothic_Monospace_Medium {
+            get {
+                object obj = ResourceManager.GetObject("GenShinGothic_Monospace_Medium", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
