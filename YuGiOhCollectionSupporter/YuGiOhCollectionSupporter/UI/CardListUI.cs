@@ -52,19 +52,23 @@ namespace YuGiOhCollectionSupporter
 
 				PackCardDB.CardList.Clear();
 
+
 				//variationがそのパックのカードで、そのvariationのみの状態のカードを新しく作成し、それ用のリストに追加
 				foreach (var card in cardDB.CardList)
                 {
-                    foreach (var variation in card.ListVariations)
+					List<CardVariation> VariationList = new List<CardVariation>();
+					foreach (var variation in card.ListVariations)
                     {
 						if(variation.発売パック.URL == pack.URL)
                         {
-							var tmpcard = new CardData(card,variation);
-							PackCardDB.CardList.Add(tmpcard);
-							break;
+							VariationList.Add(variation);
+
 						}
 					}
-                }
+					var tmpcard = new CardData(card, VariationList);
+					PackCardDB.CardList.Add(tmpcard);
+
+				}
 
 				//略号ソートのためにパックデータの完全なものが必要
 				foreach (var card in PackCardDB.CardList)

@@ -58,10 +58,9 @@ namespace YuGiOhCollectionSupporter
 		}
 
 		//単一variationのカード作成
-		public CardData(CardData card,CardVariation variation) :this(card.ID, card.URL,card.名前 ,card.読み, card.英語名, card.ValuePairs, card.ペンデュラム効果, card.テキスト, card.種族,null)
+		public CardData(CardData card,List<CardVariation> variationlist) :this(card.ID, card.URL,card.名前 ,card.読み, card.英語名, card.ValuePairs, card.ペンデュラム効果, card.テキスト, card.種族,null)
         {
-			ListVariations = new List<CardVariation>();
-			ListVariations.Add(variation);
+			ListVariations = variationlist;
 		}
 
         internal int AddNewData(CardData newdata)
