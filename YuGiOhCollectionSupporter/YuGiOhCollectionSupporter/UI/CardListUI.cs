@@ -48,7 +48,7 @@ namespace YuGiOhCollectionSupporter
 				Pack = pack;
 				linkLabel1.Text = Pack.Name;
 				label1.Text = Pack.TypeName;
-				label4.Text = Pack.SeriesName;
+				label4.Text = Pack.BirthDay.ToString("yyyy/MM/dd");
 
 				PackCardDB.CardList.Clear();
 

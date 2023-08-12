@@ -339,6 +339,14 @@ namespace YuGiOhCollectionSupporter
 				form.getCardHaveNumCode(form.CardDB).Item2, form.getCardHaveNumRarity(form.CardDB).Item1, form.getCardHaveNumRarity(form.CardDB).Item2);
 			panel.Controls.Add(homeUI);
 
+			ComboBox comboBox = new ComboBox();
+			comboBox.Items.Add("カード名別で");
+			comboBox.Items.Add("略号別で");
+			comboBox.Items.Add("レアリティ別で");
+			comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+			comboBox.SelectedIndex = 0;
+			panel.Controls.Add(comboBox);
+
 			Button button = new Button();
 			button.Text = "持ってないカードをPDF出力";
 			button.Size = new System.Drawing.Size(200,30);
@@ -346,13 +354,6 @@ namespace YuGiOhCollectionSupporter
 			button.BringToFront();
 			panel.Controls.Add(button);
 
-			ComboBox comboBox = new ComboBox();
-			comboBox.Items.Add("カード名別");
-			comboBox.Items.Add("略号別");
-			comboBox.Items.Add("レアリティ別");
-			comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-			comboBox.SelectedIndex = 0;
-			panel.Controls.Add(comboBox);
 
 			button.Tag = comboBox;
 		}

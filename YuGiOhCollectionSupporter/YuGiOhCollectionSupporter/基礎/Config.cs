@@ -15,7 +15,7 @@ namespace YuGiOhCollectionSupporter
 		public decimal CardID_MAX = 20000;
 
 		public bool Is捜索打ち切り = true;
-		public decimal 捜索打ち切り限界 = 100;
+		public decimal 捜索打ち切り限界 = 200;
 
 
 		public static string Domain = "https://www.db.yugioh-card.com";

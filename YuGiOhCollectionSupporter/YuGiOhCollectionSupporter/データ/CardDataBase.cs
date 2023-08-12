@@ -40,7 +40,7 @@ namespace YuGiOhCollectionSupporter
                     if (newdata.URL == olddata.URL)
                     {
                         updatenum += olddata.AddNewData(newdata);
-                        olddata = newdata;                              //データを新しいものに更新
+ //                       olddata = newdata;                              //データを新しいものに更新してるつもりだったが意味ないじゃんこれ
                         goto next;
                     }
                 }
@@ -94,7 +94,7 @@ namespace YuGiOhCollectionSupporter
                     var olddata = UserCardDataList[i];
                     if (newdata.ID == olddata.ID)
                     {
-                        olddata = newdata;                              //データを新しいものに更新
+                        UserCardDataList[i] = newdata;                              //データを新しいものに更新
                         goto next;
                     }
                 }

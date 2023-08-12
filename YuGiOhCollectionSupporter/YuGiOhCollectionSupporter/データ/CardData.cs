@@ -226,7 +226,8 @@ namespace YuGiOhCollectionSupporter
 					return uservariation.所持フラグ;
                 }
             }
-			Program.WriteLog("不明なvariation(TwinCardData.get所持フラグ)",LogLevel.エラー);
+			Program.WriteLog("不明なvariation(TwinCardData.get所持フラグ) " + variation.発売パック.Name + " " + variation.rarity.Name
+				+ " " + variation.略号.get略号Full(), LogLevel.エラー);
 			return false;
         }
 
@@ -240,7 +241,8 @@ namespace YuGiOhCollectionSupporter
 					return ;
 				}
 			}
-			Program.WriteLog("不明なvariation(TwinCardData.set所持フラグ)", LogLevel.エラー);
+			Program.WriteLog("不明なvariation(TwinCardData.set所持フラグ) " + variation.発売パック.Name + " " + variation.rarity.Name
+				+ " " + variation.略号.get略号Full(), LogLevel.エラー);
 		}
 
 		//そのカード名のカードを持っているかを返す
