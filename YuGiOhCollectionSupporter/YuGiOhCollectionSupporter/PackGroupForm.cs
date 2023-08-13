@@ -63,7 +63,8 @@ namespace YuGiOhCollectionSupporter
 		{
             PackGroupDataList.Add(new PackGroupData("構築済みデッキ", "スターターデッキ", "STARTER DECK"));
             PackGroupDataList.Add(new PackGroupData("構築済みデッキ", "ストラクチャーデッキ", "STRUCTURE DECK"));
-            PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "COLLECTORS TIN", "COLLECTORS TIN"));
+			PackGroupDataList.Add(new PackGroupData("構築済みデッキ", "デュエルロワイヤル", "デュエルロワイヤル"));
+			PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "COLLECTORS TIN", "COLLECTORS TIN"));
             PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "アニメーションクロニクル", "アニメーションクロニクル"));
             PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "WORLD PREMIERE PACK", "WORLD PREMIERE PACK"));
             PackGroupDataList.Add(new PackGroupData("その他ブースターパック", "デッキビルドパック", "デッキビルドパック"));
