@@ -39,6 +39,9 @@ namespace YuGiOhCollectionSupporter
 		{
 			config = Config.Load();
 			Program.WriteLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
+
+			SQLite.CreateTable();
+
 			Program.Load(CardDB.SaveDataPath, ref CardDB);
 			Program.Load(PackDB.SaveDataPath, ref PackDB);
 			Program.Load(UserCardDB.SaveUserDataPath, ref UserCardDB);

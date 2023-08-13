@@ -68,6 +68,17 @@ namespace YuGiOhCollectionSupporter
 			return null;
 		}
 
+		public static string CardDataToJson(CardData data)
+		{
+			string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+			return json;
+		}
+
+		public static CardData JsonToCardData(string json)
+		{
+			return JsonConvert.DeserializeObject<CardData>(json);
+		}
+
 		public static void Save<T>(string path, T data, DefaultContractResolver cr = null)
 		{
 			//jsonにシリアライズ
