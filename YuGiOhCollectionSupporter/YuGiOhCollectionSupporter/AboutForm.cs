@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PdfSharp.Pdf.Content.Objects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -7,7 +8,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace 遊戯王カードコレクトサポーター
+namespace YuGiOhCollectionSupporter
 {
 	partial class AboutForm : Form
 	{
@@ -37,7 +38,7 @@ namespace 遊戯王カードコレクトサポーター
 						return titleAttribute.Title;
 					}
 				}
-				return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
+				return "";//System.IO.Path.GetFileNameWithoutExtension(Assembly.GetAssembly() Assembly.GetExecutingAssembly().CodeBase);
 			}
 		}
 

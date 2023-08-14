@@ -154,7 +154,7 @@ namespace YuGiOhCollectionSupporter
                 NoCardCount = 0;
 
 
-                SQLite.InsertRecord(carddata.ID, carddata);
+				form.sqlite.DBAccess(form.sqlite.InsertCardData,carddata);
             }
             Program.WriteLog("カードデータ取得終了", LogLevel.必須項目);
 

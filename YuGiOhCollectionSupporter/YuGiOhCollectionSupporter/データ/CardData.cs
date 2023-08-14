@@ -2,31 +2,55 @@
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SQLite;
+using System.Data.Entity;
 
 namespace YuGiOhCollectionSupporter
 {
+
+	[Table("carddata")]
+//	[Index(nameof(CardData.ID), IsUnique = true)]なぜかエラーになる
 	public class CardData
 	{
+		[Key]
+		[Column("id")]
 		public int ID;
+
+		[Column("birthday")]
 		public DateTimeOffset 誕生日;
 
+		[Column("url")]
 		public string URL;
+
+		[Column("name")]
 		public string 名前;
-		public string 読み;	//ひらがなはカタカナに直される
+
+		[Column("read")]
+		public string 読み;   //ひらがなはカタカナに直される
+
+		[Column("eng")]
 		public string 英語名;
 
+		[Column("valuepairs")]
 		public Dictionary<string, string> ValuePairs;   //存在するパラメータのペアだけ登録される
 
+		[Column("syuzoku")]
 		public string 種族;
+
+		[Column("pendulum")]
 		public string ペンデュラム効果;
+
+		[Column("text")]
 		public string テキスト;
 
-
+		[Column("variations")]
 		public List<CardVariation> ListVariations = new List<CardVariation>();
 
 //		[JsonIgnore]
@@ -35,10 +59,6 @@ namespace YuGiOhCollectionSupporter
 
 
 
-		public (Brushes upcolor,Brushes downcolor) getCardColor()
-        {
-			return (null,null);
-        }
 
 		public CardData() { }
 

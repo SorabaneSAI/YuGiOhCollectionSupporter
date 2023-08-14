@@ -6,13 +6,58 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.Sqlite;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace YuGiOhCollectionSupporter
 {
-	public static class SQLite
+	public class SQLite : DbContext
 	{
 		public static string DBSourcePath = "Database.sqlite";
 		public static string CardTableName = "CardTable";
+
+		public DbSet<CardData> CardDataTable { get; set; }
+
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			SqliteConnectionStringBuilder stringBuilder = new SqliteConnectionStringBuilder();
+			stringBuilder.DataSource = DBSourcePath;
+
+			using (var sqliteConnection = new SqliteConnection(stringBuilder.ToString()))
+			{
+				optionsBuilder.UseSqlite(sqliteConnection);
+				;
+			}
+		}
+
+		public void DBAccess(Action<SQLite, Object> act, Object obj)
+		{
+			try
+			{
+				//テーブルなければ作る　あれば接続
+				using (var access = new SQLite())
+				{
+					access.Database.EnsureCreated();
+
+					if (act == null) return;
+					act(access, (CardData) obj);
+				}
+			}
+			catch (Exception ex)
+			{
+				Program.WriteLog(ex.Message, LogLevel.エラー);
+			}
+
+		}
+
+		public void InsertCardData(SQLite access, Object data)
+		{
+			access.CardDataTable.Add((CardData)data);
+			access.SaveChanges();
+		}
+
+		/*
 
 		public static void CreateTable()
 		{
@@ -20,6 +65,7 @@ namespace YuGiOhCollectionSupporter
 			DBExecuteNonQuery($"create table if not exists {CardTableName}(" +
 							"id integer primary key," +
 							"json text)");
+
 		}
 
 		public static void DBExecuteNonQuery(string query)
@@ -45,18 +91,19 @@ namespace YuGiOhCollectionSupporter
 			}
 		}
 
-		public static void InsertRecord(int id, CardData data)
+		public static void InsertCardData(int id, CardData data)
 		{
 			string str = Program.CardDataToJson(data).Replace("'", "''");
 			var query = $"INSERT INTO {CardTableName} (id,json) VALUES ({id},'{str}')";	//{}のために'で囲み、'のために'を''にする
 			DBExecuteNonQuery(query.ToString());
 		}
 
-		public static void UpdateRecord(int id, CardData data)
+		public static void UpdateCardData(int id, CardData data)
 		{
 			string str = Program.CardDataToJson(data).Replace("'", "''");
 			var query = $"UPDATE {CardTableName} SET json = '{str}' WHERE id = {id};";
 			DBExecuteNonQuery(query.ToString());
 		}
+		*/
 	}
 }
