@@ -49,7 +49,7 @@ namespace YuGiOhCollectionSupporter
                         string 相対パス = packnode.QuerySelector("input").GetAttribute("value");
 
                         await Task.Delay(1000); //負荷軽減のため１秒待機;
-                        (int num, DateTimeOffset day) tmp = await getPackData(Config.Domain + 相対パス);
+                        (int num, DateTime day) tmp = await getPackData(Config.Domain + 相対パス);
 
                         if(tmp.num == -1)
                         {
@@ -73,14 +73,14 @@ namespace YuGiOhCollectionSupporter
             return packDatas;
         }
 
-        public static async Task<(int, DateTimeOffset)> getPackData(string url)
+        public static async Task<(int, DateTime)> getPackData(string url)
         {
             var html = await Program.GetHtml(url);
 
             if (html == null)
             {
                 Program.WriteLog($"エラー発生。ログファイル参照。[{url}]", LogLevel.エラー);
-                return (-1, DateTimeOffset.Now);
+                return (-1, DateTime.Now);
             }
             var DivNode = html.QuerySelector("div[id='bg']");
 
@@ -90,7 +90,7 @@ namespace YuGiOhCollectionSupporter
 
             string ptn = "[0-9]{4}年[0-9]{2}月[0-9]{2}日";
             string dateStr = Regex.Match(birthdaystr, ptn).Value;   //正規表現で日付だけ抜き出す
-            DateTimeOffset birthday = Program.ConvertDate(dateStr, "yyyy年MM月dd日");
+            DateTime birthday = Program.ConvertDate(dateStr, "yyyy年MM月dd日");
 
 
             //カード枚数取得
@@ -102,7 +102,7 @@ namespace YuGiOhCollectionSupporter
             if(!int.TryParse(numstr,out num))
             {
                 Program.WriteLog("getPackDataで日付変換失敗",LogLevel.エラー);
-                return (-1, DateTimeOffset.Now);
+                return (-1, DateTime.Now);
             }
             return (num, birthday);
 

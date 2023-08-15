@@ -24,13 +24,16 @@ namespace YuGiOhCollectionSupporter
 
 		public async static void SetFormPanelLeft(Form1 form)
 		{
-			Program.WriteLog("ツリーノード作成中",LogLevel.必須項目);
 			form.InvalidMenuItem();
 
-			//ツリーをクリア
+			form.treeView1.Invoke(new Action(() =>
+			{
+				//ツリーをクリア
+				form.treeView1.Nodes.Clear();
+			}));
+
 			TreeView treeview = form.treeView1;
 			var nodes = treeview.Nodes;
-			nodes.Clear();
 
 			TreeView tmptreeview = new TreeView();  //TreeNodeに別スレッドが触らないためにこれを使用
 
@@ -80,28 +83,34 @@ namespace YuGiOhCollectionSupporter
 				nextloop:;
                 }
 
-                //typenameのツリーを作成
-                foreach (var typename in typenameList)
-                {
-					treeview.Nodes.Add(typename);
-				}
-				treeview.Nodes.Add("非表示");
+				treeview.Invoke(new Action(() =>
+				{
 
-                //typenameのツリーにPackGroupのツリーをくっつける
-                foreach (var packgroup in form.PackGroupDataList)
-                {
-					if (packgroup.有効フラグ == false) continue;
 
-					foreach (TreeNode node in treeview.Nodes)
+					//typenameのツリーを作成
+					foreach (var typename in typenameList)
 					{
-						if(packgroup.親ノード名 == node.Text)
-                        {
-							var n =node.Nodes.Add(packgroup.子ノード名);
-							n.Tag = packgroup;
-							break;
-                        }
+						treeview.Nodes.Add(typename);
 					}
-				}
+					treeview.Nodes.Add("非表示");
+
+					//typenameのツリーにPackGroupのツリーをくっつける
+					foreach (var packgroup in form.PackGroupDataList)
+					{
+						if (packgroup.有効フラグ == false) continue;
+
+						foreach (TreeNode node in treeview.Nodes)
+						{
+							if(packgroup.親ノード名 == node.Text)
+							{
+								var n =node.Nodes.Add(packgroup.子ノード名);
+								n.Tag = packgroup;
+								break;
+							}
+						}
+					}
+
+				}));
 
 
 
@@ -118,12 +127,12 @@ namespace YuGiOhCollectionSupporter
 								if (packgroupdata == null) break;	//今追加したパックだとキャストできない
 								if (pack.Name.Contains(packgroupdata.含まれる文字))
                                 {
-									AddTreeNode(node2,pack);
+									AddTreeNode(treeview,node2, pack);
 									goto next;
                                 }
 									
                             }
-							AddTreeNode(node, pack);
+							AddTreeNode(treeview, node, pack);
 							break;
                         }
                     }
@@ -131,18 +140,24 @@ namespace YuGiOhCollectionSupporter
                 }
 			}
 
-
-
-			Program.WriteLog("ツリーノード作成終了", LogLevel.必須項目);
+			treeview.Invoke(new Action(() =>
+			{
+				treeview.TreeViewNodeSorter = new NodeSorter();
+				treeview.Sort();
+			}));
 			form.ValidMenuItem();
 
 		}
 
-		static void AddTreeNode(TreeNode node, PackData pack)
+		static void AddTreeNode(TreeView treeview,TreeNode node, PackData pack)
         {
-			var n = node.Nodes.Add(pack.Name);
-			n.Tag = pack;
-			n.Text += $"({pack.CardCount})";
+			treeview.Invoke(new Action(() =>
+			{
+				var n = node.Nodes.Add(pack.Name);
+				n.Tag = pack;
+				n.Text += $"({pack.CardCount})";
+			}));
+
 		}
 
 		//Depthは読み取る文字数であり再帰回数 

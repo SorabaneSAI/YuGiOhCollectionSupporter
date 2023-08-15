@@ -158,10 +158,10 @@ namespace YuGiOhCollectionSupporter
 			return JsonConvert.SerializeObject(obj, format);
         }
 
-		public static DateTimeOffset ConvertDate(string date,string format)
+		public static DateTime ConvertDate(string date,string format)
         {
-			DateTimeOffset output;
-			if (DateTimeOffset.TryParseExact(date, format, null, DateTimeStyles.AssumeLocal, out output))
+			DateTime output;
+			if (DateTime.TryParseExact(date, format, null, DateTimeStyles.AssumeLocal, out output))
             {
 				return output.Date;
             }
@@ -171,7 +171,7 @@ namespace YuGiOhCollectionSupporter
 			return output;
 		}
 
-		public static string ToString(DateTimeOffset date)
+		public static string ToString(DateTime date)
         {
 			return date.ToString(@"yyyy\/MM\/dd");
         }

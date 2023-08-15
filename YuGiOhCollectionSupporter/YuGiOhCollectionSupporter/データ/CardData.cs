@@ -13,7 +13,7 @@ namespace YuGiOhCollectionSupporter
 	public class CardData
 	{
 		public int ID;
-		public DateTimeOffset 誕生日;
+		public DateTime 誕生日;
 
 		public string URL;
 		public string 名前;
@@ -103,9 +103,9 @@ namespace YuGiOhCollectionSupporter
 
 
 		//最も若い誕生日を返す
-		public DateTimeOffset getEarlyDate()
+		public DateTime getEarlyDate()
         {
-			DateTimeOffset date = DateTimeOffset.Now;
+			DateTime date = DateTime.Now;
 
 			if (ListVariations == null) return date;
 			foreach (var vari in ListVariations)

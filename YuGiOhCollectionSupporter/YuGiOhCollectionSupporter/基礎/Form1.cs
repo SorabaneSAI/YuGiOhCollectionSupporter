@@ -99,20 +99,34 @@ namespace YuGiOhCollectionSupporter
 			formPanel.SetFormPanelRight(e.Node, this);
 		}
 
-		private void あいうえお順ToolStripMenuItem_Click(object sender, EventArgs e)
+		private async void あいうえお順ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			パック順ToolStripMenuItem.CheckState = CheckState.Unchecked;
 			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 
-			formPanel.SetFormPanelLeft( this);
+
+			Program.WriteLog("ツリーノード作成中", LogLevel.必須項目);	//非同期処理中はなんかログかけない
+			//これでUI固まらない
+			await Task.Run(() =>
+			{
+				formPanel.SetFormPanelLeft(this);
+			});
+			Program.WriteLog("ツリーノード作成終了", LogLevel.必須項目);
+
 		}
 
-		private void パック順ToolStripMenuItem_Click(object sender, EventArgs e)
+		private async void パック順ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			あいうえお順ToolStripMenuItem.CheckState = CheckState.Unchecked;
 			パック順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 
-			formPanel.SetFormPanelLeft(this);
+			Program.WriteLog("ツリーノード作成中", LogLevel.必須項目);   //非同期処理中はなんかログかけない
+			//これでUI固まらない
+			await Task.Run(() =>
+			{
+				formPanel.SetFormPanelLeft(this);
+			});
+			Program.WriteLog("ツリーノード作成終了", LogLevel.必須項目);
 		}
 
 
