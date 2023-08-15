@@ -25,6 +25,8 @@ namespace YuGiOhCollectionSupporter
 		public async static void SetFormPanelLeft(Form1 form)
 		{
 			form.InvalidMenuItem();
+			Program.WriteLog("ツリーノード作成中", LogLevel.必須項目);  
+
 
 			form.treeView1.Invoke(new Action(() =>
 			{
@@ -57,12 +59,16 @@ namespace YuGiOhCollectionSupporter
 					}
 				});
 				*/
-
-				//面倒だけどTreeNodeCollectionのせいでこうするしかない！
-				foreach (TreeNode node in tmptreeview.Nodes)
+				treeview.Invoke(new Action(() =>
 				{
-					treeview.Nodes.Add((TreeNode)node.Clone()); //クローンしないとなぜか表示されない
-				}
+
+					//面倒だけどTreeNodeCollectionのせいでこうするしかない！
+					foreach (TreeNode node in tmptreeview.Nodes)
+					{
+						treeview.Nodes.Add((TreeNode)node.Clone()); //クローンしないとなぜか表示されない
+					}
+				}));
+
 			}
 			else if(form.パック順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
             {
@@ -131,19 +137,22 @@ namespace YuGiOhCollectionSupporter
                     }
 				next:;
                 }
+
+				treeview.Invoke(new Action(() =>
+				{
+					//面倒だけどTreeNodeCollectionのせいでこうするしかない！
+					foreach (TreeNode node in tmptreeview.Nodes)
+					{
+						treeview.Nodes.Add((TreeNode)node.Clone()); //クローンしないとなぜか表示されない
+					}
+					treeview.TreeViewNodeSorter = new NodeSorter();
+					treeview.Sort();
+				}));
+
 			}
 
-			treeview.Invoke(new Action(() =>
-			{
-				//面倒だけどTreeNodeCollectionのせいでこうするしかない！
-				foreach (TreeNode node in tmptreeview.Nodes)
-				{
-					treeview.Nodes.Add((TreeNode)node.Clone()); //クローンしないとなぜか表示されない
-				}
-				treeview.TreeViewNodeSorter = new NodeSorter();
-				treeview.Sort();
-			}));
 			form.ValidMenuItem();
+			Program.WriteLog("ツリーノード作成終了", LogLevel.必須項目);
 
 		}
 

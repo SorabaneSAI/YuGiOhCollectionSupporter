@@ -20,6 +20,7 @@ namespace YuGiOhCollectionSupporter
 		public LogForm()
 		{
 			InitializeComponent();
+			_ = dataGridView1.Handle;   //ハンドルが作成されてないとInvokeできない
 		}
 
 		private void LogForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -55,31 +56,36 @@ namespace YuGiOhCollectionSupporter
 
 		public void AddLog(string text, LogLevel LV)
         {
-			lock (dataGridView1)
+			dataGridView1.Invoke(new Action(() =>
 			{
-				dataGridView1.Rows.Add(LV, text);
-				//ログに加えるが、現在のログレベル以下なら非表示にする
-				int index = dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
-				var row = dataGridView1.Rows[index];
-				if ((int)(LogLevel)row.Cells[0].Value < comboBox1.SelectedIndex)
-					row.Visible = false;
-				dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
 
-				//増えてきたら情報ログを消してく
-				if (dataGridView1.Rows.Count > 1000)
+				lock (dataGridView1)
 				{
-					for (int i = 0; i < dataGridView1.Rows.Count; i++)
+					dataGridView1.Rows.Add(LV, text);
+					//ログに加えるが、現在のログレベル以下なら非表示にする
+					int index = dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
+					var row = dataGridView1.Rows[index];
+					if ((int)(LogLevel)row.Cells[0].Value < comboBox1.SelectedIndex)
+						row.Visible = false;
+					dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.GetLastRow(DataGridViewElementStates.Visible);
+
+					//増えてきたら情報ログを消してく
+					if (dataGridView1.Rows.Count > 1000)
 					{
-						var r = dataGridView1.Rows[i];
-						if ((LogLevel)r.Cells[0].Value == LogLevel.情報)
+						for (int i = 0; i < dataGridView1.Rows.Count; i++)
 						{
-							dataGridView1.Rows.RemoveAt(i);
-							break;
+							var r = dataGridView1.Rows[i];
+							if ((LogLevel)r.Cells[0].Value == LogLevel.情報)
+							{
+								dataGridView1.Rows.RemoveAt(i);
+								break;
+							}
 						}
 					}
 				}
-			}
+			}));
+
 		}
 
-    }
+	}
 }

@@ -105,13 +105,11 @@ namespace YuGiOhCollectionSupporter
 			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 
 
-			Program.WriteLog("ツリーノード作成中", LogLevel.必須項目);	//非同期処理中はなんかログかけない
 			//これでUI固まらない
 			await Task.Run(() =>
 			{
 				formPanel.SetFormPanelLeft(this);
 			});
-			Program.WriteLog("ツリーノード作成終了", LogLevel.必須項目);
 
 		}
 
@@ -120,13 +118,11 @@ namespace YuGiOhCollectionSupporter
 			あいうえお順ToolStripMenuItem.CheckState = CheckState.Unchecked;
 			パック順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 
-			Program.WriteLog("ツリーノード作成中", LogLevel.必須項目);   //非同期処理中はなんかログかけない
 			//これでUI固まらない
 			await Task.Run(() =>
 			{
 				formPanel.SetFormPanelLeft(this);
 			});
-			Program.WriteLog("ツリーノード作成終了", LogLevel.必須項目);
 		}
 
 
