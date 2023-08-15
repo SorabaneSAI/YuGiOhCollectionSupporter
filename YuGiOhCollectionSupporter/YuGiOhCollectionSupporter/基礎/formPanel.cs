@@ -83,41 +83,34 @@ namespace YuGiOhCollectionSupporter
 				nextloop:;
                 }
 
-				treeview.Invoke(new Action(() =>
+				//typenameのツリーを作成
+				foreach (var typename in typenameList)
 				{
+					tmptreeview.Nodes.Add(typename);
+				}
+				tmptreeview.Nodes.Add("非表示");
 
+				//typenameのツリーにPackGroupのツリーをくっつける
+				foreach (var packgroup in form.PackGroupDataList)
+				{
+					if (packgroup.有効フラグ == false) continue;
 
-					//typenameのツリーを作成
-					foreach (var typename in typenameList)
+					foreach (TreeNode node in tmptreeview.Nodes)
 					{
-						treeview.Nodes.Add(typename);
-					}
-					treeview.Nodes.Add("非表示");
-
-					//typenameのツリーにPackGroupのツリーをくっつける
-					foreach (var packgroup in form.PackGroupDataList)
-					{
-						if (packgroup.有効フラグ == false) continue;
-
-						foreach (TreeNode node in treeview.Nodes)
+						if(packgroup.親ノード名 == node.Text)
 						{
-							if(packgroup.親ノード名 == node.Text)
-							{
-								var n =node.Nodes.Add(packgroup.子ノード名);
-								n.Tag = packgroup;
-								break;
-							}
+							var n =node.Nodes.Add(packgroup.子ノード名);
+							n.Tag = packgroup;
+							break;
 						}
 					}
-
-				}));
-
+				}
 
 
 				//そのツリーにパック名をくっつける
 				foreach (var pack in form.PackDB.PackDataList)
                 {
-					foreach (TreeNode node in treeview.Nodes)
+					foreach (TreeNode node in tmptreeview.Nodes)
 					{
 						if (node.Text == pack.TypeName)
                         {
@@ -127,12 +120,12 @@ namespace YuGiOhCollectionSupporter
 								if (packgroupdata == null) break;	//今追加したパックだとキャストできない
 								if (pack.Name.Contains(packgroupdata.含まれる文字))
                                 {
-									AddTreeNode(treeview,node2, pack);
+									AddTreeNode(tmptreeview, node2, pack);
 									goto next;
                                 }
 									
                             }
-							AddTreeNode(treeview, node, pack);
+							AddTreeNode(tmptreeview, node, pack);
 							break;
                         }
                     }
@@ -142,6 +135,11 @@ namespace YuGiOhCollectionSupporter
 
 			treeview.Invoke(new Action(() =>
 			{
+				//面倒だけどTreeNodeCollectionのせいでこうするしかない！
+				foreach (TreeNode node in tmptreeview.Nodes)
+				{
+					treeview.Nodes.Add((TreeNode)node.Clone()); //クローンしないとなぜか表示されない
+				}
 				treeview.TreeViewNodeSorter = new NodeSorter();
 				treeview.Sort();
 			}));
@@ -151,12 +149,9 @@ namespace YuGiOhCollectionSupporter
 
 		static void AddTreeNode(TreeView treeview,TreeNode node, PackData pack)
         {
-			treeview.Invoke(new Action(() =>
-			{
 				var n = node.Nodes.Add(pack.Name);
 				n.Tag = pack;
 				n.Text += $"({pack.CardCount})";
-			}));
 
 		}
 
