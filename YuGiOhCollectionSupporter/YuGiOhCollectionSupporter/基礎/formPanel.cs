@@ -22,25 +22,27 @@ namespace YuGiOhCollectionSupporter
 		//パネルにいろいろ設置する
 
 
-		public async static void SetFormPanelLeft(Form1 form)
+		public async static void SetFormPanelLeft(Form1 form, bool IsAiueo)
 		{
 			form.InvalidMenuItem();
-			Program.WriteLog("ツリーノード作成中", LogLevel.必須項目);  
+			Program.WriteLog("ツリーノード作成中", LogLevel.必須項目);
 
 
-			form.treeView1.Invoke(new Action(() =>
+			TreeView treeview = IsAiueo ? form.treeView1 : form.treeView2 ;
+
+
+			treeview.Invoke(new Action(() =>
 			{
 				//ツリーをクリア
-				form.treeView1.Nodes.Clear();
+				treeview.Nodes.Clear();
 			}));
 
-			TreeView treeview = form.treeView1;
 			var nodes = treeview.Nodes;
 
 			TreeView tmptreeview = new TreeView();  //TreeNodeに別スレッドが触らないためにこれを使用
 
 			//チェック次第でソートする
-			if (form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			if (IsAiueo)
             {
 				form.CardDB.SortAIUEO();
 
@@ -70,7 +72,7 @@ namespace YuGiOhCollectionSupporter
 				}));
 
 			}
-			else if(form.パック順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			else 
             {
 				//typenameの種類を全部取得
 				List<string> typenameList = new List<string>();
@@ -314,7 +316,7 @@ namespace YuGiOhCollectionSupporter
 		}
 
 		//右側は左側で何をクリックしたかで変わる
-		public static void SetFormPanelRight(TreeNode treenode, Form1 form)
+		public static void SetFormPanelRight(TreeNode treenode, Form1 form,int num)
 		{
 			if (treenode.Tag == null) return;
 			form.splitContainer1.Panel2.Controls.Clear();
@@ -322,7 +324,7 @@ namespace YuGiOhCollectionSupporter
 			CardDataBase cardDB;
 			PackData pack;
 
-			if (form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate)
+			if (num ==1)
 			{
 				cardDB = ((TreeNodeAIUEOTag)treenode.Tag).CardDB;
 				pack = null;
@@ -338,7 +340,7 @@ namespace YuGiOhCollectionSupporter
 
 			}
 
-			CardListUI packUI = new CardListUI(cardDB,pack, form, form.あいうえお順ToolStripMenuItem.CheckState == CheckState.Indeterminate) ;
+			CardListUI packUI = new CardListUI(cardDB,pack, form, num==1) ;
 			form.splitContainer1.Panel2.Controls.Add(packUI);
 
 		}

@@ -58,7 +58,7 @@
             "警告",
             "エラー"});
 			this.comboBox1.Location = new System.Drawing.Point(107, 8);
-			this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.comboBox1.Name = "comboBox1";
 			this.comboBox1.Size = new System.Drawing.Size(157, 23);
 			this.comboBox1.TabIndex = 2;
@@ -68,7 +68,7 @@
 			// button1
 			// 
 			this.button1.Location = new System.Drawing.Point(376, 5);
-			this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.button1.Margin = new System.Windows.Forms.Padding(4);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(100, 29);
 			this.button1.TabIndex = 6;
@@ -89,13 +89,13 @@
             this.text});
 			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataGridView1.Location = new System.Drawing.Point(4, 42);
-			this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.ReadOnly = true;
 			this.dataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
 			this.dataGridView1.RowHeadersVisible = false;
 			this.dataGridView1.RowHeadersWidth = 51;
-			this.dataGridView1.RowTemplate.Height = 15;
+			this.dataGridView1.RowTemplate.Height = 17;
 			this.dataGridView1.Size = new System.Drawing.Size(1448, 736);
 			this.dataGridView1.TabIndex = 1;
 			// 
@@ -128,7 +128,7 @@
 			this.tableLayoutPanel1.Controls.Add(this.dataGridView1, 0, 1);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
@@ -145,7 +145,7 @@
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.comboBox1);
 			this.Controls.Add(this.tableLayoutPanel1);
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "LogForm";
 			this.Text = "ログ";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LogForm_FormClosing);

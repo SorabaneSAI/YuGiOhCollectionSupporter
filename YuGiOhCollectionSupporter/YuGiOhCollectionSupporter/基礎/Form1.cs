@@ -46,6 +46,9 @@ namespace YuGiOhCollectionSupporter
 
 			formPanel.ShowHome(this);
 
+			//あいうえお順とパック順のツリー作成
+			button3.PerformClick();
+			button4.PerformClick();
 			//			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 		}
 		//設定を開く
@@ -93,37 +96,6 @@ namespace YuGiOhCollectionSupporter
 			Application.Exit();
 		}
 
-		//クリックしたら右側にパックの内容表示
-		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-		{
-			formPanel.SetFormPanelRight(e.Node, this);
-		}
-
-		private async void あいうえお順ToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			パック順ToolStripMenuItem.CheckState = CheckState.Unchecked;
-			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
-
-
-			//これでUI固まらない
-			await Task.Run(() =>
-			{
-				formPanel.SetFormPanelLeft(this);
-			});
-
-		}
-
-		private async void パック順ToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			あいうえお順ToolStripMenuItem.CheckState = CheckState.Unchecked;
-			パック順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
-
-			//これでUI固まらない
-			await Task.Run(() =>
-			{
-				formPanel.SetFormPanelLeft(this);
-			});
-		}
 
 
 		private async void 両方取得ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -211,7 +183,7 @@ namespace YuGiOhCollectionSupporter
 				label1.Visible = true;  //左下のラベルをON
 				toolStripMenuItem1.Enabled = false; //設定を触れないように
 				データ取得ToolStripMenuItem.Enabled = false; //このボタンも触れないように
-				並び順ToolStripMenuItem.Enabled = false;
+//				並び順ToolStripMenuItem.Enabled = false;
 			}));
 
 		}
@@ -223,7 +195,7 @@ namespace YuGiOhCollectionSupporter
 				label1.Visible = false;  //左下のラベル非表示
 				toolStripMenuItem1.Enabled = true;  //設定を触れるように
 				データ取得ToolStripMenuItem.Enabled = true;  //このボタンも触れるように
-				並び順ToolStripMenuItem.Enabled = true;
+//				並び順ToolStripMenuItem.Enabled = true;
 			}));
 
 		}
@@ -318,5 +290,34 @@ namespace YuGiOhCollectionSupporter
 			MessageBox.Show("PDFの出力が終わりました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
+		private async void button3_Click(object sender, EventArgs e)
+		{
+			//これでUI固まらない
+			await Task.Run(() =>
+			{
+				formPanel.SetFormPanelLeft(this, true);
+			});
+
+		}
+
+		private async void button4_Click(object sender, EventArgs e)
+		{
+			//これでUI固まらない
+			await Task.Run(() =>
+			{
+				formPanel.SetFormPanelLeft(this, false);
+			});
+
+		}
+		//クリックしたら右側にパックの内容表示
+		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			formPanel.SetFormPanelRight(e.Node, this, 1);
+		}
+
+		private void treeView2_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			formPanel.SetFormPanelRight(e.Node, this, 2);
+		}
 	}
 }
