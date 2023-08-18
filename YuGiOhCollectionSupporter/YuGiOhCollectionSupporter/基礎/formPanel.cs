@@ -28,7 +28,7 @@ namespace YuGiOhCollectionSupporter
 			Program.WriteLog("ツリーノード作成中", LogLevel.必須項目);
 
 
-			TreeView treeview = IsAiueo ? form.treeView1 : form.treeView2 ;
+			TreeView treeview = IsAiueo ? form.treeView1 : form.treeView2;
 
 
 			treeview.Invoke(new Action(() =>
@@ -43,10 +43,10 @@ namespace YuGiOhCollectionSupporter
 
 			//チェック次第でソートする
 			if (IsAiueo)
-            {
+			{
 				form.CardDB.SortAIUEO();
 
-				await RecursiveAddTreeNodeAIUEO(tmptreeview.Nodes, form.CardDB, 0,"",form);
+				await RecursiveAddTreeNodeAIUEO(tmptreeview.Nodes, form.CardDB, 0, "", form);
 				/*
 				//別スレッドで動かすためにTask.Run
 				var task = Task.Run(() => RecursiveAddTreeNode(tmptreeview.Nodes, CardDB.CardDB, 0));
@@ -72,24 +72,24 @@ namespace YuGiOhCollectionSupporter
 				}));
 
 			}
-			else 
-            {
+			else
+			{
 				//typenameの種類を全部取得
 				List<string> typenameList = new List<string>();
 
-                foreach (var pack in form.PackDB.PackDataList)
-                {
-                    foreach (var typename in typenameList)
-                    {
-						if(pack.TypeName == typename)
-                        {
+				foreach (var pack in form.PackDB.PackDataList)
+				{
+					foreach (var typename in typenameList)
+					{
+						if (pack.TypeName == typename)
+						{
 							goto nextloop;
 						}
 					}
 					typenameList.Add(pack.TypeName);
-					
+
 				nextloop:;
-                }
+				}
 
 				//typenameのツリーを作成
 				foreach (var typename in typenameList)
@@ -105,9 +105,9 @@ namespace YuGiOhCollectionSupporter
 
 					foreach (TreeNode node in tmptreeview.Nodes)
 					{
-						if(packgroup.親ノード名 == node.Text)
+						if (packgroup.親ノード名 == node.Text)
 						{
-							var n =node.Nodes.Add(packgroup.子ノード名);
+							var n = node.Nodes.Add(packgroup.子ノード名);
 							n.Tag = packgroup;
 							break;
 						}
@@ -117,28 +117,28 @@ namespace YuGiOhCollectionSupporter
 
 				//そのツリーにパック名をくっつける
 				foreach (var pack in form.PackDB.PackDataList)
-                {
+				{
 					foreach (TreeNode node in tmptreeview.Nodes)
 					{
 						if (node.Text == pack.TypeName)
-                        {
-                            foreach (TreeNode node2 in node.Nodes)
-                            {
+						{
+							foreach (TreeNode node2 in node.Nodes)
+							{
 								PackGroupData packgroupdata = node2.Tag as PackGroupData;
-								if (packgroupdata == null) break;	//今追加したパックだとキャストできない
+								if (packgroupdata == null) break;   //今追加したパックだとキャストできない
 								if (pack.Name.Contains(packgroupdata.含まれる文字))
-                                {
+								{
 									AddTreeNode(tmptreeview, node2, pack);
 									goto next;
-                                }
-									
-                            }
+								}
+
+							}
 							AddTreeNode(tmptreeview, node, pack);
 							break;
-                        }
-                    }
+						}
+					}
 				next:;
-                }
+				}
 
 				treeview.Invoke(new Action(() =>
 				{
@@ -158,17 +158,17 @@ namespace YuGiOhCollectionSupporter
 
 		}
 
-		static void AddTreeNode(TreeView treeview,TreeNode node, PackData pack)
-        {
-				var n = node.Nodes.Add(pack.Name);
-				n.Tag = pack;
-				n.Text += $"({pack.CardCount})";
+		static void AddTreeNode(TreeView treeview, TreeNode node, PackData pack)
+		{
+			var n = node.Nodes.Add(pack.Name);
+			n.Tag = pack;
+			n.Text += $"({pack.CardCount})";
 
 		}
 
 		//Depthは読み取る文字数であり再帰回数 
-		public async static Task RecursiveAddTreeNodeAIUEO(TreeNodeCollection treenodes, CardDataBase carddb, int Depth,string ParentName, Form1 form)
-        {
+		public async static Task RecursiveAddTreeNodeAIUEO(TreeNodeCollection treenodes, CardDataBase carddb, int Depth, string ParentName, Form1 form)
+		{
 			//あ～んなどまでの全部のNodeをここにも保存
 			List<TreeNode> AIUEONodeList = new List<TreeNode>();
 
@@ -180,25 +180,25 @@ namespace YuGiOhCollectionSupporter
 				GyouNode.Tag = new TreeNodeAIUEOTag(gyou);
 
 				//各行のひらがなをノードとして行ノードに追加
-                for (int i = 0; i < Program.getTextLength(gyou.文字); i++)
-                {
-					string one_text = Program.getTextElement(gyou.文字,i);
+				for (int i = 0; i < Program.getTextLength(gyou.文字); i++)
+				{
+					string one_text = Program.getTextElement(gyou.文字, i);
 					var KanaNode = GyouNode.Nodes.Add(ParentName + one_text);
 					KanaNode.Tag = new TreeNodeAIUEOTag(new 行(ParentName + one_text, one_text));  //１文字だけの行扱いだけど特に意味はない
 					AIUEONodeList.Add(KanaNode);
 				}
 			}
-			if (Depth ==0)
+			if (Depth == 0)
 			{
 				//最初だけ非表示ノードも追加
 				TreeNode node = treenodes.Add($"非表示");
 				node.Tag = new TreeNodeAIUEOTag(null);
 
 				foreach (var card in carddb.CardList)
-                {
+				{
 					var twincarddata = form.getTwinCardData(card);
 					if (twincarddata.get表示フラグ() == false)
-                    {
+					{
 						((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Add(card);
 					}
 				}
@@ -217,22 +217,22 @@ namespace YuGiOhCollectionSupporter
 				//最初の文字を取得
 				string one_txt = Program.getTextElement(card.読み, Depth);
 
-                foreach (var node in AIUEONodeList)
-                {
-					if(((TreeNodeAIUEOTag)(node.Tag)).Gyou.文字.Equals(one_txt))
-                    {
+				foreach (var node in AIUEONodeList)
+				{
+					if (((TreeNodeAIUEOTag)(node.Tag)).Gyou.文字.Equals(one_txt))
+					{
 						//行ノードとその下のかなノード両方登録
 						((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Add(card);
 						((TreeNodeAIUEOTag)node.Parent.Tag).CardDB.CardList.Add(card);
 						goto nextloop;
-                    }
-                }
+					}
+				}
 
-                //どこにも所属出来ない場合、その他に
-                foreach (TreeNode node in treenodes)
-                {
-					if(node.Text.Contains("その他"))
-                    {
+				//どこにも所属出来ない場合、その他に
+				foreach (TreeNode node in treenodes)
+				{
+					if (node.Text.Contains("その他"))
+					{
 						((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Add(card);
 						break;
 					}
@@ -241,25 +241,25 @@ namespace YuGiOhCollectionSupporter
 			nextloop:;
 			}
 
-            //要素がないツリーを削除
-            for (int i = treenodes.Count-1; i >=0 ; i--)
-            {
+			//要素がないツリーを削除
+			for (int i = treenodes.Count - 1; i >= 0; i--)
+			{
 				TreeNode node = treenodes[i];
 
-                for (int j = node.Nodes.Count - 1; j >=0; j--)
-                {
+				for (int j = node.Nodes.Count - 1; j >= 0; j--)
+				{
 					TreeNode childnode = node.Nodes[j];
 					if (((TreeNodeAIUEOTag)childnode.Tag).CardDB.CardList.Count == 0)
-                    {
+					{
 						node.Nodes.RemoveAt(j);
 					}
 				}
-				if (((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Count ==0)
-                {
+				if (((TreeNodeAIUEOTag)node.Tag).CardDB.CardList.Count == 0)
+				{
 					treenodes.RemoveAt(i);
 
 				}
-            }
+			}
 
 			//カード枚数を表示
 			foreach (TreeNode node in treenodes)
@@ -268,8 +268,8 @@ namespace YuGiOhCollectionSupporter
 				int num = treenodetag.CardDB.CardList.Count;
 				node.Text += $" ({num})";
 
-                foreach (TreeNode childnode in node.Nodes)
-                {
+				foreach (TreeNode childnode in node.Nodes)
+				{
 					var childnodetag = (TreeNodeAIUEOTag)childnode.Tag;
 					int childnum = childnodetag.CardDB.CardList.Count;
 					childnode.Text += $" ({childnum})";
@@ -287,14 +287,14 @@ namespace YuGiOhCollectionSupporter
 					var treenodetag = (TreeNodeAIUEOTag)childnode.Tag;
 					if (treenodetag.Gyou.名前 != "非表示" && treenodetag.CardDB.CardList.Count > 50)    //50しかなかったらツリーを作成しない
 					{
-						await RecursiveAddTreeNodeAIUEO(childnode.Nodes, treenodetag.CardDB, Depth + 1, ((TreeNodeAIUEOTag)childnode.Tag).Gyou.名前,form);
+						await RecursiveAddTreeNodeAIUEO(childnode.Nodes, treenodetag.CardDB, Depth + 1, ((TreeNodeAIUEOTag)childnode.Tag).Gyou.名前, form);
 
 						//１つしか子を持っていない場合、自分を削除して親は孫を子にする
-						NodeUp(childnode,node.Nodes);                
+						NodeUp(childnode, node.Nodes);
 					}
 				}
 
-				NodeUp(node,treenodes);
+				NodeUp(node, treenodes);
 			}
 
 		}
@@ -306,8 +306,8 @@ namespace YuGiOhCollectionSupporter
 
 			int num = ParentNodeCollection.IndexOf(node);   //そのままaddすると順番が狂うので番号を控えて、追加のたびに増やす
 			foreach (TreeNode n in node.Nodes)
-            {
-				ParentNodeCollection.Insert(num,(TreeNode)n.Clone());
+			{
+				ParentNodeCollection.Insert(num, (TreeNode)n.Clone());
 				num++;
 			}
 
@@ -316,7 +316,7 @@ namespace YuGiOhCollectionSupporter
 		}
 
 		//右側は左側で何をクリックしたかで変わる
-		public static void SetFormPanelRight(TreeNode treenode, Form1 form,int num)
+		public static void SetFormPanelRight(TreeNode treenode, Form1 form, int num)
 		{
 			if (treenode.Tag == null) return;
 			form.splitContainer1.Panel2.Controls.Clear();
@@ -324,15 +324,15 @@ namespace YuGiOhCollectionSupporter
 			CardDataBase cardDB;
 			PackData pack;
 
-			if (num ==1)
+			if (num == 1)
 			{
 				cardDB = ((TreeNodeAIUEOTag)treenode.Tag).CardDB;
 				pack = null;
 			}
-			else 
+			else
 			{
 				pack = treenode.Tag as PackData;
-				if (pack == null) return;	//PackGroupDataの可能性あり
+				if (pack == null) return;   //PackGroupDataの可能性あり
 
 				cardDB = new CardDataBase();    //新しく作成してはいるが改造されていないCardDataBase
 
@@ -340,13 +340,13 @@ namespace YuGiOhCollectionSupporter
 
 			}
 
-			CardListUI packUI = new CardListUI(cardDB,pack, form, num==1) ;
+			CardListUI packUI = new CardListUI(cardDB, pack, form, num == 1);
 			form.splitContainer1.Panel2.Controls.Add(packUI);
 
 		}
 
 		public static void ShowHome(Form1 form)
-        {
+		{
 			form.splitContainer1.Panel2.Controls.Clear();
 			//ホーム画面
 
@@ -370,8 +370,8 @@ namespace YuGiOhCollectionSupporter
 
 			Button button = new Button();
 			button.Text = "持ってないカードをPDF出力";
-			button.Size = new System.Drawing.Size(200,30);
-			button.Click += form.button_Click;	//変数の都合でformにイベントあり
+			button.Size = new System.Drawing.Size(200, 30);
+			button.Click += form.button_Click;  //変数の都合でformにイベントあり
 			button.BringToFront();
 			panel.Controls.Add(button);
 
@@ -379,5 +379,64 @@ namespace YuGiOhCollectionSupporter
 			button.Tag = comboBox;
 		}
 
+
+		public static void SearchCardNameButton(Form1 form, string txt)
+		{
+			var treeview = form.treeView1;
+			treeview.Nodes.Clear();
+			var nodes = treeview.Nodes;
+
+			var 完全一致List = new List<CardData>();
+			var 部分一致List = new List<CardData>();
+			var テキスト一致List = new List<CardData>();
+
+			var cardlist = form.CardDB.CardList;
+			foreach (var card in cardlist)
+			{
+				if(card.名前.Equals(txt))
+				{
+					完全一致List.Add(card);
+				}
+				else if(card.名前.Contains(txt))
+				{
+					部分一致List.Add(card);
+				}
+				else if(card.テキスト.Contains(txt) || card.ペンデュラム効果.Contains(txt))
+				{
+					テキスト一致List.Add(card);
+				}
+
+			}
+
+			//それぞれツリーに追加
+
+			var node2 = nodes.Add($"完全一致({完全一致List.Count})");
+			node2.Tag = new TreeNodeAIUEOTag(new 行("あ", "あ"));
+			var cardlist2 = ((TreeNodeAIUEOTag)node2.Tag).CardDB.CardList;
+
+			foreach (var card in 完全一致List)
+			{
+				cardlist2.Add(card);
+			}
+
+			var node3 = nodes.Add($"部分一致({部分一致List.Count})");
+			node3.Tag = new TreeNodeAIUEOTag(new 行("あ", "あ"));
+			var cardlist3 = ((TreeNodeAIUEOTag)node3.Tag).CardDB.CardList;
+
+			foreach (var card in 部分一致List)
+			{
+				cardlist3.Add(card);
+			}
+
+			var node4 = nodes.Add($"テキスト一致({テキスト一致List.Count})");
+			node4.Tag = new TreeNodeAIUEOTag(new 行("あ", "あ"));
+			var cardlist4 = ((TreeNodeAIUEOTag)node4.Tag).CardDB.CardList;
+
+			foreach (var card in テキスト一致List)
+			{
+				cardlist4.Add(card);
+			}
+
+		}
 	}
 }

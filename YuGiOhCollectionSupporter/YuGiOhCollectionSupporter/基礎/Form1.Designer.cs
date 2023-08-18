@@ -72,7 +72,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-			this.menuStrip1.Size = new System.Drawing.Size(1540, 30);
+			this.menuStrip1.Size = new System.Drawing.Size(1540, 28);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -167,7 +167,7 @@
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
 			this.splitContainer1.Size = new System.Drawing.Size(1540, 794);
-			this.splitContainer1.SplitterDistance = 571;
+			this.splitContainer1.SplitterDistance = 570;
 			this.splitContainer1.SplitterWidth = 5;
 			this.splitContainer1.TabIndex = 3;
 			// 
@@ -192,14 +192,14 @@
 			this.splitContainer2.Panel2.Controls.Add(this.button2);
 			this.splitContainer2.Panel2.Controls.Add(this.textBox2);
 			this.splitContainer2.Panel2.Controls.Add(this.treeView2);
-			this.splitContainer2.Size = new System.Drawing.Size(571, 794);
-			this.splitContainer2.SplitterDistance = 234;
+			this.splitContainer2.Size = new System.Drawing.Size(570, 794);
+			this.splitContainer2.SplitterDistance = 233;
 			this.splitContainer2.TabIndex = 6;
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(178, 4);
+			this.button3.Location = new System.Drawing.Point(177, 4);
 			this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(49, 34);
@@ -211,13 +211,14 @@
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(118, 4);
+			this.button1.Location = new System.Drawing.Point(117, 4);
 			this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(54, 34);
 			this.button1.TabIndex = 7;
 			this.button1.Text = "検索";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// textBox1
 			// 
@@ -226,7 +227,7 @@
 			this.textBox1.Location = new System.Drawing.Point(4, 2);
 			this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(108, 22);
+			this.textBox1.Size = new System.Drawing.Size(107, 22);
 			this.textBox1.TabIndex = 6;
 			// 
 			// treeView1
@@ -236,7 +237,7 @@
 			this.treeView1.Margin = new System.Windows.Forms.Padding(4);
 			this.treeView1.MinimumSize = new System.Drawing.Size(31, 4);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(230, 743);
+			this.treeView1.Size = new System.Drawing.Size(229, 743);
 			this.treeView1.TabIndex = 5;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 

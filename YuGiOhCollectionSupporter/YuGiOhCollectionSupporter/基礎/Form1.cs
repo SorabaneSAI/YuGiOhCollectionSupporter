@@ -319,5 +319,11 @@ namespace YuGiOhCollectionSupporter
 		{
 			formPanel.SetFormPanelRight(e.Node, this, 2);
 		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			if (textBox1.Text == "") return;
+			formPanel.SearchCardNameButton(this,textBox1.Text);
+		}
 	}
 }
