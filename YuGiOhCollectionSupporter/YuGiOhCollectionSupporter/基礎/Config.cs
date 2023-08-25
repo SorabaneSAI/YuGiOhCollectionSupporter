@@ -12,7 +12,7 @@ namespace YuGiOhCollectionSupporter
 		public string URL2 = "https://www.db.yugioh-card.com/yugiohdb/card_search.action?ope=2&cid=";
 
 		public decimal CardID_MIN = 4000;
-		public decimal CardID_MAX = 20000;
+		public decimal CardID_MAX = 30000;
 
 		public bool Is捜索打ち切り = true;
 		public decimal 捜索打ち切り限界 = 200;

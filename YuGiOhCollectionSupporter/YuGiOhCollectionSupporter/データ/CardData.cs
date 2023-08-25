@@ -180,6 +180,7 @@ namespace YuGiOhCollectionSupporter
 		public int ID;
 		public bool 表示フラグ = true;
 		public List<UserVariationData> UserVariationDataList = new List<UserVariationData>();
+		public bool Is同名予備カード枚数十分 = false;	//自分しか使わない予備のカードが３枚以上あるかフラグ
 		public class UserVariationData
         {
 			public bool 所持フラグ = false;
@@ -191,7 +192,8 @@ namespace YuGiOhCollectionSupporter
 		public UserCardData(CardData card)
         {
 			ID = card.ID;
-            foreach (var variation in card.ListVariations)
+
+			foreach (var variation in card.ListVariations)
             {
 				UserVariationData vardata = new UserVariationData();
 				vardata.発売パックURL = variation.発売パック.URL;
@@ -216,6 +218,9 @@ namespace YuGiOhCollectionSupporter
 
 		public bool get表示フラグ() { return usercarddata.表示フラグ; }
 		public void set表示フラグ(bool flag) { usercarddata.表示フラグ = flag; }
+
+		public bool getIs同名予備カード枚数十分() { return usercarddata.Is同名予備カード枚数十分; }
+		public void setIs同名予備カード枚数十分(bool flag) { usercarddata.Is同名予備カード枚数十分 = flag; }
 
 		public bool get所持フラグ(CardVariation variation)
         {

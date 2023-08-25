@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -19,6 +20,10 @@ namespace YuGiOhCollectionSupporter
 		bool あいうえお順Flag;
 		int Page =1;
 		const int MAX_NUM = 100;
+
+		Color red = Color.FromArgb(255, 128, 128);
+		Color yellow = Color.FromArgb(255, 255, 128);
+		Color green = Color.FromArgb(128, 255, 128);
 
 		public CardListUI(CardDataBase cardDB, PackData pack, Form1 form1,bool あいうえお順フラグ)
 		{
@@ -91,10 +96,6 @@ namespace YuGiOhCollectionSupporter
 				form.getCardHaveNumRarity(PackCardDB).Item1,form.getCardHaveNumRarity(PackCardDB).Item2);    //埋め込むのに引数のないコンストラクタが必要なので初期化
 
 
-			Color red = Color.FromArgb(255, 128, 128);
-			Color yellow = Color.FromArgb(255, 255, 128);
-			Color green = Color.FromArgb(128, 255, 128);
-
 			dataGridView1.Rows.Clear();
 			for (int i=(page-1)* MAX_NUM; i< (page-1)* MAX_NUM + MAX_NUM; i++ )
             {
@@ -119,19 +120,6 @@ namespace YuGiOhCollectionSupporter
 
 				int num = dataGridView1.Rows.Add(twincarddata.IsCardNameHave(), card.名前, ryakugou, rarity, twincarddata.usercarddata.UserVariationDataList[0].所持フラグ);
 				dataGridView1.Rows[num].Tag = CardDB.getCard(card.ID); //行のタグにカード情報を埋め込む  cardは変更されてる可能性があるのでCardDBから同じのを持ってくる
-				dataGridView1.Rows[num].Cells["名前"].Style.BackColor = twincarddata.IsCardNameHave() ? green : red;
-				Color c;
-				if (code_havenum == 0) c = red;
-				else if (code_havenum == code_allnum) c = green;
-				else c = yellow;
-
-				dataGridView1.Rows[num].Cells["略号"].Style.BackColor = c;
-
-				if (rarity_havenum == 0) c = red;
-				else if (rarity_havenum == rarity_allnum) c = green;
-				else c = yellow;
-
-				dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
 
 				var dgvcell = (DataGridViewImageCell)dataGridView1.Rows[num].Cells["type"];
 				dgvcell.Value = getCanvasCardColor(card, dgvcell);
@@ -142,7 +130,6 @@ namespace YuGiOhCollectionSupporter
                 {
 					quickcell.Value = (rarity_havenum == 1);
 					quickcell.Tag = card.ListVariations[0];
-					quickcell.Style.BackColor = c;
 				}
 				else
                 {
@@ -150,8 +137,13 @@ namespace YuGiOhCollectionSupporter
 					dataGridView1.Rows[num].Cells["クイック"] = new DataGridViewTextBoxCell();  //テキストボックスを消すためにタイプを変更
 					dataGridView1.Rows[num].Cells["クイック"].Value = "";
 					dataGridView1.Rows[num].Cells["クイック"].ReadOnly = true;
-					dataGridView1.Rows[num].Cells["クイック"].Style.BackColor = Color.FromArgb(171, 171, 173);
 				}
+
+				var havecell = dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"];
+				havecell.Value = twincarddata.getIs同名予備カード枚数十分();
+				havecell.Tag = card.ListVariations[0];
+
+				UpdateCellColor(num, twincarddata);
 			}
 
 			//DGVの内容物に合わせてサイズを大きくする
@@ -193,6 +185,29 @@ namespace YuGiOhCollectionSupporter
 			}
 
 
+		}
+
+		public void UpdateCellColor(int num,TwinCardData twincarddata)
+		{
+			dataGridView1.Rows[num].Cells["名前"].Style.BackColor = twincarddata.IsCardNameHave() ? green : red;
+			(int code_havenum, int code_allnum) = twincarddata.getCardHaveNumCode();
+			(int rarity_havenum, int rarity_allnum) = twincarddata.getCardHaveNumRarity();
+
+			Color c;
+			if (code_havenum == 0) c = red;
+			else if (code_havenum == code_allnum) c = green;
+			else c = yellow;
+
+			dataGridView1.Rows[num].Cells["略号"].Style.BackColor = c;
+
+			if (rarity_havenum == 0) c = red;
+			else if (rarity_havenum == rarity_allnum) c = green;
+			else c = yellow;
+
+			dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
+			dataGridView1.Rows[num].Cells["クイック"].Style.BackColor = c;
+			var cell = dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"];
+			cell.Style.BackColor = ((bool)cell.Value) ? green : red;
 		}
 
 		private Bitmap getCanvasCardColor(CardData card, DataGridViewImageCell cell)
@@ -375,21 +390,26 @@ namespace YuGiOhCollectionSupporter
 
 		}
 
-        private async void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
 			//チェックボックスの列かどうか調べる
-			if (dataGridView1.Columns[e.ColumnIndex].Name == "クイック" && dataGridView1[e.ColumnIndex, e.RowIndex].GetType() == typeof(DataGridViewCheckBoxCell))
+			if (e.RowIndex >= 0 && dataGridView1[e.ColumnIndex, e.RowIndex].GetType() == typeof(DataGridViewCheckBoxCell))
 			{
 				var variation = (CardVariation)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
 				if (variation == null) return;  //init中でvalueを書き換えるときの誤爆を防ぐ苦肉の策
 
 				var twincarddata = form.getTwinCardData((CardData)dataGridView1.Rows[e.RowIndex].Tag);
-				twincarddata.set所持フラグ(variation, (bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
 
-				dataGridView1.Enabled = false;
-				Init(CardDB, Pack, form,あいうえお順Flag,Page);
-				await Program.SaveUserDataAsync();
-				dataGridView1.Enabled = true;
+				if (dataGridView1.Columns[e.ColumnIndex].Name == "クイック")
+				{
+					twincarddata.set所持フラグ(variation, (bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
+				}
+				else //予備カード所持
+				{
+					twincarddata.setIs同名予備カード枚数十分((bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
+				}
+
+				UpdateCellColor(e.RowIndex,twincarddata);
 			}
 
 		}
@@ -438,5 +458,9 @@ namespace YuGiOhCollectionSupporter
 			AddSpaceLabel(flowLayoutPanel2);
 		}
 
+		private void button2_Click_1(object sender, EventArgs e)
+		{
+			_ = Program.SaveUserDataAsync();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -386,22 +387,40 @@ namespace YuGiOhCollectionSupporter
 			treeview.Nodes.Clear();
 			var nodes = treeview.Nodes;
 
-			var 完全一致List = new List<CardData>();
-			var 部分一致List = new List<CardData>();
+			var 名前完全一致List = new List<CardData>();
+			var 読み完全一致List = new List<CardData>();
+			var 名前部分一致List = new List<CardData>();
+			var 読み部分一致List = new List<CardData>();
 			var テキスト一致List = new List<CardData>();
 
 			var cardlist = form.CardDB.CardList;
 			foreach (var card in cardlist)
 			{
-				if(card.名前.Equals(txt))
+				CompareInfo ci = CultureInfo.CurrentCulture.CompareInfo;
+				var option = CompareOptions.IgnoreKanaType | CompareOptions.IgnoreCase;
+				int 名前result = ci.IndexOf(card.名前, txt, option); 
+				int テキストresult = ci.IndexOf(card.テキスト, txt, option);
+				int ペンデュラムresult = ci.IndexOf(card.ペンデュラム効果, txt, option);
+				int 読みresult = ci.IndexOf(card.読み, txt, option);
+
+
+				if (card.名前.Equals(txt))
 				{
-					完全一致List.Add(card);
+					名前完全一致List.Add(card);
 				}
-				else if(card.名前.Contains(txt))
+				else if(card.読み.Equals(Kanaxs.Kana.ToKatakana(txt)))
 				{
-					部分一致List.Add(card);
+					読み完全一致List.Add(card);
 				}
-				else if(card.テキスト.Contains(txt) || card.ペンデュラム効果.Contains(txt))
+				else if(名前result >= 0)
+				{
+					名前部分一致List.Add(card);
+				}
+				else if(読みresult >= 0)
+				{
+					読み部分一致List.Add(card);
+				}
+				else if(テキストresult >=0 || ペンデュラムresult >=0)
 				{
 					テキスト一致List.Add(card);
 				}
@@ -410,22 +429,41 @@ namespace YuGiOhCollectionSupporter
 
 			//それぞれツリーに追加
 
-			var node2 = nodes.Add($"完全一致({完全一致List.Count})");
+			var node2 = nodes.Add($"名前完全一致({名前完全一致List.Count})");
 			node2.Tag = new TreeNodeAIUEOTag(new 行("あ", "あ"));
 			var cardlist2 = ((TreeNodeAIUEOTag)node2.Tag).CardDB.CardList;
 
-			foreach (var card in 完全一致List)
+			foreach (var card in 名前完全一致List)
 			{
 				cardlist2.Add(card);
 			}
 
-			var node3 = nodes.Add($"部分一致({部分一致List.Count})");
+
+			var node5 = nodes.Add($"読み完全一致({読み完全一致List.Count})");
+			node5.Tag = new TreeNodeAIUEOTag(new 行("あ", "あ"));
+			var cardlist5 = ((TreeNodeAIUEOTag)node5.Tag).CardDB.CardList;
+
+			foreach (var card in 読み完全一致List)
+			{
+				cardlist5.Add(card);
+			}
+
+			var node3 = nodes.Add($"名前部分一致({名前部分一致List.Count})");
 			node3.Tag = new TreeNodeAIUEOTag(new 行("あ", "あ"));
 			var cardlist3 = ((TreeNodeAIUEOTag)node3.Tag).CardDB.CardList;
 
-			foreach (var card in 部分一致List)
+			foreach (var card in 名前部分一致List)
 			{
 				cardlist3.Add(card);
+			}
+
+			var node6 = nodes.Add($"読み部分一致({読み部分一致List.Count})");
+			node6.Tag = new TreeNodeAIUEOTag(new 行("あ", "あ"));
+			var cardlist6 = ((TreeNodeAIUEOTag)node6.Tag).CardDB.CardList;
+
+			foreach (var card in 読み部分一致List)
+			{
+				cardlist6.Add(card);
 			}
 
 			var node4 = nodes.Add($"テキスト一致({テキスト一致List.Count})");
@@ -438,5 +476,59 @@ namespace YuGiOhCollectionSupporter
 			}
 
 		}
+
+		public static void SearchPackNameButton(Form1 form, string txt)
+		{
+			var treeview = form.treeView2;
+			treeview.Nodes.Clear();
+			var nodes = treeview.Nodes;
+
+			var 名前完全一致List = new List<PackData>();
+//			var 略号完全一致List = new List<PackData>();
+			var 名前部分一致List = new List<PackData>();
+			//			var 略号部分一致List = new List<PackData>();
+
+			//大文字小文字ひらがなカタカナの区別なく検索
+			CompareInfo ci = CultureInfo.CurrentCulture.CompareInfo;
+			var option = CompareOptions.IgnoreKanaType | CompareOptions.IgnoreCase;
+
+			var packlist = form.PackDB.PackDataList;
+			foreach (var pack in packlist)
+			{
+				int 名前result = ci.IndexOf(pack.Name, txt, option);
+				if (pack.Name.Equals(txt))
+				{
+					名前完全一致List.Add(pack);
+				}
+				else if (名前result >= 0)
+				{
+					名前部分一致List.Add(pack);
+				}
+
+			}
+
+			//それぞれツリーに追加
+
+			var node2 = nodes.Add($"名前完全一致({名前完全一致List.Count})");
+			var cardlist2 = new List<PackData>();
+
+			foreach (var pack in 名前完全一致List)
+			{
+				var node = node2.Nodes.Add(pack.Name);
+				node.Tag = pack;
+			}
+
+			var node3 = nodes.Add($"名前部分一致({名前部分一致List.Count})");
+			var cardlist3 = new List<PackData>();
+
+			foreach (var pack in 名前部分一致List)
+			{
+				var node = node3.Nodes.Add(pack.Name);
+				node.Tag = pack;
+			}
+
+
+		}
+
 	}
 }

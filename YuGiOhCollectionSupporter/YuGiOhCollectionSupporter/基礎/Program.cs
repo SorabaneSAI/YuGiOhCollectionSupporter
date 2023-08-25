@@ -133,7 +133,13 @@ namespace YuGiOhCollectionSupporter
         {
 			form1.label1.Visible = true;
 			form1.UpdateLabel("カードデータセーブ中...");
-			await SaveAsync(form1.CardDB.SaveDataPath, form1.CardDB, null/*new CardDataContractResolver(UserDataFlag)*/);
+
+			//これでUI固まらない
+			await Task.Run(() =>
+			{
+				_ = SaveAsync(form1.CardDB.SaveDataPath, form1.CardDB, null/*new CardDataContractResolver(UserDataFlag)*/);
+			});
+
 
 			form1.label1.Visible = false;
 		}
@@ -143,7 +149,12 @@ namespace YuGiOhCollectionSupporter
 			form1.label1.Visible = true;
 			form1.UpdateLabel("ユーザーデータセーブ中...");
 
-			await SaveAsync(form1.UserCardDB.SaveUserDataPath, form1.UserCardDB, null/*new CardDataContractResolver(UserDataFlag)*/);
+			//これでUI固まらない
+			await Task.Run(() =>
+			{
+				_ = SaveAsync(form1.UserCardDB.SaveUserDataPath, form1.UserCardDB, null/*new CardDataContractResolver(UserDataFlag)*/);
+			});
+
 
 			form1.label1.Visible = false;
 		}

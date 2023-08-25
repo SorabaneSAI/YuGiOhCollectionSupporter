@@ -325,5 +325,27 @@ namespace YuGiOhCollectionSupporter
 			if (textBox1.Text == "") return;
 			formPanel.SearchCardNameButton(this,textBox1.Text);
 		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			if (textBox2.Text == "") return;
+			formPanel.SearchPackNameButton(this, textBox2.Text);
+		}
+
+		private void textBox1_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				button1.PerformClick();
+			}
+		}
+
+		private void textBox2_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				button2.PerformClick();
+			}
+		}
 	}
 }
