@@ -462,5 +462,16 @@ namespace YuGiOhCollectionSupporter
 		{
 			_ = Program.SaveUserDataAsync();
 		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+			var list = new List<int>();
+			foreach(var card in PackCardDB.CardList)
+			{
+				list.Add(card.ID);
+			}
+
+			form.データ取得(false, true, list);
+		}
 	}
 }

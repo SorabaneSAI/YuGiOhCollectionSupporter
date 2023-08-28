@@ -10,7 +10,7 @@ namespace YuGiOhCollectionSupporter
 {
     class GetAllCards
     {
-        public static async Task<(CardDataBase,UserCardDataBase)> getAllCardsAsync(Config config, Form1 form, List<string> errorlist)
+        public static async Task<(CardDataBase,UserCardDataBase)> getAllCardsAsync(List<int> CardIDList ,Config config, Form1 form, List<string> errorlist)
         {
             Program.WriteLog("カードデータ取得中", LogLevel.必須項目);
 
@@ -19,17 +19,17 @@ namespace YuGiOhCollectionSupporter
 
             int NoCardCount = 0;
 
-            for (int i = (int)config.CardID_MIN; i < config.CardID_MAX + 1; i++)
+            for (int i = 0; i < CardIDList.Count; i++)
             {
                 await Task.Delay(1000); //負荷軽減のため１秒待機;
 
                 //カードリストはjavascriptを経由しないと入手できないっぽいので直接idを入力(当てずっぽう)
-                string url = config.URL2 + i;
+                string url = config.URL2 + CardIDList[i];
                 var html = await Program.GetHtml(url);
 
                 if (html == null)
                 {
-                    errorlist.Add(" id=" + i + " ");
+                    errorlist.Add(" id=" + CardIDList[i] + " ");
                     Program.WriteLog($"エラー発生。ログファイル参照。[{url}]", LogLevel.エラー);
 
                     if (errorlist.Count > 10)
@@ -44,7 +44,7 @@ namespace YuGiOhCollectionSupporter
 
                 if (html.Source.Text.IndexOf("カード情報がありません。") >= 0)
                 {
-                    Program.WriteLog(config.URL2 + i + ":カードデータなし", LogLevel.情報);
+                    Program.WriteLog(config.URL2 + CardIDList[i] + ":カードデータなし", LogLevel.情報);
                     NoCardCount++;
                     if (config.Is捜索打ち切り == true && NoCardCount >= config.捜索打ち切り限界)
                     {
@@ -141,13 +141,13 @@ namespace YuGiOhCollectionSupporter
                 読み = Kanaxs.Kana.ToKatakana(読み);    //ひらがなはカタカナにする
                 読み = RemoveSymbol(読み);  //読みに紛れ込む記号などを排除
 
-                CardData carddata = new CardData(i, url, 名前, 読み, 英語, dic, Program.getTextContent(pendulumnode2), cardtext, 種族, listvaridations);
+                CardData carddata = new CardData(CardIDList[i], url, 名前, 読み, 英語, dic, Program.getTextContent(pendulumnode2), cardtext, 種族, listvaridations);
                 UserCardData usercarddata = new UserCardData(carddata);
 
-                Program.WriteLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 + " : " + config.URL2 + i, LogLevel.情報);
+                Program.WriteLog(carddata.名前 + " : " + carddata.読み + " : " + carddata.英語名 + " : " + config.URL2 + CardIDList[i], LogLevel.情報);
                 Program.WriteLog(Program.ToJson(carddata.ValuePairs, Newtonsoft.Json.Formatting.None) + " : " + carddata.テキスト + " : " + carddata.ペンデュラム効果, LogLevel.情報);
                 Program.WriteLog(Program.ToJson(listvaridations, Newtonsoft.Json.Formatting.None), LogLevel.情報);
-                form.UpdateLabel((i - config.CardID_MIN) + "/" + (config.CardID_MAX + 1 - config.CardID_MIN) + ":" + carddata.名前);
+                form.UpdateLabel((i) + "/" + (CardIDList.Count) + ":" + carddata.名前);
 
                 carddatabase.CardList.Add(carddata);
                 usercarddatabase.UserCardDataList.Add(usercarddata);
@@ -162,7 +162,7 @@ namespace YuGiOhCollectionSupporter
 
         public static string RemoveSymbol(string name)
         {
-            string removesymbol = "「」『』・ 　－";
+            string removesymbol = "「」『』・ 　－“”";
 
             for (int i = 0; i < Program.getTextLength(removesymbol); i++)
             {

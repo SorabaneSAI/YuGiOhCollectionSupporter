@@ -115,6 +115,19 @@ namespace YuGiOhCollectionSupporter
 					}
 				}
 
+				//基本パックにシリーズ名をつける
+				foreach (TreeNode node in tmptreeview.Nodes)
+				{
+					if (node.Text == "基本ブースターパック")
+					{
+                        foreach (var groupdata in form.SeriesGroupDataList)
+                        {
+							var n = node.Nodes.Add(groupdata.シリーズ名);
+							n.Tag = groupdata;
+						}
+					}
+				}
+
 
 				//そのツリーにパック名をくっつける
 				foreach (var pack in form.PackDB.PackDataList)
@@ -123,17 +136,31 @@ namespace YuGiOhCollectionSupporter
 					{
 						if (node.Text == pack.TypeName)
 						{
-							foreach (TreeNode node2 in node.Nodes)
+							System.Collections.IList list = node.Nodes;
+							for (int i = 0; i < list.Count; i++)
 							{
-								PackGroupData packgroupdata = node2.Tag as PackGroupData;
-								if (packgroupdata == null) break;   //今追加したパックだとキャストできない
-								if (pack.Name.Contains(packgroupdata.含まれる文字))
+								TreeNode node2 = (TreeNode)list[i];
+								if (node2.Tag is PackGroupData packgroupdata && pack.Name.Contains(packgroupdata.含まれる文字)) //今追加したパックだとキャストできない
 								{
 									AddTreeNode(tmptreeview, node2, pack);
 									goto next;
 								}
+								else if (node2.Tag is SeriesGroupData seriesgroupdata) //１期から判定するので１回でよい
+								{
+									if (i > 0 && pack.BirthDay < DateTime.Parse(seriesgroupdata.開始日))
+									{
+										AddTreeNode(tmptreeview, (TreeNode)list[i-1], pack);
+										goto next;
+									}
+									else if(i == list.Count-1) //最後だったら最後のシリーズに追加
+									{
+										AddTreeNode(tmptreeview, (TreeNode)list[i], pack);
+										goto next;
+									}
+								}
 
 							}
+							//どれでもなかったら１つ上のツリーになる
 							AddTreeNode(tmptreeview, node, pack);
 							break;
 						}

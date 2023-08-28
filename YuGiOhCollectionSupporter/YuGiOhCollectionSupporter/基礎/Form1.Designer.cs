@@ -49,6 +49,7 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.treeView2 = new System.Windows.Forms.TreeView();
+			this.シリーズ期設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -68,6 +69,7 @@
             this.ログToolStripMenuItem,
             this.ホームToolStripMenuItem,
             this.パック分類設定ToolStripMenuItem,
+            this.シリーズ期設定ToolStripMenuItem,
             this.これについてToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
@@ -96,21 +98,21 @@
 			// パックデータ取得ToolStripMenuItem
 			// 
 			this.パックデータ取得ToolStripMenuItem.Name = "パックデータ取得ToolStripMenuItem";
-			this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+			this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.パックデータ取得ToolStripMenuItem.Text = "パックデータ取得";
-			this.パックデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
+			this.パックデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.パックデータ取得ToolStripMenuItem_Click);
 			// 
 			// カードデータ取得ToolStripMenuItem
 			// 
 			this.カードデータ取得ToolStripMenuItem.Name = "カードデータ取得ToolStripMenuItem";
-			this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+			this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.カードデータ取得ToolStripMenuItem.Text = "カードデータ取得";
-			this.カードデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
+			this.カードデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.カードデータ取得ToolStripMenuItem_Click);
 			// 
 			// パックカード両方取得ToolStripMenuItem
 			// 
 			this.パックカード両方取得ToolStripMenuItem.Name = "パックカード両方取得ToolStripMenuItem";
-			this.パックカード両方取得ToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+			this.パックカード両方取得ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
 			this.パックカード両方取得ToolStripMenuItem.Text = "両方取得";
 			this.パックカード両方取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
 			// 
@@ -167,7 +169,7 @@
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
 			this.splitContainer1.Size = new System.Drawing.Size(1540, 794);
-			this.splitContainer1.SplitterDistance = 569;
+			this.splitContainer1.SplitterDistance = 568;
 			this.splitContainer1.SplitterWidth = 5;
 			this.splitContainer1.TabIndex = 3;
 			// 
@@ -192,14 +194,14 @@
 			this.splitContainer2.Panel2.Controls.Add(this.button2);
 			this.splitContainer2.Panel2.Controls.Add(this.textBox2);
 			this.splitContainer2.Panel2.Controls.Add(this.treeView2);
-			this.splitContainer2.Size = new System.Drawing.Size(569, 794);
-			this.splitContainer2.SplitterDistance = 232;
+			this.splitContainer2.Size = new System.Drawing.Size(568, 794);
+			this.splitContainer2.SplitterDistance = 231;
 			this.splitContainer2.TabIndex = 6;
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(176, 4);
+			this.button3.Location = new System.Drawing.Point(175, 4);
 			this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(49, 34);
@@ -211,7 +213,7 @@
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(116, 4);
+			this.button1.Location = new System.Drawing.Point(115, 4);
 			this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(54, 34);
@@ -227,7 +229,7 @@
 			this.textBox1.Location = new System.Drawing.Point(4, 2);
 			this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(106, 22);
+			this.textBox1.Size = new System.Drawing.Size(105, 22);
 			this.textBox1.TabIndex = 6;
 			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
 			// 
@@ -238,7 +240,7 @@
 			this.treeView1.Margin = new System.Windows.Forms.Padding(4);
 			this.treeView1.MinimumSize = new System.Drawing.Size(31, 4);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(228, 743);
+			this.treeView1.Size = new System.Drawing.Size(227, 743);
 			this.treeView1.TabIndex = 5;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
@@ -287,6 +289,13 @@
 			this.treeView2.Size = new System.Drawing.Size(329, 745);
 			this.treeView2.TabIndex = 0;
 			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
+			// 
+			// シリーズ期設定ToolStripMenuItem
+			// 
+			this.シリーズ期設定ToolStripMenuItem.Name = "シリーズ期設定ToolStripMenuItem";
+			this.シリーズ期設定ToolStripMenuItem.Size = new System.Drawing.Size(143, 24);
+			this.シリーズ期設定ToolStripMenuItem.Text = "シリーズ（期）設定";
+			this.シリーズ期設定ToolStripMenuItem.Click += new System.EventHandler(this.シリーズ期設定ToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
@@ -341,6 +350,7 @@
 		private System.Windows.Forms.TextBox textBox2;
 		private System.Windows.Forms.Button button4;
 		public System.Windows.Forms.TreeView treeView2;
+		private System.Windows.Forms.ToolStripMenuItem シリーズ期設定ToolStripMenuItem;
 	}
 }
 

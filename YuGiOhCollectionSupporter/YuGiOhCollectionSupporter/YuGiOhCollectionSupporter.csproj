@@ -86,6 +86,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIUEOComparer.cs" />
+    <Compile Include="SeriesGroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SeriesGroupForm.Designer.cs">
+      <DependentUpon>SeriesGroupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PackGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +153,9 @@
     </Compile>
     <Compile Include="基礎\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="SeriesGroupForm.resx">
+      <DependentUpon>SeriesGroupForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PackGroupForm.resx">
       <DependentUpon>PackGroupForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,6 +197,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\PackGroupData.datasource" />
+    <None Include="Properties\DataSources\SeriesGroupData.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -26,6 +26,9 @@ namespace YuGiOhCollectionSupporter
 		public BindingList<PackGroupData> PackGroupDataList = new BindingList<PackGroupData>();
 		public string PackGroupSavePath = "PackGroupData.json";
 
+		public BindingList<SeriesGroupData> SeriesGroupDataList = new BindingList<SeriesGroupData>();
+		public string SeriesGroupSavePath = "SeriesGroupData.json";
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -33,6 +36,7 @@ namespace YuGiOhCollectionSupporter
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
 			PackGroupData.InitialDataSet(PackGroupDataList);
+			SeriesGroupData.InitialDataSet(SeriesGroupDataList);
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -43,6 +47,9 @@ namespace YuGiOhCollectionSupporter
 			Program.Load(PackDB.SaveDataPath, ref PackDB);
 			Program.Load(UserCardDB.SaveUserDataPath, ref UserCardDB);
 			Program.Load(PackGroupSavePath, ref PackGroupDataList);
+			Program.Load(SeriesGroupSavePath, ref SeriesGroupDataList);
+
+			formPanel.ShowHome(this);
 
 			formPanel.ShowHome(this);
 
@@ -96,19 +103,38 @@ namespace YuGiOhCollectionSupporter
 			Application.Exit();
 		}
 
-
-
-		private async void 両方取得ToolStripMenuItem_Click(object sender, EventArgs e)
+		private void パックデータ取得ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var menuitem = (ToolStripMenuItem)sender;
-			bool IsPackSearch = false;
-			bool IsCardSearch = false;
-			if (menuitem.Name.Contains("パック")) IsPackSearch = true;
-			if (menuitem.Name.Contains("カード")) IsCardSearch = true;
+			データ取得(true, false, null);
+		}
+
+		private void カードデータ取得ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			データ取得(false, true, getCardIDListFromConfig());
+		}
+
+
+		private void 両方取得ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+            データ取得(true,true, getCardIDListFromConfig());
+		}
+
+		private List<int> getCardIDListFromConfig()
+		{
+			var list = new List<int>();
+			for (int i = (int)config.CardID_MIN; i <= config.CardID_MAX; i++)
+			{
+				list.Add(i);
+			}
+			return list;
+		}
+
+		public async void データ取得(bool IsPackSearch, bool IsCardSearch, List<int> CardIDList)
+		{
 
 			int 推測探索秒 = 0;
 			if (IsPackSearch) 推測探索秒 += 1800;
-			if (IsCardSearch) 推測探索秒 += (int)(config.CardID_MAX - config.CardID_MIN);
+			if (IsCardSearch) 推測探索秒 += CardIDList.Count;
 
 			//メッセージボックスを表示する
 			DialogResult result = MessageBox.Show($"捜索には{推測探索秒 / 60}分程度かかることが予測されます。\n本当に始めますか？", "",
@@ -147,7 +173,7 @@ namespace YuGiOhCollectionSupporter
 
 				if (IsCardSearch)
 				{
-					var (newcardDB, newuserDB) = await GetAllCards.getAllCardsAsync(config, this, ErrorList);
+					var (newcardDB, newuserDB) = await GetAllCards.getAllCardsAsync(CardIDList ,config, this, ErrorList);
 
 					if (newcardDB == null) break;
 
@@ -172,9 +198,8 @@ namespace YuGiOhCollectionSupporter
 
 			string msg = ans + $"エラー件数:{ErrorList.Count}件\n" + Program.ToJson(ErrorList, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
 			Program.WriteLog(msg, LogLevel.必須項目);
-			MessageBox.Show(msg	, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
-
 
 		public void InvalidMenuItem()
 		{
@@ -346,6 +371,14 @@ namespace YuGiOhCollectionSupporter
 			{
 				button2.PerformClick();
 			}
+		}
+
+		private void シリーズ期設定ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			SeriesGroupForm f = new SeriesGroupForm(SeriesGroupDataList);
+			f.ShowDialog(this);
+			f.Dispose();
+			Program.Save(SeriesGroupSavePath, SeriesGroupDataList);
 		}
 	}
 }
