@@ -304,7 +304,7 @@ namespace YuGiOhCollectionSupporter
 				//				var f = new CardForm(form.CardDB.getCard(id));
 				//と思ったがやっぱ簡易所持チェックのことを考えると削らないほうが都合がいい
 				var data = (CardData)dgv.Rows[e.RowIndex].Tag;
-				var f = new CardForm(data,form);
+				var f = new CardForm(data,form, button1.PerformClick);
 				f.Show();
             }
 		}

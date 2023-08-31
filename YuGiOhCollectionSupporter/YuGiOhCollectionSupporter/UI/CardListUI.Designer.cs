@@ -237,6 +237,7 @@
 			this.button1.TabIndex = 11;
 			this.button1.Text = "リスト更新（意味ない）";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click_1);
 			// 
 			// button2
 			// 
@@ -263,7 +264,7 @@
 			this.collectDataUI1.Location = new System.Drawing.Point(5, 157);
 			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(5);
 			this.collectDataUI1.Name = "collectDataUI1";
-			this.collectDataUI1.Size = new System.Drawing.Size(903, 289);
+			this.collectDataUI1.Size = new System.Drawing.Size(987, 289);
 			this.collectDataUI1.TabIndex = 11;
 			// 
 			// CardListUI

@@ -380,5 +380,11 @@ namespace YuGiOhCollectionSupporter
 			f.Dispose();
 			Program.Save(SeriesGroupSavePath, SeriesGroupDataList);
 		}
+
+		private void 販売価格調査ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			KanabellForm f = new KanabellForm();
+			f.Show(this);
+		}
 	}
 }

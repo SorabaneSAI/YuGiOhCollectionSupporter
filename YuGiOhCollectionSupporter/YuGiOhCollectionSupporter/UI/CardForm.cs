@@ -14,11 +14,14 @@ namespace YuGiOhCollectionSupporter
     {
         TwinCardData twincarddata;
         Form1 form; //パックをクリックした時用
-        public CardForm(CardData data,Form1 form)
+        Action 更新したい画面用関数;
+        public CardForm(CardData data,Form1 form, Action 更新用関数 = null)
         {
             InitializeComponent();
             Init(data,form);
-        }
+            更新したい画面用関数 = 更新用関数;
+
+		}
 
         public void Init(CardData data, Form1 form)
         {
@@ -84,15 +87,18 @@ namespace YuGiOhCollectionSupporter
             dataGridView1.Size = new Size(dataGridView1.Size.Width, dataGridView1.ColumnHeadersHeight + dataGridView1.RowCount * dataGridView1.RowTemplate.Height);
         }
 
+
         private async void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             twincarddata.set表示フラグ(checkBox1.Checked) ;
-
+            /*
             checkBox1.Enabled = false;
             dataGridView1.Enabled = false;
             await Program.SaveUserDataAsync();
-            checkBox1.Enabled = true;
+			更新したい画面用関数?.Invoke();
+			checkBox1.Enabled = true;
             dataGridView1.Enabled = true;
+            */
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -116,22 +122,25 @@ namespace YuGiOhCollectionSupporter
         }
 
         //チェックボックスがクリックされたかを知るその２
-        private async void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             //チェックボックスの列かどうか調べる
             if (dataGridView1.Columns[e.ColumnIndex].Name == "所持")
             {
                 var variation = (CardVariation)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
                 twincarddata.set所持フラグ(variation,(bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
-
+				/*
                 checkBox1.Enabled = false;
                 dataGridView1.Enabled = false;
                 Init(twincarddata.carddata,form);
                 await Program.SaveUserDataAsync();
-                checkBox1.Enabled = true;
+				更新したい画面用関数?.Invoke();
+				checkBox1.Enabled = true;
                 dataGridView1.Enabled = true;
-            }
-        }
+                */
+				Init(twincarddata.carddata, form);
+			}
+		}
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -151,7 +160,7 @@ namespace YuGiOhCollectionSupporter
                 f.Controls.Add(packUI);
                 f.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
                 f.AutoScroll = true;
-                f.Size = new Size(700,700);
+                f.Size = new Size(1000,800);
                 f.Text = "パック情報";
  //               f.FormBorderStyle = FormBorderStyle.Sizable;
                 f.Show();
@@ -165,5 +174,10 @@ namespace YuGiOhCollectionSupporter
             return AutoScrollPosition;
         }
 
-    }
+		private async void CardForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			await Program.SaveUserDataAsync();
+			更新したい画面用関数?.Invoke();
+		}
+	}
 }

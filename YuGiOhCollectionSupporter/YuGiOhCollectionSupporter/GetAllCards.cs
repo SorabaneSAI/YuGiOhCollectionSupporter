@@ -29,7 +29,18 @@ namespace YuGiOhCollectionSupporter
 
                 if (html == null)
                 {
-                    errorlist.Add(" id=" + CardIDList[i] + " ");
+                    //３回再挑戦
+					for (var j = 0; j < 3; j++)
+					{
+						await Task.Delay(1000); //負荷軽減のため１秒待機;
+						html = await Program.GetHtml(url);
+						if (html != null)
+						{
+							goto goto_continue;
+						}
+					}
+
+					errorlist.Add(" id=" + CardIDList[i] + " ");
                     Program.WriteLog($"エラー発生。ログファイル参照。[{url}]", LogLevel.エラー);
 
                     if (errorlist.Count > 10)
@@ -41,6 +52,8 @@ namespace YuGiOhCollectionSupporter
 
                     continue;
                 }
+
+                goto_continue:
 
                 if (html.Source.Text.IndexOf("カード情報がありません。") >= 0)
                 {
