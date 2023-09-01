@@ -11,6 +11,7 @@ using System.IO;
 using System.Text;
 using System.Globalization;
 using Newtonsoft.Json.Serialization;
+using System.ComponentModel;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -232,6 +233,16 @@ namespace YuGiOhCollectionSupporter
 			return si.LengthInTextElements;
 		}
 
+		//普通にコピーできないので１つずつコピー
+		public static void CopyList<T>(BindingList<T> From, BindingList<T> To)
+		{
+			To.Clear();
+			foreach (var item in From)
+			{
+				To.Add(item);
+			}
+
+		}
 	}
 
 }

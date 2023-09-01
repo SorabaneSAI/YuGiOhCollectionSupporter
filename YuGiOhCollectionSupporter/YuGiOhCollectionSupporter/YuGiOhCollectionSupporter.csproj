@@ -92,6 +92,18 @@
     <Compile Include="KanabellForm.Designer.cs">
       <DependentUpon>KanabellForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ThroughPageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ThroughPageForm.Designer.cs">
+      <DependentUpon>ThroughPageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RarityPairForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RarityPairForm.Designer.cs">
+      <DependentUpon>RarityPairForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SeriesGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +175,12 @@
     <EmbeddedResource Include="KanabellForm.resx">
       <DependentUpon>KanabellForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ThroughPageForm.resx">
+      <DependentUpon>ThroughPageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RarityPairForm.resx">
+      <DependentUpon>RarityPairForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SeriesGroupForm.resx">
       <DependentUpon>SeriesGroupForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -207,7 +225,9 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\PackGroupData.datasource" />
+    <None Include="Properties\DataSources\RarityPairData.datasource" />
     <None Include="Properties\DataSources\SeriesGroupData.datasource" />
+    <None Include="Properties\DataSources\ThroughPageData.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -1,6 +1,6 @@
 ﻿namespace YuGiOhCollectionSupporter
 {
-    partial class SeriesGroupForm
+    partial class RarityPairForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,13 +33,13 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
-			this.SeriesGroupDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.シリーズ名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.開始日 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.rarityPairDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Rarity_Konami = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.有効フラグDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.SeriesGroupDataBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.rarityPairDataBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -89,11 +89,11 @@
 			this.dataGridView1.AutoGenerateColumns = false;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.シリーズ名,
-            this.開始日,
+            this.Column1,
+            this.Rarity_Konami,
             this.有効フラグDataGridViewCheckBoxColumn});
 			this.tableLayoutPanel1.SetColumnSpan(this.dataGridView1, 2);
-			this.dataGridView1.DataSource = this.SeriesGroupDataBindingSource;
+			this.dataGridView1.DataSource = this.rarityPairDataBindingSource;
 			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataGridView1.Location = new System.Drawing.Point(4, 4);
 			this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
@@ -103,25 +103,25 @@
 			this.dataGridView1.Size = new System.Drawing.Size(1059, 499);
 			this.dataGridView1.TabIndex = 3;
 			// 
-			// SeriesGroupDataBindingSource
+			// rarityPairDataBindingSource
 			// 
-			this.SeriesGroupDataBindingSource.DataSource = typeof(YuGiOhCollectionSupporter.SeriesGroupData);
+			this.rarityPairDataBindingSource.DataSource = typeof(YuGiOhCollectionSupporter.RarityPairData);
 			// 
-			// シリーズ名
+			// Column1
 			// 
-			this.シリーズ名.DataPropertyName = "シリーズ名";
-			this.シリーズ名.HeaderText = "シリーズ名";
-			this.シリーズ名.MinimumWidth = 6;
-			this.シリーズ名.Name = "シリーズ名";
-			this.シリーズ名.Width = 200;
+			this.Column1.DataPropertyName = "Rarity_Kanabell";
+			this.Column1.HeaderText = "カーナベル";
+			this.Column1.MinimumWidth = 6;
+			this.Column1.Name = "Column1";
+			this.Column1.Width = 125;
 			// 
-			// 開始日
+			// Rarity_Konami
 			// 
-			this.開始日.DataPropertyName = "開始日";
-			this.開始日.HeaderText = "開始日";
-			this.開始日.MinimumWidth = 6;
-			this.開始日.Name = "開始日";
-			this.開始日.Width = 200;
+			this.Rarity_Konami.DataPropertyName = "Rarity_Konami";
+			this.Rarity_Konami.HeaderText = "コナミ";
+			this.Rarity_Konami.MinimumWidth = 6;
+			this.Rarity_Konami.Name = "Rarity_Konami";
+			this.Rarity_Konami.Width = 125;
 			// 
 			// 有効フラグDataGridViewCheckBoxColumn
 			// 
@@ -131,19 +131,19 @@
 			this.有効フラグDataGridViewCheckBoxColumn.Name = "有効フラグDataGridViewCheckBoxColumn";
 			this.有効フラグDataGridViewCheckBoxColumn.Width = 50;
 			// 
-			// SeriesGroupForm
+			// RarityPairForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1067, 562);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Margin = new System.Windows.Forms.Padding(4);
-			this.Name = "SeriesGroupForm";
-			this.Text = "SeriesGroupForm";
+			this.Name = "RarityPairForm";
+			this.Text = "PackGroupForm";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PackGroupForm_FormClosed);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.SeriesGroupDataBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.rarityPairDataBindingSource)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -154,10 +154,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.BindingSource SeriesGroupDataBindingSource;
-		private System.Windows.Forms.DataGridViewTextBoxColumn シリーズ名DataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn シリーズ名;
-		private System.Windows.Forms.DataGridViewTextBoxColumn 開始日;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Rarity_Konami;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn 有効フラグDataGridViewCheckBoxColumn;
+		private System.Windows.Forms.BindingSource rarityPairDataBindingSource;
 	}
 }

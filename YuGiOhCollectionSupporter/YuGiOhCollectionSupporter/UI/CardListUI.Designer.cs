@@ -34,18 +34,18 @@
 			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
 			this.type = new System.Windows.Forms.DataGridViewImageColumn();
 			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.クイック = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.Is同名予備カード枚数十分 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.flowLayoutPanel3.SuspendLayout();
@@ -156,58 +156,13 @@
 			this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
 			this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
 			// 
-			// type
+			// collectDataUI1
 			// 
-			this.type.HeaderText = "";
-			this.type.MinimumWidth = 6;
-			this.type.Name = "type";
-			this.type.ReadOnly = true;
-			this.type.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.type.Width = 30;
-			// 
-			// 名前
-			// 
-			this.名前.HeaderText = "名前";
-			this.名前.MinimumWidth = 100;
-			this.名前.Name = "名前";
-			this.名前.ReadOnly = true;
-			this.名前.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.名前.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.名前.Width = 250;
-			// 
-			// 略号
-			// 
-			this.略号.HeaderText = "略号";
-			this.略号.MinimumWidth = 70;
-			this.略号.Name = "略号";
-			this.略号.ReadOnly = true;
-			this.略号.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.略号.Width = 125;
-			// 
-			// レアリティ
-			// 
-			this.レアリティ.HeaderText = "レアリティ";
-			this.レアリティ.MinimumWidth = 70;
-			this.レアリティ.Name = "レアリティ";
-			this.レアリティ.ReadOnly = true;
-			this.レアリティ.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.レアリティ.Width = 70;
-			// 
-			// クイック
-			// 
-			this.クイック.HeaderText = "クイック所持";
-			this.クイック.MinimumWidth = 6;
-			this.クイック.Name = "クイック";
-			this.クイック.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.クイック.Width = 90;
-			// 
-			// Is同名予備カード枚数十分
-			// 
-			this.Is同名予備カード枚数十分.HeaderText = "同名予備カード枚数十分";
-			this.Is同名予備カード枚数十分.MinimumWidth = 6;
-			this.Is同名予備カード枚数十分.Name = "Is同名予備カード枚数十分";
-			this.Is同名予備カード枚数十分.Width = 180;
+			this.collectDataUI1.Location = new System.Drawing.Point(5, 157);
+			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(5);
+			this.collectDataUI1.Name = "collectDataUI1";
+			this.collectDataUI1.Size = new System.Drawing.Size(987, 289);
+			this.collectDataUI1.TabIndex = 11;
 			// 
 			// flowLayoutPanel1
 			// 
@@ -259,13 +214,58 @@
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.button3_Click);
 			// 
-			// collectDataUI1
+			// type
 			// 
-			this.collectDataUI1.Location = new System.Drawing.Point(5, 157);
-			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(5);
-			this.collectDataUI1.Name = "collectDataUI1";
-			this.collectDataUI1.Size = new System.Drawing.Size(987, 289);
-			this.collectDataUI1.TabIndex = 11;
+			this.type.HeaderText = "";
+			this.type.MinimumWidth = 6;
+			this.type.Name = "type";
+			this.type.ReadOnly = true;
+			this.type.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.type.Width = 30;
+			// 
+			// 名前
+			// 
+			this.名前.HeaderText = "名前";
+			this.名前.MinimumWidth = 100;
+			this.名前.Name = "名前";
+			this.名前.ReadOnly = true;
+			this.名前.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.名前.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.名前.Width = 250;
+			// 
+			// 略号
+			// 
+			this.略号.HeaderText = "略号";
+			this.略号.MinimumWidth = 70;
+			this.略号.Name = "略号";
+			this.略号.ReadOnly = true;
+			this.略号.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.略号.Width = 125;
+			// 
+			// レアリティ
+			// 
+			this.レアリティ.HeaderText = "レアリティ";
+			this.レアリティ.MinimumWidth = 70;
+			this.レアリティ.Name = "レアリティ";
+			this.レアリティ.ReadOnly = true;
+			this.レアリティ.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.レアリティ.Width = 70;
+			// 
+			// クイック
+			// 
+			this.クイック.HeaderText = "Q所持";
+			this.クイック.MinimumWidth = 6;
+			this.クイック.Name = "クイック";
+			this.クイック.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.クイック.Width = 70;
+			// 
+			// Is同名予備カード枚数十分
+			// 
+			this.Is同名予備カード枚数十分.HeaderText = "同名予備";
+			this.Is同名予備カード枚数十分.MinimumWidth = 6;
+			this.Is同名予備カード枚数十分.Name = "Is同名予備カード枚数十分";
+			this.Is同名予備カード枚数十分.Width = 80;
 			// 
 			// CardListUI
 			// 
@@ -295,15 +295,15 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 		private CollectDataUI collectDataUI1;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.DataGridViewImageColumn type;
 		private System.Windows.Forms.DataGridViewLinkColumn 名前;
 		private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
 		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn クイック;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn Is同名予備カード枚数十分;
-		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button3;
 	}
 }

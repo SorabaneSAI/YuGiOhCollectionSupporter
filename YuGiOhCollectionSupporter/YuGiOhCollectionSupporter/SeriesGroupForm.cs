@@ -13,11 +13,15 @@ namespace YuGiOhCollectionSupporter
     public partial class SeriesGroupForm : Form
     {
         public BindingList<SeriesGroupData> SeriesGroupDataList = new BindingList<SeriesGroupData>();
-        public BindingList<SeriesGroupData> oldSeriesGroupDataList;
+        public BindingList<SeriesGroupData> oldSeriesGroupDataList = new BindingList<SeriesGroupData>();
 
-        public SeriesGroupForm(BindingList<SeriesGroupData> datalist)
+		public Form1 form;
+
+		public SeriesGroupForm(BindingList<SeriesGroupData> datalist, Form1 form1)
         {
             InitializeComponent();
+
+            form = form1;
 
 			SeriesGroupDataList = datalist;
 
@@ -25,7 +29,9 @@ namespace YuGiOhCollectionSupporter
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = SeriesGroupDataList;
 
-			oldSeriesGroupDataList = new BindingList<SeriesGroupData>(SeriesGroupDataList);   //コンストラクタにブチ込むとコピーになる
+			//コンストラクタにブチ込むとコピーになるのはガセ　普通にコピー
+			Program.CopyList(SeriesGroupDataList, oldSeriesGroupDataList);
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,12 +41,11 @@ namespace YuGiOhCollectionSupporter
 
         private void button2_Click(object sender, EventArgs e)
         {
-			SeriesGroupDataList = oldSeriesGroupDataList;
-            Close();
+			Program.CopyList(oldSeriesGroupDataList, form.SeriesGroupDataList);
+			Close();
         }
         private void PackGroupForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            button2_Click(sender, e);
         }
 	}
 

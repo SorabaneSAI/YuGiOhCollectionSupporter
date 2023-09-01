@@ -13,19 +13,23 @@ namespace YuGiOhCollectionSupporter
     public partial class PackGroupForm : Form
     {
         public BindingList<PackGroupData> PackGroupDataList = new BindingList<PackGroupData>();
-        public BindingList<PackGroupData> oldPackGroupDataList;
+        public BindingList<PackGroupData> oldPackGroupDataList = new BindingList<PackGroupData>();
 
-        public PackGroupForm(BindingList<PackGroupData> datalist)
+        public Form1 form;
+        public PackGroupForm(BindingList<PackGroupData> datalist, Form1 form1)
         {
             InitializeComponent();
 
+            form = form1;
             PackGroupDataList = datalist;
 
 
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = PackGroupDataList;
 
-            oldPackGroupDataList = new BindingList<PackGroupData>(PackGroupDataList);   //コンストラクタにブチ込むとコピーになる
+            //コンストラクタにブチ込むとコピーになるのはガセ　普通にコピー
+            Program.CopyList(PackGroupDataList, oldPackGroupDataList);
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,12 +39,11 @@ namespace YuGiOhCollectionSupporter
 
         private void button2_Click(object sender, EventArgs e)
         {
-            PackGroupDataList = oldPackGroupDataList;
+			Program.CopyList(oldPackGroupDataList, form.PackGroupDataList);
             Close();
         }
         private void PackGroupForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            button2_Click(sender, e);
         }
 	}
 

@@ -17,6 +17,8 @@ namespace YuGiOhCollectionSupporter
 {
 	public partial class KanabellForm : Form
 	{
+		Form1 form;
+
 		public enum ERank { A,B,C,D,在庫なし,その他}
 		public class KanabellCard
 		{
@@ -40,9 +42,10 @@ namespace YuGiOhCollectionSupporter
 		}
 
 
-		public KanabellForm()
+		public KanabellForm(Form1 form)
 		{
 			InitializeComponent();
+			this.form = form;
 		}
 
 		public async Task<List<KanabellCard>> GetHtml(List<string> errorlist)
@@ -59,21 +62,33 @@ namespace YuGiOhCollectionSupporter
 
 			//まずシリーズを取得
 			var SeriesURLList = new List<string>();
+			var SeriesNameList = new List<string>();
 			var DivNameNode = html.QuerySelector("div[id='search__detail-list']");
-			var ListLiNodes = DivNameNode.QuerySelectorAll("li");
+			var ListLiNodes = DivNameNode.QuerySelectorAll("li[class*='yugioh_ocg-list-items']");	//ラッシュデュエルは含まない
 
 			foreach ( var node in ListLiNodes )
 			{
 				var aNode = node.QuerySelector("a");
+				var name = aNode.TextContent.Trim();
+				//スルーするページかチェック
+				foreach (var throughdata in form.ThroughPageDataList)
+				{
+					if (name == throughdata.Word)
+					{
+						goto goto_through;
+					}
+				}
 				string url = aNode.GetAttribute("href").Trim();
+				SeriesNameList.Add(name);
 				SeriesURLList.Add(textBox1.Text + url);
+
+			goto_through:;
 			}
 
 			var KanabellCardList = new List<KanabellCard>();
-
-
-			foreach (var seriesURL in SeriesURLList)
+			for (int k = 0; k < SeriesURLList.Count; k++)
             {
+				string seriesURL = SeriesURLList[k];
 				await Task.Delay(1000); //負荷軽減のため１秒待機;
 
 				var html2 = await Program.GetHtml(seriesURL);
@@ -104,11 +119,13 @@ namespace YuGiOhCollectionSupporter
 					continue;
 				}
 
-				goto_continue:;
+			goto_continue:;
 
 				//次へのページがなくなるまで続く
+				int num = 0;
 				while (true)
 				{
+					num++;
 					//カード取得
 					//カードがあるテーブルを取得
 					var DivNameNode3 = html2.QuerySelector("div[id='ListSell']");
@@ -140,6 +157,8 @@ namespace YuGiOhCollectionSupporter
 
 							html2 = await Program.GetHtml(textBox1.Text + page.GetAttribute("href").Trim());
 
+							Program.WriteLog($"{SeriesNameList[k]} {k}/{SeriesURLList.Count}の{num}ページ目  {Program.ToJson(KanabellCardList.Last())}", LogLevel.情報);
+
 							goto next;
 						}
 					}
@@ -147,7 +166,9 @@ namespace YuGiOhCollectionSupporter
 					//次へがなくなったら次のシリーズ
 					break;
 
+
 					next:;
+
 				}
 
 			}
@@ -232,7 +253,7 @@ namespace YuGiOhCollectionSupporter
 			//カードと関連付ける
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private async void button1_Click(object sender, EventArgs e)
 		{
 			var sw = new System.Diagnostics.Stopwatch();
 			sw.Start();
@@ -240,9 +261,8 @@ namespace YuGiOhCollectionSupporter
 			InvalidMenuItem();
 
 			var errorlist = new List<string>();
-			var task = GetHtml(errorlist);
+			var pricelist = await GetHtml(errorlist);
 
-			var pricelist = task.Result;
 			Program.Save(PriceDataBase.SaveDataPath, pricelist);
 
 
@@ -266,6 +286,8 @@ namespace YuGiOhCollectionSupporter
 				button1.Enabled = false;
 				button2.Enabled = false;
 				button3.Enabled = false;
+				button4.Enabled = false;
+				button5.Enabled = false;
 
 			}));
 
@@ -280,9 +302,27 @@ namespace YuGiOhCollectionSupporter
 				button1.Enabled = true;
 				button2.Enabled = true;
 				button3.Enabled = true;
+				button4.Enabled = true;
+				button5.Enabled = true;
 			}));
 
 		}
 
+		private void button4_Click(object sender, EventArgs e)
+		{
+			RarityPairForm f = new RarityPairForm(form.RarityPairDataList,form);
+			f.ShowDialog(this);
+			f.Dispose();
+			Program.Save(form.RarityPairSavePath, form.RarityPairDataList);
+
+		}
+
+		private void button5_Click(object sender, EventArgs e)
+		{
+			ThroughPageForm f = new ThroughPageForm(form.ThroughPageDataList, form);
+			f.ShowDialog(this);
+			f.Dispose();
+			Program.Save(form.ThroughPageSavePath, form.ThroughPageDataList);
+		}
 	}
 }

@@ -1,45 +1,44 @@
 ﻿namespace YuGiOhCollectionSupporter
 {
-    partial class SeriesGroupForm
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class ThroughPageForm
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
 			this.components = new System.ComponentModel.Container();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
-			this.SeriesGroupDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.シリーズ名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.開始日 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.throughPageDataBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.有効フラグDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.SeriesGroupDataBindingSource)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.throughPageDataBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -89,11 +88,10 @@
 			this.dataGridView1.AutoGenerateColumns = false;
 			this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.シリーズ名,
-            this.開始日,
+            this.Column1,
             this.有効フラグDataGridViewCheckBoxColumn});
 			this.tableLayoutPanel1.SetColumnSpan(this.dataGridView1, 2);
-			this.dataGridView1.DataSource = this.SeriesGroupDataBindingSource;
+			this.dataGridView1.DataSource = this.throughPageDataBindingSource;
 			this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dataGridView1.Location = new System.Drawing.Point(4, 4);
 			this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
@@ -103,25 +101,17 @@
 			this.dataGridView1.Size = new System.Drawing.Size(1059, 499);
 			this.dataGridView1.TabIndex = 3;
 			// 
-			// SeriesGroupDataBindingSource
+			// throughPageDataBindingSource
 			// 
-			this.SeriesGroupDataBindingSource.DataSource = typeof(YuGiOhCollectionSupporter.SeriesGroupData);
+			this.throughPageDataBindingSource.DataSource = typeof(YuGiOhCollectionSupporter.ThroughPageData);
 			// 
-			// シリーズ名
+			// Column1
 			// 
-			this.シリーズ名.DataPropertyName = "シリーズ名";
-			this.シリーズ名.HeaderText = "シリーズ名";
-			this.シリーズ名.MinimumWidth = 6;
-			this.シリーズ名.Name = "シリーズ名";
-			this.シリーズ名.Width = 200;
-			// 
-			// 開始日
-			// 
-			this.開始日.DataPropertyName = "開始日";
-			this.開始日.HeaderText = "開始日";
-			this.開始日.MinimumWidth = 6;
-			this.開始日.Name = "開始日";
-			this.開始日.Width = 200;
+			this.Column1.DataPropertyName = "Word";
+			this.Column1.HeaderText = "このワードのページはスルーするー";
+			this.Column1.MinimumWidth = 6;
+			this.Column1.Name = "Column1";
+			this.Column1.Width = 300;
 			// 
 			// 有効フラグDataGridViewCheckBoxColumn
 			// 
@@ -131,33 +121,31 @@
 			this.有効フラグDataGridViewCheckBoxColumn.Name = "有効フラグDataGridViewCheckBoxColumn";
 			this.有効フラグDataGridViewCheckBoxColumn.Width = 50;
 			// 
-			// SeriesGroupForm
+			// ThroughPageForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1067, 562);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Margin = new System.Windows.Forms.Padding(4);
-			this.Name = "SeriesGroupForm";
-			this.Text = "SeriesGroupForm";
+			this.Name = "ThroughPageForm";
+			this.Text = "ThroughPageForm";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PackGroupForm_FormClosed);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.SeriesGroupDataBindingSource)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.throughPageDataBindingSource)).EndInit();
 			this.ResumeLayout(false);
 
-        }
+		}
 
-        #endregion
+		#endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.BindingSource SeriesGroupDataBindingSource;
-		private System.Windows.Forms.DataGridViewTextBoxColumn シリーズ名DataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn シリーズ名;
-		private System.Windows.Forms.DataGridViewTextBoxColumn 開始日;
+		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.DataGridView dataGridView1;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn 有効フラグDataGridViewCheckBoxColumn;
+		private System.Windows.Forms.BindingSource throughPageDataBindingSource;
 	}
 }

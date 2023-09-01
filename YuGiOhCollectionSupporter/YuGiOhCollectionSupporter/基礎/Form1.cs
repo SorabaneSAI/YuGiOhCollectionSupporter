@@ -29,6 +29,12 @@ namespace YuGiOhCollectionSupporter
 		public BindingList<SeriesGroupData> SeriesGroupDataList = new BindingList<SeriesGroupData>();
 		public string SeriesGroupSavePath = "SeriesGroupData.json";
 
+		public BindingList<RarityPairData> RarityPairDataList = new BindingList<RarityPairData>();
+		public string RarityPairSavePath = "RarityPairData.json";
+
+		public BindingList<ThroughPageData> ThroughPageDataList = new BindingList<ThroughPageData>();
+		public string ThroughPageSavePath = "ThroughPageData.json";
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -37,6 +43,8 @@ namespace YuGiOhCollectionSupporter
 
 			PackGroupData.InitialDataSet(PackGroupDataList);
 			SeriesGroupData.InitialDataSet(SeriesGroupDataList);
+			RarityPairData.InitialDataSet(RarityPairDataList);
+			ThroughPageData.InitialDataSet(ThroughPageDataList);
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -48,6 +56,8 @@ namespace YuGiOhCollectionSupporter
 			Program.Load(UserCardDB.SaveUserDataPath, ref UserCardDB);
 			Program.Load(PackGroupSavePath, ref PackGroupDataList);
 			Program.Load(SeriesGroupSavePath, ref SeriesGroupDataList);
+			Program.Load(RarityPairSavePath, ref RarityPairDataList);
+			Program.Load(ThroughPageSavePath, ref ThroughPageDataList);
 
 			formPanel.ShowHome(this);
 
@@ -284,7 +294,7 @@ namespace YuGiOhCollectionSupporter
 
         private void パック分類設定ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			PackGroupForm f = new PackGroupForm(PackGroupDataList);
+			PackGroupForm f = new PackGroupForm(PackGroupDataList, this);
 			f.ShowDialog(this);
 			f.Dispose();
 			Program.Save(PackGroupSavePath, PackGroupDataList);
@@ -375,7 +385,7 @@ namespace YuGiOhCollectionSupporter
 
 		private void シリーズ期設定ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			SeriesGroupForm f = new SeriesGroupForm(SeriesGroupDataList);
+			SeriesGroupForm f = new SeriesGroupForm(SeriesGroupDataList, this);
 			f.ShowDialog(this);
 			f.Dispose();
 			Program.Save(SeriesGroupSavePath, SeriesGroupDataList);
@@ -383,7 +393,7 @@ namespace YuGiOhCollectionSupporter
 
 		private void 販売価格調査ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			KanabellForm f = new KanabellForm();
+			KanabellForm f = new KanabellForm(this);
 			f.Show(this);
 		}
 	}
