@@ -27,8 +27,8 @@ namespace YuGiOhCollectionSupporter
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = PackGroupDataList;
 
-            //コンストラクタにブチ込むとコピーになるのはガセ　普通にコピー
-            Program.CopyList(PackGroupDataList, oldPackGroupDataList);
+			//コンストラクタにブチ込むとコピーになるのはガセ　普通にコピー
+			oldPackGroupDataList = Program.DeepCopy(PackGroupDataList);
 
         }
 
@@ -39,7 +39,7 @@ namespace YuGiOhCollectionSupporter
 
         private void button2_Click(object sender, EventArgs e)
         {
-			Program.CopyList(oldPackGroupDataList, form.PackGroupDataList);
+			form.PackGroupDataList = Program.DeepCopy(oldPackGroupDataList);
             Close();
         }
         private void PackGroupForm_FormClosed(object sender, FormClosedEventArgs e)

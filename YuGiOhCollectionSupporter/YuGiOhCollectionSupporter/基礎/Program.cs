@@ -12,6 +12,9 @@ using System.Text;
 using System.Globalization;
 using Newtonsoft.Json.Serialization;
 using System.ComponentModel;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -233,15 +236,24 @@ namespace YuGiOhCollectionSupporter
 			return si.LengthInTextElements;
 		}
 
-		//普通にコピーできないので１つずつコピー
-		public static void CopyList<T>(BindingList<T> From, BindingList<T> To)
+		//https://bluebirdofoz.hatenablog.com/entry/2022/10/15/234936
+		/// <summary>
+		/// 対象のディープコピーを行う
+		/// シリアライズ(Serializable 属性)されていないクラスではエラー
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		public static T DeepCopy<T>(this T src)
 		{
-			To.Clear();
-			foreach (var item in From)
+			using (MemoryStream stream = new MemoryStream())
 			{
-				To.Add(item);
-			}
+				var formatter = new BinaryFormatter();
+				formatter.Serialize(stream, src);
+				stream.Position = 0;
 
+				return (T)formatter.Deserialize(stream);
+			}
 		}
 	}
 

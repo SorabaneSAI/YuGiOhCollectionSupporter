@@ -57,6 +57,10 @@ namespace YuGiOhCollectionSupporter
 
 			}
 		}
+		public override int GetHashCode()
+		{
+			return this.get略号Full().GetHashCode();
+		}
 
 	}
 }

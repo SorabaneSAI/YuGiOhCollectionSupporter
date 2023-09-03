@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Dom;
+using AngleSharp.Html.Dom;
 using MigraDoc.DocumentObjectModel.Tables;
 using System;
 using System.Collections.Generic;
@@ -19,17 +20,23 @@ namespace YuGiOhCollectionSupporter
 	{
 		Form1 form;
 
-		public enum ERank { A,B,C,D,在庫なし,その他}
+		public enum EKanabellRank { A,B,C,D,在庫なし,その他}
 		public class KanabellCard
 		{
-			string Rare="";
-			string 分類1="";
-			string 分類2="";
-			string Name = "";
-			ERank Rank = ERank.その他;
-			int Price = 0;
+			public string Rare ="";
+			public string 分類1 ="";
+			public string 分類2="";
+			public string Name = "";
+			public EKanabellRank Rank = EKanabellRank.その他;
+			public int Price = 0;
+			public string URL = "";
 
-			public KanabellCard(string rare, string bunrui1, string bunrui2, string name, ERank rank, int price)
+			public string Note="";
+
+			//この２つは②で追加される
+			public string 備考詳細 = "";
+			public string 略号Full = "";
+			public KanabellCard(string rare, string bunrui1, string bunrui2, string name, EKanabellRank rank, int price, string uRL)
 			{
 				Rare = rare;
 				分類1 = bunrui1;
@@ -37,6 +44,23 @@ namespace YuGiOhCollectionSupporter
 				Name = name;
 				Rank = rank;
 				Price = price;
+				URL = uRL;
+
+				//最後のカッコを探す
+				if (Name.Last() == ')')
+				{
+					int Bra = Name.LastIndexOf('(');
+					if (Bra == -1)
+					{
+						Program.WriteLog($")があるのに(がない\n {Program.ToJson(this)}", LogLevel.エラー);
+					}
+					else
+					{
+						Note = Name.Substring(Bra + 1, Name.Length - Bra - 2);    //カッコの中身
+						Name = Name.Substring(0, Bra); //カッコを除いた名前
+					}
+				}
+
 			}
 
 		}
@@ -51,7 +75,9 @@ namespace YuGiOhCollectionSupporter
 		public async Task<List<KanabellCard>> GetHtml(List<string> errorlist)
 		{
 			//アクセスしてデータを取ってくる
-			Program.WriteLog("販売価格取得中", LogLevel.必須項目);
+			string str = "販売価格取得中";
+			Program.WriteLog(str, LogLevel.必須項目);
+			form.UpdateLabel(str);
 
 			var html = await Program.GetHtml(textBox1.Text + textBox2.Text);
 			if (html == null)
@@ -157,7 +183,9 @@ namespace YuGiOhCollectionSupporter
 
 							html2 = await Program.GetHtml(textBox1.Text + page.GetAttribute("href").Trim());
 
-							Program.WriteLog($"{SeriesNameList[k]} {k}/{SeriesURLList.Count}の{num}ページ目  {Program.ToJson(KanabellCardList.Last())}", LogLevel.情報);
+							str = $"{SeriesNameList[k]} {k}/{SeriesURLList.Count}の{num}ページ目  {Program.ToJson(KanabellCardList.Last())}";
+							Program.WriteLog(str, LogLevel.情報);
+							form.UpdateLabel(str);
 
 							goto next;
 						}
@@ -183,8 +211,9 @@ namespace YuGiOhCollectionSupporter
 			var seriesstr1 = "";
 			var seriesstr2 = "";
 			var namestr = "";
-			ERank rank = ERank.在庫なし;
+			EKanabellRank rank = EKanabellRank.在庫なし;
 			int price = 0;
+			string url = "";
 
 			var cardnodeTable = cell.QuerySelector("table");
 			foreach (var row2 in cardnodeTable.QuerySelectorAll("tr"))
@@ -206,6 +235,7 @@ namespace YuGiOhCollectionSupporter
 				if (namenode != null)
 				{
 					namestr = namenode.TextContent.Trim();
+					url = textBox1.Text + namenode.GetAttribute("href").Trim();
 					continue;
 				}
 
@@ -214,7 +244,7 @@ namespace YuGiOhCollectionSupporter
 				{
 					if(pricenode.QuerySelector("span[class='None']") != null)
 					{
-						rank = ERank.在庫なし;
+						rank = EKanabellRank.在庫なし;
 						continue;
 					}
 
@@ -235,23 +265,19 @@ namespace YuGiOhCollectionSupporter
 				}
 			}
 
-			return new KanabellCard(rarestr, seriesstr1,seriesstr2, namestr, rank, price);
+			return new KanabellCard(rarestr, seriesstr1,seriesstr2, namestr, rank, price,url);
 		}
 
-		public ERank GetERank(string URL)
+		public EKanabellRank GetERank(string URL)
 		{
-			if (URL.Contains("a.gif")) return ERank.A;
-			if (URL.Contains("b.gif")) return ERank.A;
-			if (URL.Contains("c.gif")) return ERank.A;
-			if (URL.Contains("d.gif")) return ERank.A;
-			if (URL.Contains("card_none.gif")) return ERank.在庫なし;
-			return ERank.その他;
+			if (URL.Contains("a.gif")) return EKanabellRank.A;
+			if (URL.Contains("b.gif")) return EKanabellRank.B;
+			if (URL.Contains("c.gif")) return EKanabellRank.C;
+			if (URL.Contains("d.gif")) return EKanabellRank.D;
+			if (URL.Contains("card_none.gif")) return EKanabellRank.在庫なし;
+			return EKanabellRank.その他;
 		}
 
-		public void Relation(KanabellCard card, CardDataBase DB)
-		{
-			//カードと関連付ける
-		}
 
 		private async void button1_Click(object sender, EventArgs e)
 		{
@@ -263,6 +289,7 @@ namespace YuGiOhCollectionSupporter
 			var errorlist = new List<string>();
 			var pricelist = await GetHtml(errorlist);
 
+			form.PriceDB.PriceDataList = pricelist;
 			Program.Save(PriceDataBase.SaveDataPath, pricelist);
 
 
@@ -288,6 +315,7 @@ namespace YuGiOhCollectionSupporter
 				button3.Enabled = false;
 				button4.Enabled = false;
 				button5.Enabled = false;
+				button6.Enabled = false;
 
 			}));
 
@@ -304,6 +332,7 @@ namespace YuGiOhCollectionSupporter
 				button3.Enabled = true;
 				button4.Enabled = true;
 				button5.Enabled = true;
+				button6.Enabled = true;
 			}));
 
 		}
@@ -324,5 +353,112 @@ namespace YuGiOhCollectionSupporter
 			f.Dispose();
 			Program.Save(form.ThroughPageSavePath, form.ThroughPageDataList);
 		}
+
+		private void button2_Click(object sender, EventArgs e)
+		{
+			MakePair.MakeDictionary(form,this);
+		}
+
+		private async void button6_Click(object sender, EventArgs e)
+		{
+			var sw = new System.Diagnostics.Stopwatch();
+			sw.Start();
+
+			InvalidMenuItem();
+
+			var errorlist = new List<string>();
+			await get略号(errorlist, form.PriceDB.PriceDataList);
+
+			Program.Save(PriceDataBase.SaveDataPath, form.PriceDB.PriceDataList);
+
+
+			ValidMenuItem();
+
+			sw.Stop();
+			TimeSpan ts = sw.Elapsed;
+
+			string msg = $"販売情報の取得が完了しました。\n全データ件数{form.PriceDB.PriceDataList.Count}" + $"エラー件数:{errorlist.Count}件\n" + Program.ToJson(errorlist, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
+			Program.WriteLog(msg, LogLevel.必須項目);
+			MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+
+		private async Task get略号(List<string> errorlist ,List<KanabellCard> KanabellCardList)
+		{
+			string str = "カードページ取得中";
+			Program.WriteLog(str, LogLevel.必須項目);
+			form.UpdateLabel(str);
+
+			for (int k = 0; k < KanabellCardList.Count; k++)
+			{
+				string URL = KanabellCardList[k].URL;
+				if (URL == "") continue;	//①を実行していなければ空白 っていうか要素がないか
+
+				await Task.Delay(1000); //負荷軽減のため１秒待機;
+
+				var html2 = await Program.GetHtml(URL);
+
+				//取得できなかったら３回挑戦
+				if (html2 == null)
+				{
+					for (var i = 0; i < 3; i++)
+					{
+						await Task.Delay(1000); //負荷軽減のため１秒待機;
+						html2 = await Program.GetHtml(URL);
+						if (html2 != null)
+						{
+							goto goto_continue;
+						}
+					}
+
+					errorlist.Add(URL);
+					Program.WriteLog($"エラー発生。ログファイル参照。[{URL}]", LogLevel.エラー);
+
+					if (errorlist.Count > 10)
+					{
+						Program.WriteLog($"エラーが多すぎるので強制終了", LogLevel.エラー);
+						MessageBox.Show("エラーが多すぎたため、データ収集を終了します。（ログ参照）", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return ;
+					}
+
+					continue;
+				}
+
+			goto_continue:;
+
+				AnalyzeHtml略号(KanabellCardList[k], html2);
+
+				str = $"{k}/{KanabellCardList.Count}  {KanabellCardList[k].略号Full} {KanabellCardList[k].備考詳細} ";
+				Program.WriteLog(str, LogLevel.情報);
+				form.UpdateLabel(str);
+
+
+			}
+		}
+
+		//略号、備考を追記する
+		private void AnalyzeHtml略号(KanabellCard kanabell, IHtmlDocument html)
+		{
+			var divNode = html.QuerySelector("div[id*='card_detail']");
+			//			var trNodeList = divNode.QuerySelector("table").Children[0].Children;
+			var tdNodeList = divNode.QuerySelectorAll("td");
+
+			kanabell.備考詳細 = tdNodeList[0].TextContent.Trim();	//最初が備考のはず・・・
+
+			foreach (var node in tdNodeList)
+            {
+				if(node.TextContent.Contains("シリアル番号"))
+				{
+					var twin = node.TextContent.Split(':');
+					kanabell.略号Full = twin[1].Trim();
+
+					if(kanabell.略号Full == "")
+					{
+						kanabell.略号Full = "なし";
+					}
+
+					break;
+				}
+            }
+        }
 	}
 }

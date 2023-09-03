@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YuGiOhCollectionSupporter.データ;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -22,6 +23,7 @@ namespace YuGiOhCollectionSupporter
 		public CardDataBase CardDB = new CardDataBase();
 		public PackDataBase PackDB = new PackDataBase();
 		public UserCardDataBase UserCardDB = new UserCardDataBase();
+		public PriceDataBase PriceDB = new PriceDataBase();
 
 		public BindingList<PackGroupData> PackGroupDataList = new BindingList<PackGroupData>();
 		public string PackGroupSavePath = "PackGroupData.json";
@@ -54,6 +56,7 @@ namespace YuGiOhCollectionSupporter
 			Program.Load(CardDB.SaveDataPath, ref CardDB);
 			Program.Load(PackDB.SaveDataPath, ref PackDB);
 			Program.Load(UserCardDB.SaveUserDataPath, ref UserCardDB);
+			Program.Load(PriceDataBase.SaveDataPath, ref PriceDB.PriceDataList);
 			Program.Load(PackGroupSavePath, ref PackGroupDataList);
 			Program.Load(SeriesGroupSavePath, ref SeriesGroupDataList);
 			Program.Load(RarityPairSavePath, ref RarityPairDataList);

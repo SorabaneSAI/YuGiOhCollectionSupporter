@@ -29,6 +29,10 @@ namespace YuGiOhCollectionSupporter
 			BirthDay = birthDay;
 			CardCount = cardCount;
 		}
+		public override int GetHashCode()
+		{
+			return URL.GetHashCode();
+		}
 
 	}
 	public class NodeSorter : IComparer
@@ -51,4 +55,6 @@ namespace YuGiOhCollectionSupporter
 		}
 
 	}
+
+
 }

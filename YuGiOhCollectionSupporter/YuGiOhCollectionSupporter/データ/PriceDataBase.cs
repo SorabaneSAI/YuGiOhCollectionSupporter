@@ -7,9 +7,9 @@ using static YuGiOhCollectionSupporter.KanabellForm;
 
 namespace YuGiOhCollectionSupporter.データ
 {
-	internal class PriceDataBase
+	public class PriceDataBase
 	{
-		public List<KanabellCard> PackDataList = new List<KanabellCard>();
+		public List<KanabellCard> PriceDataList = new List<KanabellCard>();
 		public static string SaveDataPath = "PriceDataBase.json";
 
 	}

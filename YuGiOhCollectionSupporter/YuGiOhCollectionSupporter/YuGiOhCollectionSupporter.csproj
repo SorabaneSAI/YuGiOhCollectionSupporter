@@ -92,6 +92,7 @@
     <Compile Include="KanabellForm.Designer.cs">
       <DependentUpon>KanabellForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MakePair.cs" />
     <Compile Include="ThroughPageForm.cs">
       <SubType>Form</SubType>
     </Compile>

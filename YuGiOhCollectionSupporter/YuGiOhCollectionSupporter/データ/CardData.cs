@@ -158,6 +158,17 @@ namespace YuGiOhCollectionSupporter
 			return 0;
 		}
 
+		public override int GetHashCode()
+		{
+			return 発売パック.GetHashCode()+this.略号.GetHashCode() + this.rarity.GetHashCode();	//略号なしもあるし発売パックも足したほうがいいな
+		}
+		public override bool Equals(object obj)
+		{
+			CardVariation comp = obj as CardVariation;
+			if (comp == null) return false;
+
+			return this.発売パック.URL.Equals(comp.発売パック.URL) && this.略号.get略号Full().Equals(comp.略号.get略号Full()) && rarity.Name.Equals(comp.rarity.Name);
+		}
 
 	}
 
@@ -171,6 +182,12 @@ namespace YuGiOhCollectionSupporter
 			Initial = initial;
 			Name = name;
 		}
+
+		public override int GetHashCode()
+		{
+			return this.Name.GetHashCode();
+		}
+
 	}
 
 
