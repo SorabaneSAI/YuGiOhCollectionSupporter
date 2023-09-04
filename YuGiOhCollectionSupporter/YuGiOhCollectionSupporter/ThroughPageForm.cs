@@ -29,7 +29,7 @@ namespace YuGiOhCollectionSupporter
             dataGridView1.DataSource = ThroughPageDataList;
 
             //コンストラクタにブチ込むとコピーになるのはガセ　普通にコピー
-            Program.CopyList(ThroughPageDataList, oldThroughPageDataList);
+            oldThroughPageDataList = Program.DeepCopy(ThroughPageDataList);
                 
         }
 
@@ -40,7 +40,7 @@ namespace YuGiOhCollectionSupporter
 
         private void button2_Click(object sender, EventArgs e)
         {
-			Program.CopyList(oldThroughPageDataList, form.ThroughPageDataList);
+			form.ThroughPageDataList = Program.DeepCopy(oldThroughPageDataList);
 			Close();
         }
         private void PackGroupForm_FormClosed(object sender, FormClosedEventArgs e)

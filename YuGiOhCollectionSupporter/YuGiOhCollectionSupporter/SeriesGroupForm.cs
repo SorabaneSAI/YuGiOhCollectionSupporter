@@ -30,7 +30,7 @@ namespace YuGiOhCollectionSupporter
             dataGridView1.DataSource = SeriesGroupDataList;
 
 			//コンストラクタにブチ込むとコピーになるのはガセ　普通にコピー
-			Program.CopyList(SeriesGroupDataList, oldSeriesGroupDataList);
+			oldSeriesGroupDataList = Program.DeepCopy(SeriesGroupDataList);
 
         }
 
@@ -41,7 +41,7 @@ namespace YuGiOhCollectionSupporter
 
         private void button2_Click(object sender, EventArgs e)
         {
-			Program.CopyList(oldSeriesGroupDataList, form.SeriesGroupDataList);
+			form.SeriesGroupDataList = Program.DeepCopy(oldSeriesGroupDataList);
 			Close();
         }
         private void PackGroupForm_FormClosed(object sender, FormClosedEventArgs e)

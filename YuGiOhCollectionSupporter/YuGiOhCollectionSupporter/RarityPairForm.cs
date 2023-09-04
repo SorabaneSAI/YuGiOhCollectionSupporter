@@ -28,8 +28,8 @@ namespace YuGiOhCollectionSupporter
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = RarityPairDataList;
 
-            //コンストラクタにブチ込むとコピーになるのはガセ　普通にコピー
-            Program.CopyList(RarityPairDataList, oldRarityPairDataList);
+			//コンストラクタにブチ込むとコピーになるのはガセ　普通にコピー
+			oldRarityPairDataList = Program.DeepCopy(RarityPairDataList);
                 
         }
 
@@ -40,7 +40,7 @@ namespace YuGiOhCollectionSupporter
 
         private void button2_Click(object sender, EventArgs e)
         {
-			Program.CopyList(oldRarityPairDataList, form.RarityPairDataList);
+			form.RarityPairDataList = Program.DeepCopy(oldRarityPairDataList);
 			Close();
         }
         private void PackGroupForm_FormClosed(object sender, FormClosedEventArgs e)

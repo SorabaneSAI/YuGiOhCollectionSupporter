@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using YuGiOhCollectionSupporter.データ;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -61,6 +62,7 @@ namespace YuGiOhCollectionSupporter
 					}
 				}
 
+
 			}
 
 		}
@@ -70,6 +72,12 @@ namespace YuGiOhCollectionSupporter
 		{
 			InitializeComponent();
 			this.form = form;
+
+			for (int i = 0; i <= 10; i++)
+			{
+				comboBox1.Items.Add((i*10).ToString()+"%");
+				comboBox2.Items.Add((i*10).ToString()+"%");
+			}
 		}
 
 		public async Task<List<KanabellCard>> GetHtml(List<string> errorlist)
@@ -316,6 +324,8 @@ namespace YuGiOhCollectionSupporter
 				button4.Enabled = false;
 				button5.Enabled = false;
 				button6.Enabled = false;
+				comboBox1.Enabled = false;
+				comboBox2.Enabled = false;
 
 			}));
 
@@ -333,6 +343,8 @@ namespace YuGiOhCollectionSupporter
 				button4.Enabled = true;
 				button5.Enabled = true;
 				button6.Enabled = true;
+				comboBox1.Enabled = true;
+				comboBox2.Enabled = true;
 			}));
 
 		}
@@ -361,6 +373,21 @@ namespace YuGiOhCollectionSupporter
 
 		private async void button6_Click(object sender, EventArgs e)
 		{
+			int percent = comboBox2.SelectedIndex - comboBox1.SelectedIndex;
+			if(!(percent > 0 && percent <=10))
+			{
+				MessageBox.Show("範囲が不正です", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				return;
+			}
+
+			//メッセージボックスを表示する
+			DialogResult result = MessageBox.Show($"捜索には{(int)(percent*0.1* form.PriceDB.PriceDataList.Count / 60)}分程度かかることが予測されます。\n本当に始めますか？", "",
+				MessageBoxButtons.YesNo,
+				MessageBoxIcon.Exclamation,
+				MessageBoxDefaultButton.Button2);
+
+			if (result == DialogResult.No) return;
+
 			var sw = new System.Diagnostics.Stopwatch();
 			sw.Start();
 
@@ -377,7 +404,7 @@ namespace YuGiOhCollectionSupporter
 			sw.Stop();
 			TimeSpan ts = sw.Elapsed;
 
-			string msg = $"販売情報の取得が完了しました。\n全データ件数{form.PriceDB.PriceDataList.Count}" + $"エラー件数:{errorlist.Count}件\n" + Program.ToJson(errorlist, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
+			string msg = $"販売情報の取得が完了しました。\n全データ件数{(int)(percent * 0.1 * form.PriceDB.PriceDataList.Count)}" + $"エラー件数:{errorlist.Count}件\n" + Program.ToJson(errorlist, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
 			Program.WriteLog(msg, LogLevel.必須項目);
 			MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
@@ -388,7 +415,10 @@ namespace YuGiOhCollectionSupporter
 			Program.WriteLog(str, LogLevel.必須項目);
 			form.UpdateLabel(str);
 
-			for (int k = 0; k < KanabellCardList.Count; k++)
+			int StartNum = (int)(KanabellCardList.Count * comboBox1.SelectedIndex * 0.1);
+			int EndNum   = (int)(KanabellCardList.Count * comboBox2.SelectedIndex * 0.1);
+
+			for (int k = StartNum; k < EndNum; k++)
 			{
 				string URL = KanabellCardList[k].URL;
 				if (URL == "") continue;	//①を実行していなければ空白 っていうか要素がないか
@@ -427,7 +457,7 @@ namespace YuGiOhCollectionSupporter
 
 				AnalyzeHtml略号(KanabellCardList[k], html2);
 
-				str = $"{k}/{KanabellCardList.Count}  {KanabellCardList[k].略号Full} {KanabellCardList[k].備考詳細} ";
+				str = $"{k}/{(EndNum-StartNum)}  {KanabellCardList[k].略号Full} {KanabellCardList[k].備考詳細} ";
 				Program.WriteLog(str, LogLevel.情報);
 				form.UpdateLabel(str);
 
