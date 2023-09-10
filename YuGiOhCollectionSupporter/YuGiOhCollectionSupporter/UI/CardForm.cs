@@ -39,8 +39,10 @@ namespace YuGiOhCollectionSupporter
 
             if (data.ペンデュラム効果 == "")
             {
-                flowLayoutPanel1.Controls.Remove(label4);
-                flowLayoutPanel1.Controls.Remove(textBox1);
+                flowLayoutPanel1.Size = new Size(0, 0);
+
+				flowLayoutPanel1.Controls.Remove(label4);
+				flowLayoutPanel1.Controls.Remove(textBox1);
             }
             else
             {
