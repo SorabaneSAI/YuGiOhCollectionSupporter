@@ -118,7 +118,8 @@ namespace YuGiOhCollectionSupporter
 					ryakugou = $"{code_havenum} / {code_allnum}";
 
 
-				int num = dataGridView1.Rows.Add(twincarddata.IsCardNameHave(), card.名前, ryakugou, rarity, twincarddata.usercarddata.UserVariationDataList[0].所持フラグ);
+				int num = dataGridView1.Rows.Add(twincarddata.IsCardNameHave(), card.名前, ryakugou, rarity,
+					twincarddata.usercarddata.UserVariationDataList[0].所持フラグ );
 				dataGridView1.Rows[num].Tag = CardDB.getCard(card.ID); //行のタグにカード情報を埋め込む  cardは変更されてる可能性があるのでCardDBから同じのを持ってくる
 
 				var dgvcell = (DataGridViewImageCell)dataGridView1.Rows[num].Cells["type"];
@@ -142,6 +143,23 @@ namespace YuGiOhCollectionSupporter
 				var havecell = dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"];
 				havecell.Value = twincarddata.getIs同名予備カード枚数十分();
 				havecell.Tag = card.ListVariations[0];
+
+				//１枚ならクイックランクセット
+				var quickrankcell = dataGridView1.Rows[num].Cells["Qランク"];
+
+				if (rarity_allnum == 1)    //１枚しか存在しない場合はクイックセットが可能に
+				{
+					quickrankcell.Value = twincarddata.usercarddata.Rank.ToString();
+					quickrankcell.Tag = card.ListVariations[0];
+				}
+				else
+				{
+					dataGridView1.Rows[num].Cells["Qランク"].Value = null;
+					dataGridView1.Rows[num].Cells["Qランク"] = new DataGridViewTextBoxCell();
+					dataGridView1.Rows[num].Cells["Qランク"].Value = "";
+					dataGridView1.Rows[num].Cells["Qランク"].ReadOnly = true;
+					dataGridView1.Rows[num].Cells["Qランク"].Style.BackColor = Color.Gray;
+				}
 
 				//値段情報あったら書く
 				if (rarity_allnum == 1 )
@@ -439,7 +457,7 @@ namespace YuGiOhCollectionSupporter
 				{
 					twincarddata.set所持フラグ(variation, (bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
 				}
-				else //予備カード所持
+				else if(dataGridView1.Columns[e.ColumnIndex].Name == "Is同名予備カード枚数十分")//予備カード所持
 				{
 					twincarddata.setIs同名予備カード枚数十分((bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
 				}
@@ -507,6 +525,80 @@ namespace YuGiOhCollectionSupporter
 			}
 
 			form.データ取得(false, true, list);
+		}
+
+		//１回のクリックでコンボボックス起動
+		private void dataGridView1_CellEnter(object sender,	DataGridViewCellEventArgs e)
+		{
+			DataGridView dgv = (DataGridView)sender;
+
+			if (dgv.Columns[e.ColumnIndex].Name == "Qランク" &&
+			   dgv.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn)
+			{
+				SendKeys.Send("{F4}");
+			}
+		}
+
+		//ここからコンボボックスの変更を察知
+		private DataGridViewComboBoxEditingControl dataGridViewComboBox = null;
+
+		//EditingControlShowingイベントハンドラ
+		private void DataGridView1_EditingControlShowing(object sender,
+			DataGridViewEditingControlShowingEventArgs e)
+		{
+			//表示されているコントロールがDataGridViewComboBoxEditingControlか調べる
+			if (e.Control is DataGridViewComboBoxEditingControl)
+			{
+				DataGridView dgv = (DataGridView)sender;
+
+				//該当する列か調べる
+				if (dgv.CurrentCell.OwningColumn.Name == "Qランク")
+				{
+					//編集のために表示されているコントロールを取得
+					this.dataGridViewComboBox =
+						(DataGridViewComboBoxEditingControl)e.Control;
+					//SelectedIndexChangedイベントハンドラを追加
+					this.dataGridViewComboBox.SelectedIndexChanged +=
+						new EventHandler(dataGridViewComboBox_SelectedIndexChanged);
+				}
+			}
+		}
+
+		//CellEndEditイベントハンドラ
+		private void DataGridView1_CellEndEdit(object sender,
+			DataGridViewCellEventArgs e)
+		{
+			//SelectedIndexChangedイベントハンドラを削除
+			if (this.dataGridViewComboBox != null)
+			{
+				this.dataGridViewComboBox.SelectedIndexChanged -=
+					new EventHandler(dataGridViewComboBox_SelectedIndexChanged);
+				this.dataGridViewComboBox = null;
+			}
+		}
+
+		//DataGridViewに表示されているコンボボックスの
+		//SelectedIndexChangedイベントハンドラ
+		private void dataGridViewComboBox_SelectedIndexChanged(object sender,
+			EventArgs e)
+		{
+			//選択されたアイテムを表示
+			DataGridViewComboBoxEditingControl cb =
+				(DataGridViewComboBoxEditingControl)sender;
+
+			{
+				EKanabellRank rank;
+				if (Program.TryParse((string)cb.EditingControlFormattedValue, out rank) == false)
+				{
+					Program.WriteLog("EKanabellRankへのキャストエラー　", LogLevel.エラー);
+					return;
+				}
+
+				var twincarddata = form.getTwinCardData((CardData) dataGridView1.Rows[cb.EditingControlRowIndex].Tag);
+
+				twincarddata.usercarddata.Rank = rank;
+			}
+
 		}
 	}
 }

@@ -165,7 +165,7 @@ namespace YuGiOhCollectionSupporter
 				if (dataGridView1.Columns[e.ColumnIndex].Name == $"値段{i+1}")
 				{
 					var variation = (CardVariation)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
-                    if(variation.KanabellList.Count > i)
+                    if(variation?.KanabellList.Count > i)
                     {
                         string URL = variation.KanabellList[i].URL;
 						System.Diagnostics.Process.Start(URL);
@@ -211,5 +211,80 @@ namespace YuGiOhCollectionSupporter
 			await Program.SaveUserDataAsync();
 			更新したい画面用関数?.Invoke();
 		}
+
+		//１回のクリックでコンボボックス起動
+		private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridView dgv = (DataGridView)sender;
+
+			if (dgv.Columns[e.ColumnIndex].Name == "ランク" &&
+			   dgv.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn)
+			{
+				SendKeys.Send("{F4}");
+			}
+		}
+
+		//ここからコンボボックスの変更を察知
+		private DataGridViewComboBoxEditingControl dataGridViewComboBox = null;
+
+		//EditingControlShowingイベントハンドラ
+		private void DataGridView1_EditingControlShowing(object sender,
+			DataGridViewEditingControlShowingEventArgs e)
+		{
+			//表示されているコントロールがDataGridViewComboBoxEditingControlか調べる
+			if (e.Control is DataGridViewComboBoxEditingControl)
+			{
+				DataGridView dgv = (DataGridView)sender;
+
+				//該当する列か調べる
+				if (dgv.CurrentCell.OwningColumn.Name == "ランク")
+				{
+					//編集のために表示されているコントロールを取得
+					this.dataGridViewComboBox =
+						(DataGridViewComboBoxEditingControl)e.Control;
+					//SelectedIndexChangedイベントハンドラを追加
+					this.dataGridViewComboBox.SelectedIndexChanged +=
+						new EventHandler(dataGridViewComboBox_SelectedIndexChanged);
+				}
+			}
+		}
+
+		//CellEndEditイベントハンドラ
+		private void DataGridView1_CellEndEdit(object sender,
+			DataGridViewCellEventArgs e)
+		{
+			//SelectedIndexChangedイベントハンドラを削除
+			if (this.dataGridViewComboBox != null)
+			{
+				this.dataGridViewComboBox.SelectedIndexChanged -=
+					new EventHandler(dataGridViewComboBox_SelectedIndexChanged);
+				this.dataGridViewComboBox = null;
+			}
+		}
+
+		//DataGridViewに表示されているコンボボックスの
+		//SelectedIndexChangedイベントハンドラ
+		private void dataGridViewComboBox_SelectedIndexChanged(object sender,
+			EventArgs e)
+		{
+			//選択されたアイテムを表示
+			DataGridViewComboBoxEditingControl cb =
+				(DataGridViewComboBoxEditingControl)sender;
+
+			{
+				EKanabellRank rank;
+				if (Program.TryParse((string)cb.EditingControlFormattedValue, out rank) == false)
+				{
+					Program.WriteLog("EKanabellRankへのキャストエラー　", LogLevel.エラー);
+					return;
+				}
+
+				var twincarddata = form.getTwinCardData((CardData)dataGridView1.Rows[cb.EditingControlRowIndex].Tag);
+
+				twincarddata.usercarddata.Rank = rank;
+			}
+
+		}
+
 	}
 }

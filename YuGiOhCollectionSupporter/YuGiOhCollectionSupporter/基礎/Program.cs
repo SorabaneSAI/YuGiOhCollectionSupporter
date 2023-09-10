@@ -255,6 +255,11 @@ namespace YuGiOhCollectionSupporter
 				return (T)formatter.Deserialize(stream);
 			}
 		}
+
+		public static bool TryParse<TEnum>(string s, out TEnum wd) where TEnum : struct
+		{
+			return Enum.TryParse(s, out wd) && Enum.IsDefined(typeof(TEnum), wd);
+		}
 	}
 
 }

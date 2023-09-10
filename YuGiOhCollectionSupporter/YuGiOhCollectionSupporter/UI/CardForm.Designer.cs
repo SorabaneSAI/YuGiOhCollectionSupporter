@@ -44,7 +44,8 @@
 			this.パック名 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.所持 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.値段 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ランク = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.値段1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.値段2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.値段3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -107,6 +108,7 @@
 			// 
 			// textBox1
 			// 
+			this.textBox1.Dock = System.Windows.Forms.DockStyle.Right;
 			this.textBox1.Location = new System.Drawing.Point(13, 241);
 			this.textBox1.Margin = new System.Windows.Forms.Padding(13, 6, 4, 4);
 			this.textBox1.Multiline = true;
@@ -150,7 +152,8 @@
             this.パック名,
             this.レアリティ,
             this.所持,
-            this.値段,
+            this.ランク,
+            this.値段1,
             this.値段2,
             this.値段3});
 			this.dataGridView1.Location = new System.Drawing.Point(13, 449);
@@ -164,6 +167,7 @@
 			this.dataGridView1.Size = new System.Drawing.Size(1047, 126);
 			this.dataGridView1.TabIndex = 8;
 			this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+			this.dataGridView1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEnter);
 			this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
 			this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
 			this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
@@ -184,7 +188,8 @@
 			this.checkBox1.AutoSize = true;
 			this.checkBox1.Checked = true;
 			this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBox1.Location = new System.Drawing.Point(4, 178);
+			this.checkBox1.Dock = System.Windows.Forms.DockStyle.Right;
+			this.checkBox1.Location = new System.Drawing.Point(868, 178);
 			this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(192, 19);
@@ -252,12 +257,27 @@
 			this.所持.Name = "所持";
 			this.所持.Width = 50;
 			// 
-			// 値段
+			// ランク
 			// 
-			this.値段.HeaderText = "値段1";
-			this.値段.MinimumWidth = 6;
-			this.値段.Name = "値段";
-			this.値段.ReadOnly = true;
+			this.ランク.HeaderText = "ランク";
+			this.ランク.Items.AddRange(new object[] {
+            "A",
+            "B",
+            "C",
+            "D",
+            "在庫なし",
+            "不明"});
+			this.ランク.MinimumWidth = 6;
+			this.ランク.Name = "ランク";
+			this.ランク.Width = 80;
+			// 
+			// 値段1
+			// 
+			this.値段1.HeaderText = "値段1";
+			this.値段1.MinimumWidth = 6;
+			this.値段1.Name = "値段1";
+			this.値段1.ReadOnly = true;
+			this.値段1.Width = 125;
 			// 
 			// 値段2
 			// 
@@ -265,6 +285,7 @@
 			this.値段2.MinimumWidth = 6;
 			this.値段2.Name = "値段2";
 			this.値段2.ReadOnly = true;
+			this.値段2.Width = 125;
 			// 
 			// 値段3
 			// 
@@ -272,6 +293,7 @@
 			this.値段3.MinimumWidth = 6;
 			this.値段3.Name = "値段3";
 			this.値段3.ReadOnly = true;
+			this.値段3.Width = 125;
 			// 
 			// CardForm
 			// 
@@ -313,7 +335,8 @@
 		private System.Windows.Forms.DataGridViewLinkColumn パック名;
 		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn 所持;
-		private System.Windows.Forms.DataGridViewTextBoxColumn 値段;
+		private System.Windows.Forms.DataGridViewComboBoxColumn ランク;
+		private System.Windows.Forms.DataGridViewTextBoxColumn 値段1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn 値段2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn 値段3;
 	}

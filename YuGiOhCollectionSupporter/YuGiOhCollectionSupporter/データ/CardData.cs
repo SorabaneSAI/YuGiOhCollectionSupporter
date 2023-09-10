@@ -203,7 +203,9 @@ namespace YuGiOhCollectionSupporter
 		public int ID;
 		public bool 表示フラグ = true;
 		public List<UserVariationData> UserVariationDataList = new List<UserVariationData>();
-		public bool Is同名予備カード枚数十分 = false;	//自分しか使わない予備のカードが３枚以上あるかフラグ
+		public bool Is同名予備カード枚数十分 = false;  //自分しか使わない予備のカードが３枚以上あるかフラグ
+		public EKanabellRank Rank = EKanabellRank.A;    //持っているカードのランク　デフォでAにしとく
+
 		public class UserVariationData
         {
 			public bool 所持フラグ = false;
