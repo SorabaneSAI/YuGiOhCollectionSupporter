@@ -81,8 +81,27 @@ namespace YuGiOhCollectionSupporter
                     dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
                     dataGridView1.Rows[num].Cells["所持"].Style.BackColor = c;
 
-                }
-            }
+                    for (int i = 0; i < 3; i++)
+                    {
+                        //ないとこはグレー
+                        if(i >= variation.KanabellList.Count)
+                        {
+							dataGridView1.Rows[num].Cells[$"値段{i + 1}"].Style.BackColor = Color.Gray;
+                            continue;
+						}
+
+						var kanabell = variation.KanabellList[i];
+						if (kanabell.Rank == EKanabellRank.不明 || kanabell.Rank == EKanabellRank.在庫なし)
+						{
+							dataGridView1.Rows[num].Cells[$"値段{i+1}"].Style.BackColor = Color.Gray;
+						}
+						else
+						{
+							dataGridView1.Rows[num].Cells[$"値段{i + 1}"].Value = kanabell.Rank.ToString() + " " + kanabell.Price.ToString();
+						}
+					}
+				}
+			}
             //DGVの内容物に合わせてサイズを大きくする
             dataGridView1.Size = new Size(dataGridView1.Size.Width, dataGridView1.ColumnHeadersHeight + dataGridView1.RowCount * dataGridView1.RowTemplate.Height);
         }
@@ -139,6 +158,19 @@ namespace YuGiOhCollectionSupporter
                 dataGridView1.Enabled = true;
                 */
 				Init(twincarddata.carddata, form);
+			}
+            //リンクならカーナベルを開く
+            for (int i = 0; i < 3; i++)
+            {
+				if (dataGridView1.Columns[e.ColumnIndex].Name == $"値段{i+1}")
+				{
+					var variation = (CardVariation)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
+                    if(variation.KanabellList.Count > i)
+                    {
+                        string URL = variation.KanabellList[i].URL;
+						System.Diagnostics.Process.Start(URL);
+					}
+				}
 			}
 		}
 

@@ -143,6 +143,25 @@ namespace YuGiOhCollectionSupporter
 				havecell.Value = twincarddata.getIs同名予備カード枚数十分();
 				havecell.Tag = card.ListVariations[0];
 
+				//値段情報あったら書く
+				if (rarity_allnum == 1 )
+				{
+					var variation = card.ListVariations[0];
+					if(variation.KanabellList == null)
+					{
+						dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
+					}
+					else if (!(variation.KanabellList[0].Rank == EKanabellRank.不明 || variation.KanabellList[0].Rank == EKanabellRank.在庫なし))
+					{
+						var pricecell = dataGridView1.Rows[num].Cells["Q値段"];
+						pricecell.Value = variation.KanabellList[0].Rank.ToString() + " " + variation.KanabellList[0].Price.ToString();
+					}
+				}
+				else
+				{
+					dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
+				}
+
 				UpdateCellColor(num, twincarddata);
 			}
 
@@ -208,6 +227,8 @@ namespace YuGiOhCollectionSupporter
 			dataGridView1.Rows[num].Cells["クイック"].Style.BackColor = c;
 			var cell = dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"];
 			cell.Style.BackColor = ((bool)cell.Value) ? green : red;
+
+
 		}
 
 		private Bitmap getCanvasCardColor(CardData card, DataGridViewImageCell cell)
@@ -307,6 +328,20 @@ namespace YuGiOhCollectionSupporter
 				var f = new CardForm(data,form, button1.PerformClick);
 				f.Show();
             }
+			//リンクならカーナベルを開く
+			{
+				if (dataGridView1.Columns[e.ColumnIndex].Name == $"Q値段")
+				{
+					var data = (CardData)dgv.Rows[e.RowIndex].Tag;
+					var variation = data.ListVariations[0];
+					if ( variation.KanabellList.Count > 0)
+					{
+						string URL = variation.KanabellList[0].URL;
+						System.Diagnostics.Process.Start(URL);
+					}
+				}
+			}
+
 		}
 
 		private void button1_Click(object sender, EventArgs e)

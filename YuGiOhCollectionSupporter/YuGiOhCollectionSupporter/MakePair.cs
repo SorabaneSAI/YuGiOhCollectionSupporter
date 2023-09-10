@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Dom;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace YuGiOhCollectionSupporter
 {
 	internal class MakePair
 	{
-		static string PriceDictionaryPath = "PriceDictionary.json";
+//		static string PriceDictionaryPath = "PriceDictionary.json";
 
 		public class KanabellCard2
 		{
@@ -27,7 +28,7 @@ namespace YuGiOhCollectionSupporter
 			}
 		}
 
-		public static void MakeDictionary(Form1 form, KanabellForm formK)
+		public static async void MakeDictionary(Form1 form, KanabellForm formK)
 		{
 			//CardDataとKanabellCardの連携を果たす
 
@@ -39,7 +40,8 @@ namespace YuGiOhCollectionSupporter
 			var errorlist = new List<string>();
 			var pricedictionary = MakeDictionary2(errorlist, form, formK);  //なんかawaitできなそう　別スレッドにするか？
 
-			Program.Save(PriceDictionaryPath, pricedictionary);
+			//			Program.Save(PriceDictionaryPath, pricedictionary);
+			await Program.SaveCardDataAsync();
 
 
 			formK.ValidMenuItem();
@@ -47,7 +49,7 @@ namespace YuGiOhCollectionSupporter
 			sw.Stop();
 			TimeSpan ts = sw.Elapsed;
 
-			string msg = $"販売情報の取得が完了しました。\n全データ件数{pricedictionary.Count}" + $"エラー件数:{errorlist.Count}件\n" + Program.ToJson(errorlist, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
+			string msg = $"ペア情報の取得が完了しました。\n全データ件数{pricedictionary.Count}" + $"エラー件数:{errorlist.Count}件\n" + Program.ToJson(errorlist, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
 			Program.WriteLog(msg, LogLevel.必須項目);
 			MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -55,9 +57,9 @@ namespace YuGiOhCollectionSupporter
 
 		}
 
-		public static Dictionary<CardDataKey, KanabellCard> MakeDictionary2(List<string> errorlist, Form1 form, KanabellForm formK)
+		public static Dictionary<CardDataKey, List<KanabellCard>> MakeDictionary2(List<string> errorlist, Form1 form, KanabellForm formK)
 		{
-			Dictionary<CardDataKey, KanabellCard> PricePairDictionary = new Dictionary<CardDataKey, KanabellCard>();
+			Dictionary<CardDataKey, List<KanabellCard>> PricePairDictionary = new Dictionary<CardDataKey, List<KanabellCard>>();
 
 			var CardListCopy = new List<CardData>();
 			CardListCopy = Program.DeepCopy(form.CardDB.CardList);	//本データを削除するわけにはいかないのでコピー
@@ -107,23 +109,35 @@ namespace YuGiOhCollectionSupporter
 
 			}
 
+            //最後にCardDB更新
+            foreach (var card in form.CardDB.CardList)
+            {
+                foreach (var variation in card.ListVariations)
+                {
+					var key = new CardDataKey(card, variation);
+					if (PricePairDictionary.ContainsKey(key))
+					{
+						var kanabell = PricePairDictionary[key];
 
-			//ノーレアはレアだが、この場合に一意的にならないものは要報告
+						variation.KanabellList = kanabell;
+					}
+				}
 
-			//レアリティが対応表にないものを報告
+			}
 
-			return PricePairDictionary;
+
+            return PricePairDictionary;
 		}
 
-		//同名カードによるリンクを作成 ただし簡単情報用
-		public static void Compare(CardData card, KanabellCard2 kanabell, Form1 form, Dictionary<CardDataKey, KanabellCard> dictionary)
+		//同名カードによるリンクを作成
+		public static void Compare(CardData card, KanabellCard2 kanabell, Form1 form, Dictionary<CardDataKey, List<KanabellCard>> dictionary)
 		{
-			List<KanabellCard>[] PairList = new List<KanabellCard>[card.ListVariations.Count]; // そのCardDataVariationと一致したKanabellCardのリスト
+			List<KanabellCard>[] PairListList = new List<KanabellCard>[card.ListVariations.Count]; // そのCardDataVariationと一致したKanabellCardのリスト
 			int count = 0;
 			for (int i = card.ListVariations.Count - 1; i >= 0; i--)
 			{
 				var card_variation = card.ListVariations[i];
-				PairList[i] = new List<KanabellCard>();
+				PairListList[i] = new List<KanabellCard>();
 
 				for (int j = kanabell.VariationList.Count - 1; j >= 0; j--)
 				{
@@ -136,32 +150,35 @@ namespace YuGiOhCollectionSupporter
 						if (card_variation.rarity.Initial == getRareity_fromKanabell(kanabell_variation, form.RarityPairDataList))
 						{
 							//でも油断できない　同じものが複数ある可能性あり
-							PairList[i].Add(kanabell_variation);
+							PairListList[i].Add(kanabell_variation);
 
 						}
 					}
 				}
 			}
-			for (int i = 0; i < PairList.Length; i++)
+			for (int i = PairListList.Length-1; i >= 0; i--)
             {
-				List<KanabellCard> pair = PairList[i];
+				List<KanabellCard> pairlist = PairListList[i];
 
-				if (pair.Count == 0) continue;
-                if(pair.Count == 1)
+				if (pairlist.Count == 0) continue;
+                if(pairlist.Count >= 1 && pairlist.Count <= 3)
 				{
-					dictionary.Add(new CardDataKey(card, card.ListVariations[i]), PairList[i][0]);  //めでたく辞書登録
+					dictionary.Add(new CardDataKey(card, card.ListVariations[i]), pairlist);  //めでたく辞書登録
 					count++;
 
 					//登録したものを除外
 					card.ListVariations.Remove(card.ListVariations[i]);
-					kanabell.VariationList.Remove(PairList[i][0]);
+                    foreach (var pair in pairlist)
+                    {
+						kanabell.VariationList.Remove(pair);
+					}
 
-//					return true;    //もっかい最初から
+					//					return true;    //もっかい最初から
 				}
 				else
 				{
-					string str2 = $"略号レアリティが同じもの２つ以上あり\n{card.名前},{card.ListVariations[i].略号.get略号Full()},{card.ListVariations[i].rarity.Initial}";
-                    foreach (var kb in PairList[i])
+					string str2 = $"略号レアリティが同じもの4つ以上あり\n {card.名前}, {card.ListVariations[i].略号.get略号Full()}, {card.ListVariations[i].rarity.Initial}";
+                    foreach (var kb in PairListList[i])
                     {
 						str2 += $"[{kb.Note},{kb.備考詳細},{kb.Rare},{kb.URL}]";
                     }
@@ -171,19 +188,23 @@ namespace YuGiOhCollectionSupporter
 			}
 
 
-            string str = $"{kanabell.Name} {count}ペア生成({dictionary.Count})  不一致データ:CardData";
-			//レアリティ不一致は本当に不一致だった？最後に確認してログ出力
-			foreach (var card2 in card.ListVariations)
-			{
-				str += "{"+ card2.略号.get略号Full() + " " + card2.rarity.Initial + "}";
-			}
-			str += "  KanabellData";
+            string str = $"{kanabell.Name} {count}ペア生成({dictionary.Count})  ";
 
-			foreach (var kanabell2 in kanabell.VariationList)
+			if (card.ListVariations.Count >0 || kanabell.VariationList.Count >0)
 			{
-				str += "{" + kanabell2.略号Full + " " + kanabell2.Rare + "}";
-			}
+				str += "不一致データ:CardData";
+				//レアリティ不一致は本当に不一致だった？最後に確認してログ出力
+				foreach (var card2 in card.ListVariations)
+				{
+					str += "{" + card2.略号.get略号Full() + " " + card2.rarity.Initial + "}";
+				}
+				str += "  KanabellData";
 
+				foreach (var kanabell2 in kanabell.VariationList)
+				{
+					str += "{" + kanabell2.略号Full + " " + kanabell2.Rare + "}";
+				}
+			}
 
 			Program.WriteLog(str, LogLevel.情報);
 			form.UpdateLabel(str);

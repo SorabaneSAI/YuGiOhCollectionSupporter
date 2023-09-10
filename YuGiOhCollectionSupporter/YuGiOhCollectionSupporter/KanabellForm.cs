@@ -17,18 +17,18 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YuGiOhCollectionSupporter
 {
+	public enum EKanabellRank { A, B, C, D, 在庫なし, 不明 }
+
 	public partial class KanabellForm : Form
 	{
 		Form1 form;
 
-		public enum EKanabellRank { A,B,C,D,在庫なし,その他}
+		[Serializable]
 		public class KanabellCard
 		{
 			public string Rare ="";
-			public string 分類1 ="";
-			public string 分類2="";
 			public string Name = "";
-			public EKanabellRank Rank = EKanabellRank.その他;
+			public EKanabellRank Rank = EKanabellRank.不明;
 			public int Price = 0;
 			public string URL = "";
 
@@ -37,11 +37,9 @@ namespace YuGiOhCollectionSupporter
 			//この２つは②で追加される
 			public string 備考詳細 = "";
 			public string 略号Full = "";
-			public KanabellCard(string rare, string bunrui1, string bunrui2, string name, EKanabellRank rank, int price, string uRL)
+			public KanabellCard(string rare, string name, EKanabellRank rank, int price, string uRL)
 			{
 				Rare = rare;
-				分類1 = bunrui1;
-				分類2 = bunrui2;
 				Name = name;
 				Rank = rank;
 				Price = price;
@@ -78,6 +76,8 @@ namespace YuGiOhCollectionSupporter
 				comboBox1.Items.Add((i*10).ToString()+"%");
 				comboBox2.Items.Add((i*10).ToString()+"%");
 			}
+			comboBox1.SelectedIndex = 0;
+			comboBox2.SelectedIndex = 10;
 		}
 
 		public async Task<List<KanabellCard>> GetHtml(List<string> errorlist)
@@ -216,8 +216,8 @@ namespace YuGiOhCollectionSupporter
 			//カードのあるセルからテーブルを取得
 
 			var rarestr = "";
-			var seriesstr1 = "";
-			var seriesstr2 = "";
+//			var seriesstr1 = "";
+//			var seriesstr2 = "";
 			var namestr = "";
 			EKanabellRank rank = EKanabellRank.在庫なし;
 			int price = 0;
@@ -234,8 +234,8 @@ namespace YuGiOhCollectionSupporter
 					var seriesstr = infonode.QuerySelector("p").TextContent.Trim(); //シリーズ抽出　でも未加工
 
 					var serieslist = seriesstr.Split('>');
-					seriesstr1 = serieslist[0].Replace(rarestr,"").Trim();	//レアリティ文字も混ざっちゃうので消す
-					seriesstr2 = serieslist[1].Trim();
+//					seriesstr1 = serieslist[0].Replace(rarestr,"").Trim();	//レアリティ文字も混ざっちゃうので消す
+//					seriesstr2 = serieslist[1].Trim();
 					continue;
 				}
 
@@ -273,7 +273,7 @@ namespace YuGiOhCollectionSupporter
 				}
 			}
 
-			return new KanabellCard(rarestr, seriesstr1,seriesstr2, namestr, rank, price,url);
+			return new KanabellCard(rarestr,  namestr, rank, price,url);
 		}
 
 		public EKanabellRank GetERank(string URL)
@@ -283,7 +283,7 @@ namespace YuGiOhCollectionSupporter
 			if (URL.Contains("c.gif")) return EKanabellRank.C;
 			if (URL.Contains("d.gif")) return EKanabellRank.D;
 			if (URL.Contains("card_none.gif")) return EKanabellRank.在庫なし;
-			return EKanabellRank.その他;
+			return EKanabellRank.不明;
 		}
 
 
@@ -327,6 +327,7 @@ namespace YuGiOhCollectionSupporter
 				comboBox1.Enabled = false;
 				comboBox2.Enabled = false;
 
+				form.販売価格調査ToolStripMenuItem.Enabled = false;
 			}));
 
 		}
@@ -345,6 +346,8 @@ namespace YuGiOhCollectionSupporter
 				button6.Enabled = true;
 				comboBox1.Enabled = true;
 				comboBox2.Enabled = true;
+
+				form.販売価格調査ToolStripMenuItem.Enabled = true;
 			}));
 
 		}
@@ -455,9 +458,16 @@ namespace YuGiOhCollectionSupporter
 
 			goto_continue:;
 
-				AnalyzeHtml略号(KanabellCardList[k], html2);
+				try 
+				{
+					AnalyzeHtml略号(KanabellCardList[k], html2);
+				}
+				catch (Exception e) 
+				{
+					errorlist.Add(e.Message);
+				}
 
-				str = $"{k}/{(EndNum-StartNum)}  {KanabellCardList[k].略号Full} {KanabellCardList[k].備考詳細} ";
+				str = $"{k- StartNum}/{(EndNum-StartNum)}  {KanabellCardList[k].略号Full} {KanabellCardList[k].備考詳細} ";
 				Program.WriteLog(str, LogLevel.情報);
 				form.UpdateLabel(str);
 
@@ -468,27 +478,36 @@ namespace YuGiOhCollectionSupporter
 		//略号、備考を追記する
 		private void AnalyzeHtml略号(KanabellCard kanabell, IHtmlDocument html)
 		{
-			var divNode = html.QuerySelector("div[id*='card_detail']");
-			//			var trNodeList = divNode.QuerySelector("table").Children[0].Children;
-			var tdNodeList = divNode.QuerySelectorAll("td");
+			try
+			{
+				var divNode = html.QuerySelector("div[id*='card_detail']");
+				//			var trNodeList = divNode.QuerySelector("table").Children[0].Children;
+				var tdNodeList = divNode.QuerySelectorAll("td");
 
-			kanabell.備考詳細 = tdNodeList[0].TextContent.Trim();	//最初が備考のはず・・・
+				kanabell.備考詳細 = tdNodeList[0].TextContent.Trim();   //最初が備考のはず・・・
 
-			foreach (var node in tdNodeList)
-            {
-				if(node.TextContent.Contains("シリアル番号"))
+				foreach (var node in tdNodeList)
 				{
-					var twin = node.TextContent.Split(':');
-					kanabell.略号Full = twin[1].Trim();
-
-					if(kanabell.略号Full == "")
+					if (node.TextContent.Contains("シリアル番号:"))
 					{
-						kanabell.略号Full = "なし";
-					}
+						var twin = node.TextContent.Split(':');
+						kanabell.略号Full = twin[1].Trim();
 
-					break;
+						if (kanabell.略号Full == "")
+						{
+							kanabell.略号Full = "なし";
+						}
+
+						break;
+					}
 				}
-            }
-        }
+
+			}
+			catch (Exception e)
+			{
+				Program.WriteLog($"エラー {kanabell.Name},{kanabell.URL},{e.Message},{e.StackTrace}", LogLevel.エラー);
+				throw e;
+			}
+		}
 	}
 }

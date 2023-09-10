@@ -360,7 +360,7 @@
 		private System.Windows.Forms.Button button4;
 		public System.Windows.Forms.TreeView treeView2;
 		private System.Windows.Forms.ToolStripMenuItem シリーズ期設定ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem 販売価格調査ToolStripMenuItem;
+		public System.Windows.Forms.ToolStripMenuItem 販売価格調査ToolStripMenuItem;
 	}
 }
 

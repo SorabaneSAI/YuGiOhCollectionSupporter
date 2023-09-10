@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -26,16 +27,18 @@ namespace YuGiOhCollectionSupporter
 		public PriceDataBase PriceDB = new PriceDataBase();
 
 		public BindingList<PackGroupData> PackGroupDataList = new BindingList<PackGroupData>();
-		public string PackGroupSavePath = "PackGroupData.json";
+		public string PackGroupSavePath = SaveFolder + "\\"+"PackGroupData.json";
 
 		public BindingList<SeriesGroupData> SeriesGroupDataList = new BindingList<SeriesGroupData>();
-		public string SeriesGroupSavePath = "SeriesGroupData.json";
+		public string SeriesGroupSavePath = SaveFolder + "\\" + "SeriesGroupData.json";
 
 		public BindingList<RarityPairData> RarityPairDataList = new BindingList<RarityPairData>();
-		public string RarityPairSavePath = "RarityPairData.json";
+		public string RarityPairSavePath = SaveFolder + "\\" + "RarityPairData.json";
 
 		public BindingList<ThroughPageData> ThroughPageDataList = new BindingList<ThroughPageData>();
-		public string ThroughPageSavePath = "ThroughPageData.json";
+		public string ThroughPageSavePath = SaveFolder + "\\" + "ThroughPageData.json";
+
+		public static string SaveFolder = "Save";
 
 		public Form1()
 		{
@@ -43,6 +46,10 @@ namespace YuGiOhCollectionSupporter
 
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
+			if (!System.IO.Directory.Exists(SaveFolder))
+			{
+				Directory.CreateDirectory(SaveFolder);
+			}
 			PackGroupData.InitialDataSet(PackGroupDataList);
 			SeriesGroupData.InitialDataSet(SeriesGroupDataList);
 			RarityPairData.InitialDataSet(RarityPairDataList);

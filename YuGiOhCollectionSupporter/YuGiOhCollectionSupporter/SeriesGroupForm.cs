@@ -49,6 +49,7 @@ namespace YuGiOhCollectionSupporter
         }
 	}
 
+	[Serializable]
 	public class SeriesGroupData
     {
         public string シリーズ名 { get; set; }   //なんかしらんけどgetsetがないとバインドされない

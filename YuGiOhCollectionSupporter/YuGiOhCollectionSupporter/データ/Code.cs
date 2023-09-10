@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace YuGiOhCollectionSupporter
 {
+	[Serializable]
 	public class Code 
 	{
 		public bool Have略号 = true;

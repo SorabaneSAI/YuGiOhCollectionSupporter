@@ -47,6 +47,7 @@ namespace YuGiOhCollectionSupporter
         }
 	}
 
+	[Serializable]
 	public class PackGroupData
     {
         public string 親ノード名 { get; set; }   //なんかしらんけどgetsetがないとバインドされない

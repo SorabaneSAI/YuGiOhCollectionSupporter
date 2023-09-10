@@ -48,6 +48,7 @@ namespace YuGiOhCollectionSupporter
         }
 	}
 
+    [Serializable]
 	public class ThroughPageData
 	{
         public string Word { get; set; }   //なんかしらんけどgetsetがないとバインドされない

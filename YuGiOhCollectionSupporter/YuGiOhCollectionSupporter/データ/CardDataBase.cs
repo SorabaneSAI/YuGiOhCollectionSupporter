@@ -9,7 +9,7 @@ namespace YuGiOhCollectionSupporter
     public class CardDataBase
     {
         public List<CardData> CardList = new List<CardData>();
-        public string SaveDataPath = "CardDataBase.json";
+        public string SaveDataPath = Form1.SaveFolder + "\\" + "CardDataBase.json";
         public CardData getCard(int ID)
         {
             foreach (var card in CardList)
@@ -83,7 +83,7 @@ namespace YuGiOhCollectionSupporter
     public class UserCardDataBase
     {
         public List<UserCardData> UserCardDataList = new List<UserCardData>();
-        public string SaveUserDataPath = "UserCardData.json";
+        public string SaveUserDataPath = Form1.SaveFolder + "\\" + "UserCardData.json";
 
         public void AddCardDataList(List<UserCardData> userdatalist)
         {

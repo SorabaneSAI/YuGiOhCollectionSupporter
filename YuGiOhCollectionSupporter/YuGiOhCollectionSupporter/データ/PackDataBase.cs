@@ -9,7 +9,7 @@ namespace YuGiOhCollectionSupporter
     public class PackDataBase
     {
         public List<PackData> PackDataList = new List<PackData>();
-        public string SaveDataPath = "PackDataBase.json";
+        public string SaveDataPath = Form1.SaveFolder + "\\" + "PackDataBase.json";
 
         //表示フラグの引き継ぎをし、データを新しいものに更新し、追加と更新した数を返す
         public (int, int) AddPackDataList(List<PackData> packdatalist)

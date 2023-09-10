@@ -46,6 +46,7 @@
 			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.クイック = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.Is同名予備カード枚数十分 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.Q値段 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.flowLayoutPanel3.SuspendLayout();
@@ -138,7 +139,8 @@
             this.略号,
             this.レアリティ,
             this.クイック,
-            this.Is同名予備カード枚数十分});
+            this.Is同名予備カード枚数十分,
+            this.Q値段});
 			this.dataGridView1.Location = new System.Drawing.Point(4, 517);
 			this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
 			this.dataGridView1.MultiSelect = false;
@@ -149,7 +151,7 @@
 			this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
 			this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.dataGridView1.Size = new System.Drawing.Size(905, 416);
+			this.dataGridView1.Size = new System.Drawing.Size(988, 416);
 			this.dataGridView1.TabIndex = 0;
 			this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
 			this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
@@ -267,6 +269,14 @@
 			this.Is同名予備カード枚数十分.Name = "Is同名予備カード枚数十分";
 			this.Is同名予備カード枚数十分.Width = 80;
 			// 
+			// Q値段
+			// 
+			this.Q値段.HeaderText = "Q値段";
+			this.Q値段.MinimumWidth = 6;
+			this.Q値段.Name = "Q値段";
+			this.Q値段.ReadOnly = true;
+			this.Q値段.Width = 125;
+			// 
 			// CardListUI
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -305,5 +315,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn クイック;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn Is同名予備カード枚数十分;
+		private System.Windows.Forms.DataGridViewLinkColumn Q値段;
 	}
 }

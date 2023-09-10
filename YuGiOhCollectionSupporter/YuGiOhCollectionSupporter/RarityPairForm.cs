@@ -48,6 +48,7 @@ namespace YuGiOhCollectionSupporter
         }
 	}
 
+	[Serializable]
 	public class RarityPairData
     {
         public string Rarity_Kanabell { get; set; }   //なんかしらんけどgetsetがないとバインドされない
@@ -63,10 +64,16 @@ namespace YuGiOhCollectionSupporter
 
         public static void InitialDataSet(BindingList<RarityPairData> RarityPairDataList)
 		{
+			RarityPairDataList.Add(new RarityPairData("ステンレス", "NULL"));    //ステンレスは公式に載ってない
+
 			RarityPairDataList.Add(new RarityPairData("QCシク","QCSE"));
 			RarityPairDataList.Add(new RarityPairData("20thシク", "20th SE"));
 			RarityPairDataList.Add(new RarityPairData("プリシク", "PSE"));
 			RarityPairDataList.Add(new RarityPairData("コレレア", "CR"));
+
+			RarityPairDataList.Add(new RarityPairData("ゴル", "GR"));
+			RarityPairDataList.Add(new RarityPairData("ゴルシク", "GSE"));
+			RarityPairDataList.Add(new RarityPairData("プレゴル", "PG"));
 
 			RarityPairDataList.Add(new RarityPairData("アル", "UL"));
 			RarityPairDataList.Add(new RarityPairData("ウル", "UR"));

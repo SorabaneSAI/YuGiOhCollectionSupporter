@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace YuGiOhCollectionSupporter
 {
+	[Serializable]
 	public class PackData
 	{
 		public string URL = "";

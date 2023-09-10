@@ -7,9 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static YuGiOhCollectionSupporter.KanabellForm;
 
 namespace YuGiOhCollectionSupporter
 {
+	[Serializable]
 	public class CardData
 	{
 		public int ID;
@@ -122,6 +124,7 @@ namespace YuGiOhCollectionSupporter
 
 	}
 
+	[Serializable]
 	public class CardVariation : IComparer<CardVariation>
 	{
 
@@ -132,6 +135,8 @@ namespace YuGiOhCollectionSupporter
 		public Rarity rarity;
 		//           [JsonIgnore]
 		//			public bool 所持フラグ = false;
+
+		public List<KanabellCard> KanabellList;
 
 		public CardVariation() { }
 
@@ -172,6 +177,7 @@ namespace YuGiOhCollectionSupporter
 
 	}
 
+	[Serializable]
 	public class Rarity
 	{
 		public string Initial;

@@ -19,7 +19,7 @@ namespace YuGiOhCollectionSupporter
 
 
 		public static string Domain = "https://www.db.yugioh-card.com";
-		public static string ConfigPass = "Config.dat";
+		public static string ConfigPass = Form1.SaveFolder + "\\" + "Config.dat";
 
 
 
