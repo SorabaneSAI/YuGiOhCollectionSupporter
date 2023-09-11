@@ -136,7 +136,7 @@ namespace YuGiOhCollectionSupporter
 		//           [JsonIgnore]
 		//			public bool 所持フラグ = false;
 
-		public List<KanabellCard> KanabellList;
+		public List<KanabellCard> KanabellList = new List<KanabellCard>();
 
 		public CardVariation() { }
 

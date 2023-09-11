@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO.Ports;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -97,94 +98,176 @@ namespace YuGiOhCollectionSupporter
 
 
 			dataGridView1.Rows.Clear();
-			for (int i=(page-1)* MAX_NUM; i< (page-1)* MAX_NUM + MAX_NUM; i++ )
+
+			//パックならレアリティ違いも全部表示
+			//スタートするべきカード番号と終わるべきカード番号を決定
+			int start_i = (page - 1) * MAX_NUM;
+			int end_i = page * MAX_NUM;
+			int pagenum = 1;
+			
+			//パック順なら各ページに何個置けるか計算してそのページの最初と最後のカードを決定
+			if(!あいうえお順フラグ)
+			{
+//				for (int m = 0; m < page; m++)
+				{
+					bool IsStartEndDeside = false;
+					start_i = 0;
+					int p = 1;
+					int sum = 0;
+					for (int n = 0; n < PackCardDB.CardList.Count; n++)
+					{
+						sum +=PackCardDB.CardList[n].ListVariations.Count;
+						if (IsStartEndDeside == false)
+							end_i = n;
+
+						if (sum >=100)
+						{
+							if (p == page)
+							{
+								IsStartEndDeside = true;
+							}
+							{
+								//次のページ計算
+								p++;
+								if(IsStartEndDeside == false)
+									start_i = n + 1;
+								sum = 0;
+								pagenum++;
+							}
+						}
+					}
+				}
+			}
+
+			for (int i=start_i; i< end_i; i++ )
             {
 				if (i >= PackCardDB.CardList.Count) break;
 				var card = PackCardDB.CardList[i];
-				var twincarddata = form.getTwinCardData(card);
+				var twincarddata = form.getTwinCardData(card);	//UserDataは完全だが、CardDataは削られてる
 				string ryakugou = "";
 				string rarity = "";
 
 				(int rarity_havenum, int rarity_allnum) = twincarddata.getCardHaveNumRarity();
 				(int code_havenum, int code_allnum) = twincarddata.getCardHaveNumCode();
-				//１つしか存在しない略号、レアリティは文字にする
-				if (rarity_allnum == 1)   
-					rarity = card.ListVariations[0].rarity.Initial;
-				else
-					rarity = $"{rarity_havenum} / {rarity_allnum}";
-				if(code_allnum == 1)
-					ryakugou = card.ListVariations[0].略号.get略号Full();
-				else
-					ryakugou = $"{code_havenum} / {code_allnum}";
 
-
-				int num = dataGridView1.Rows.Add(twincarddata.IsCardNameHave(), card.名前, ryakugou, rarity,
-					twincarddata.usercarddata.UserVariationDataList[0].所持フラグ );
-				dataGridView1.Rows[num].Tag = CardDB.getCard(card.ID); //行のタグにカード情報を埋め込む  cardは変更されてる可能性があるのでCardDBから同じのを持ってくる
-
-				var dgvcell = (DataGridViewImageCell)dataGridView1.Rows[num].Cells["type"];
-				dgvcell.Value = getCanvasCardColor(card, dgvcell);
-
-				var quickcell = dataGridView1.Rows[num].Cells["クイック"];
-
-				if (rarity_allnum == 1)    //１枚しか存在しない場合はクイックチェックが可能に
-                {
-					quickcell.Value = (rarity_havenum == 1);
-					quickcell.Tag = card.ListVariations[0];
-				}
-				else
-                {
-					dataGridView1.Rows[num].Cells["クイック"].Value = null;
-					dataGridView1.Rows[num].Cells["クイック"] = new DataGridViewTextBoxCell();  //テキストボックスを消すためにタイプを変更
-					dataGridView1.Rows[num].Cells["クイック"].Value = "";
-					dataGridView1.Rows[num].Cells["クイック"].ReadOnly = true;
-				}
-
-				var havecell = dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"];
-				havecell.Value = twincarddata.getIs同名予備カード枚数十分();
-				havecell.Tag = card.ListVariations[0];
-
-				//１枚ならクイックランクセット
-				var quickrankcell = dataGridView1.Rows[num].Cells["Qランク"];
-
-				if (rarity_allnum == 1)    //１枚しか存在しない場合はクイックセットが可能に
+				int r = 0;  //ローカル関数で使うため
+				var variation = card.ListVariations[0];
+				if (あいうえお順フラグ)
 				{
-					quickrankcell.Value = twincarddata.usercarddata.Rank.ToString();
-					quickrankcell.Tag = card.ListVariations[0];
+					//１つしか存在しない略号、レアリティは文字にする
+					if (rarity_allnum == 1)
+						rarity = card.ListVariations[0].rarity.Initial;
+					else
+						rarity = $"{rarity_havenum} / {rarity_allnum}";
+					if (code_allnum == 1)
+						ryakugou = card.ListVariations[0].略号.get略号Full();
+					else
+						ryakugou = $"{code_havenum} / {code_allnum}";
+
+					AddDataGridView();
 				}
 				else
 				{
-					dataGridView1.Rows[num].Cells["Qランク"].Value = null;
-					dataGridView1.Rows[num].Cells["Qランク"] = new DataGridViewTextBoxCell();
-					dataGridView1.Rows[num].Cells["Qランク"].Value = "";
-					dataGridView1.Rows[num].Cells["Qランク"].ReadOnly = true;
-					dataGridView1.Rows[num].Cells["Qランク"].Style.BackColor = Color.Gray;
+					rarity_allnum = 1;
+					code_allnum = 1;
+
+					for (r = 0; r < card.ListVariations.Count; r++)
+					{
+						variation = card.ListVariations[r];
+
+						rarity_havenum = twincarddata.get所持フラグ(variation) ? 1 : 0;
+						code_havenum = rarity_havenum;
+
+						rarity = variation.rarity.Initial;
+						ryakugou = variation.略号.get略号Full();
+
+						AddDataGridView();
+					}
+
+
 				}
 
-				//値段情報あったら書く
-				if (rarity_allnum == 1 )
+
+				//ローカル関数
+				void AddDataGridView()
 				{
-					var variation = card.ListVariations[0];
-					if(variation.KanabellList == null)
+					int num = dataGridView1.Rows.Add(twincarddata.IsCardNameHave(), card.名前, ryakugou, rarity,
+						twincarddata.usercarddata.UserVariationDataList[0].所持フラグ);
+					dataGridView1.Rows[num].Tag = CardDB.getCard(card.ID); //行のタグにカード情報を埋め込む  cardは変更されてる可能性があるのでCardDBから同じのを持ってくる
+
+					var dgvcell = (DataGridViewImageCell)dataGridView1.Rows[num].Cells["type"];
+					dgvcell.Value = getCanvasCardColor(card, dgvcell);
+
+					var quickcell = dataGridView1.Rows[num].Cells["クイック"];
+
+					if (rarity_allnum == 1)    //１枚しか存在しない場合はクイックチェックが可能に
+					{
+						quickcell.Value = (rarity_havenum == 1);
+						quickcell.Tag = variation;
+					}
+					else
+					{
+						dataGridView1.Rows[num].Cells["クイック"].Value = null;
+						dataGridView1.Rows[num].Cells["クイック"] = new DataGridViewTextBoxCell();  //テキストボックスを消すためにタイプを変更
+						dataGridView1.Rows[num].Cells["クイック"].Value = "";
+						dataGridView1.Rows[num].Cells["クイック"].ReadOnly = true;
+					}
+
+					var havecell = dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"];
+					havecell.Value = twincarddata.getIs同名予備カード枚数十分();
+					havecell.Tag = variation;
+
+					//１枚ならクイックランクセット
+					var quickrankcell = dataGridView1.Rows[num].Cells["Qランク"];
+
+					if (rarity_allnum == 1)    //１枚しか存在しない場合はクイックセットが可能に
+					{
+						quickrankcell.Value = twincarddata.usercarddata.Rank.ToString();
+						quickrankcell.Tag = variation;  //Tagに仕込み
+					}
+					else
+					{
+						dataGridView1.Rows[num].Cells["Qランク"].Value = null;
+						dataGridView1.Rows[num].Cells["Qランク"] = new DataGridViewTextBoxCell();
+						dataGridView1.Rows[num].Cells["Qランク"].Value = "";
+						dataGridView1.Rows[num].Cells["Qランク"].ReadOnly = true;
+						dataGridView1.Rows[num].Cells["Qランク"].Style.BackColor = Color.Gray;
+						dataGridView1.Rows[num].Cells["Qランク"].Tag = variation;
+					}
+
+					//値段情報あったら書く
+					if (rarity_allnum == 1)
+					{
+						if (variation.KanabellList == null)
+						{
+							dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
+						}
+						else if (!(variation.KanabellList[0].Rank == EKanabellRank.不明 || variation.KanabellList[0].Rank == EKanabellRank.在庫なし))
+						{
+							var pricecell = dataGridView1.Rows[num].Cells["Q値段"];
+							pricecell.Value = variation.KanabellList[0].Rank.ToString() + " " + variation.KanabellList[0].Price.ToString();
+						}
+					}
+					else
 					{
 						dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
 					}
-					else if (!(variation.KanabellList[0].Rank == EKanabellRank.不明 || variation.KanabellList[0].Rank == EKanabellRank.在庫なし))
+
+//					UpdateCellColor(num, twincarddata, variation);
+
+					//パックでは二個目の名前を消す
+					if (!あいうえお順フラグ && r>0)
 					{
-						var pricecell = dataGridView1.Rows[num].Cells["Q値段"];
-						pricecell.Value = variation.KanabellList[0].Rank.ToString() + " " + variation.KanabellList[0].Price.ToString();
+						dataGridView1.Rows[num].Cells["名前"].Value = "";
 					}
 				}
-				else
-				{
-					dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
-				}
 
-				UpdateCellColor(num, twincarddata);
 			}
 
+			UpdateDataGridViewColor();
+
 			//DGVの内容物に合わせてサイズを大きくする
-			dataGridView1.Size = new Size(dataGridView1.Size.Width, dataGridView1.ColumnHeadersHeight + Math.Min(CardDB.CardList.Count, MAX_NUM) * dataGridView1.RowTemplate.Height);
+			dataGridView1.Size = new Size(dataGridView1.Size.Width, dataGridView1.ColumnHeadersHeight + (dataGridView1.Rows.Count+ 1) * dataGridView1.RowTemplate.Height);
 
 
 			flowLayoutPanel1.Controls.Clear();
@@ -193,6 +276,10 @@ namespace YuGiOhCollectionSupporter
 			int CenterButtonNum = 5;
 			int MAXPage = (CardDB.CardList.Count+99) / MAX_NUM;
 
+			if(!あいうえお順Flag)
+			{
+				MAXPage = pagenum;
+			}
 			//１ページボタン追加
 			if (page > CenterButtonNum/2+1)
             {
@@ -224,23 +311,30 @@ namespace YuGiOhCollectionSupporter
 
 		}
 
-		public void UpdateCellColor(int num,TwinCardData twincarddata)
+
+		public void UpdateCellColor(int num,TwinCardData twincarddata, CardVariation variation)
 		{
-			dataGridView1.Rows[num].Cells["名前"].Style.BackColor = twincarddata.IsCardNameHave() ? green : red;
-			(int code_havenum, int code_allnum) = twincarddata.getCardHaveNumCode();
+			(int code_havenum, int code_allnum) = twincarddata.getCardHaveNumCodebyCode(variation.略号);  //これ下のレアリティと同じじゃね？？
 			(int rarity_havenum, int rarity_allnum) = twincarddata.getCardHaveNumRarity();
 
 			Color c;
+
+
 			if (code_havenum == 0) c = red;
 			else if (code_havenum == code_allnum) c = green;
 			else c = yellow;
 
+			dataGridView1.Rows[num].Cells["名前"].Style.BackColor = c;
 			dataGridView1.Rows[num].Cells["略号"].Style.BackColor = c;
 
 			if (rarity_havenum == 0) c = red;
 			else if (rarity_havenum == rarity_allnum) c = green;
 			else c = yellow;
 
+			if(!あいうえお順Flag)
+			{
+				c = twincarddata.get所持フラグ(variation) == true ? green : red;
+			}
 			dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
 
 			if (dataGridView1.Rows[num].Cells["クイック"].Style.BackColor != Color.Gray)
@@ -249,6 +343,44 @@ namespace YuGiOhCollectionSupporter
 			cell.Style.BackColor = ((bool)cell.Value) ? green : red;
 
 
+		}
+
+		//上が個別のセルを変更していたが、よく考えたら全部変える必要あったわってことで代わり
+		public void UpdateDataGridViewColor()
+		{
+			foreach (DataGridViewRow row in dataGridView1.Rows)
+			{
+				TwinCardData twincarddata = form.getTwinCardData((CardData)row.Tag);
+				CardVariation variation = row.Cells["Qランク"].Tag as CardVariation;	//仕込んであったわ
+				(int code_havenum, int code_allnum) = twincarddata.getCardHaveNumCodebyCode(variation.略号);  //これ下のレアリティと同じじゃね？？
+				(int rarity_havenum, int rarity_allnum) = twincarddata.getCardHaveNumRarity();
+
+				Color c = getColorByHaveNum(code_havenum, code_allnum);
+				row.Cells["名前"].Style.BackColor = c;
+				row.Cells["略号"].Style.BackColor = c;
+
+				c = getColorByHaveNum(rarity_havenum, rarity_allnum);
+				if (!あいうえお順Flag)
+				{
+					c = twincarddata.get所持フラグ(variation) == true ? green : red;
+				}
+				row.Cells["レアリティ"].Style.BackColor = c;
+
+				if (row.Cells["クイック"].Style.BackColor != Color.Gray)
+					row.Cells["クイック"].Style.BackColor = c;
+				var cell = row.Cells["Is同名予備カード枚数十分"];
+				cell.Style.BackColor = ((bool)cell.Value) ? green : red;
+
+
+			}
+		}
+
+		//havenum == allnumなら緑、havenum==0なら赤、それ以外は黄色を返す
+		public Color getColorByHaveNum(int havenum,int allnum)
+		{
+			if (havenum == 0) return red;
+			else if (havenum == allnum) return green;
+			else return yellow;
 		}
 
 		private Bitmap getCanvasCardColor(CardData card, DataGridViewImageCell cell)
@@ -464,7 +596,9 @@ namespace YuGiOhCollectionSupporter
 					twincarddata.setIs同名予備カード枚数十分((bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
 				}
 
-				UpdateCellColor(e.RowIndex,twincarddata);
+				//				UpdateCellColor(e.RowIndex,twincarddata,variation);
+				UpdateDataGridViewColor();
+
 			}
 
 		}

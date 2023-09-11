@@ -104,8 +104,8 @@ namespace YuGiOhCollectionSupporter
 					}
 				}
 			}
-            //DGVの内容物に合わせてサイズを大きくする
-            dataGridView1.Size = new Size(dataGridView1.Size.Width, dataGridView1.ColumnHeadersHeight + dataGridView1.RowCount * dataGridView1.RowTemplate.Height);
+            //DGVの内容物に合わせてサイズを大きくする コンボボックスを開くとバグるので少し大きく取る？
+            dataGridView1.Size = new Size(dataGridView1.Size.Width, dataGridView1.ColumnHeadersHeight + (dataGridView1.RowCount+1) * dataGridView1.RowTemplate.Height);
         }
 
 
