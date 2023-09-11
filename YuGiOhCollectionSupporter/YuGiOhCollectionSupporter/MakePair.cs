@@ -64,12 +64,34 @@ namespace YuGiOhCollectionSupporter
 			var CardListCopy = new List<CardData>();
 			CardListCopy = Program.DeepCopy(form.CardDB.CardList);	//本データを削除するわけにはいかないのでコピー
 
-			var KanabellList = form.PriceDB.PriceDataList;
+			var Kanabell略号分裂List = new List<KanabellCard>();
+			var Kanabell2List = new List<KanabellCard2>();  //このリストは削除してOK!
 
-			var Kanabell2List = new List<KanabellCard2>();	//このリストは削除してOK!
+			{
+				var KanabellList = form.PriceDB.PriceDataList;
+
+				//まずKanabellの略号はスペースと改行で区切られていることがあるので、それらを別Kanabellにする
+				foreach (var kanabell in KanabellList)
+				{
+					string[] 略号List = kanabell.略号Full.Split('\n');
+					if (略号List.Length == 1)
+					{
+						Kanabell略号分裂List.Add(kanabell);
+						continue;
+					}
+
+					for (int i = 0; i < 略号List.Length; i++)
+					{
+						var newkanabell = new KanabellCard(kanabell.Rare, kanabell.Name, kanabell.Rank, kanabell.Price, kanabell.URL);
+						newkanabell.略号Full = 略号List[i];
+						newkanabell.備考詳細 = kanabell.備考詳細;
+						Kanabell略号分裂List.Add(newkanabell);
+					}
+				}
+			}
 
 			//Kanabellのデータをアップグレード カード名ごとにまとめる
-			foreach (var kanabell in KanabellList)
+			foreach (var kanabell in Kanabell略号分裂List)
 			{
 
 				//すでにあるリストと同じ名前ならValiation追加

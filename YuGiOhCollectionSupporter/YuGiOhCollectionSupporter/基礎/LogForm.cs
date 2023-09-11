@@ -12,7 +12,7 @@ namespace YuGiOhCollectionSupporter
 {
 	public enum LogLevel
 	{
-		全部, 情報, 警告, エラー, 必須項目
+		全部, 情報, 警告, エラー, 必須項目,クリア
 	}
 	public partial class LogForm : Form
 	{

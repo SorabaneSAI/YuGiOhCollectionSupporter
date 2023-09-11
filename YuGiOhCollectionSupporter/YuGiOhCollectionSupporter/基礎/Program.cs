@@ -207,13 +207,19 @@ namespace YuGiOhCollectionSupporter
 					break;
 				case LogLevel.警告:
 					Program.Log.Warn(txt);
+					form1.ログToolStripMenuItem.BackColor = System.Drawing.Color.Yellow;
 					break;
 				case LogLevel.エラー:
 					Program.Log.Error(txt);
+					form1.ログToolStripMenuItem.BackColor = System.Drawing.Color.Red;
 					break;
 				case LogLevel.必須項目:
 					form1.UpdateLabel(txt);
 					Program.Log.Info(txt);
+					break;
+				case LogLevel.クリア:
+					Program.Log.Info(txt);
+					form1.ログToolStripMenuItem.BackColor = System.Drawing.Color.White;
 					break;
 				default:
 					Program.Log.Error("不明なloglevel");

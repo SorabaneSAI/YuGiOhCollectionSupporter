@@ -242,7 +242,9 @@ namespace YuGiOhCollectionSupporter
 			else c = yellow;
 
 			dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
-			dataGridView1.Rows[num].Cells["クイック"].Style.BackColor = c;
+
+			if (dataGridView1.Rows[num].Cells["クイック"].Style.BackColor != Color.Gray)
+				dataGridView1.Rows[num].Cells["クイック"].Style.BackColor = c;
 			var cell = dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"];
 			cell.Style.BackColor = ((bool)cell.Value) ? green : red;
 

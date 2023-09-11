@@ -340,7 +340,7 @@
 
 		private System.Windows.Forms.MenuStrip menuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem これについてToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem ログToolStripMenuItem;
+		public System.Windows.Forms.ToolStripMenuItem ログToolStripMenuItem;
 		public System.Windows.Forms.Label label1;
 		public System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 		public System.Windows.Forms.ToolStripMenuItem データ取得ToolStripMenuItem;
