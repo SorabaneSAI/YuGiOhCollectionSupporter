@@ -46,7 +46,7 @@
 			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.クイック = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.Qランク = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.Is同名予備カード枚数十分 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.Is同名予備カード枚数十分 = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.Q値段 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -279,13 +279,25 @@
             "不明"});
 			this.Qランク.MinimumWidth = 6;
 			this.Qランク.Name = "Qランク";
-			this.Qランク.Width = 60;
+			this.Qランク.Width = 80;
 			// 
 			// Is同名予備カード枚数十分
 			// 
-			this.Is同名予備カード枚数十分.HeaderText = "同名予備";
+			this.Is同名予備カード枚数十分.HeaderText = "同名枚数";
+			this.Is同名予備カード枚数十分.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9+"});
 			this.Is同名予備カード枚数十分.MinimumWidth = 6;
 			this.Is同名予備カード枚数十分.Name = "Is同名予備カード枚数十分";
+			this.Is同名予備カード枚数十分.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.Is同名予備カード枚数十分.Width = 80;
 			// 
 			// Q値段
@@ -334,7 +346,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn クイック;
 		private System.Windows.Forms.DataGridViewComboBoxColumn Qランク;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn Is同名予備カード枚数十分;
+		private System.Windows.Forms.DataGridViewComboBoxColumn Is同名予備カード枚数十分;
 		private System.Windows.Forms.DataGridViewLinkColumn Q値段;
 	}
 }

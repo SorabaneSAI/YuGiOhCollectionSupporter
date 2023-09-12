@@ -203,14 +203,15 @@ namespace YuGiOhCollectionSupporter
 		public int ID;
 		public bool 表示フラグ = true;
 		public List<UserVariationData> UserVariationDataList = new List<UserVariationData>();
-		public bool Is同名予備カード枚数十分 = false;  //自分しか使わない予備のカードが３枚以上あるかフラグ
-		public EKanabellRank Rank = EKanabellRank.A;    //持っているカードのランク　デフォでAにしとく
+		public int 同名枚数 = 0;  //自分で設定する予備枚数
 
 		public class UserVariationData
         {
 			public bool 所持フラグ = false;
 			public string 発売パックURL;
 			public Rarity rarity;
+			public EKanabellRank Rank = EKanabellRank.A;    //持っているカードのランク　デフォでAにしとく
+
 		}
 
 		public UserCardData() { }
@@ -244,35 +245,52 @@ namespace YuGiOhCollectionSupporter
 		public bool get表示フラグ() { return usercarddata.表示フラグ; }
 		public void set表示フラグ(bool flag) { usercarddata.表示フラグ = flag; }
 
-		public bool getIs同名予備カード枚数十分() { return usercarddata.Is同名予備カード枚数十分; }
-		public void setIs同名予備カード枚数十分(bool flag) { usercarddata.Is同名予備カード枚数十分 = flag; }
+//		public bool getIs同名予備カード枚数十分() { return usercarddata.同名枚数; }
+//		public void setIs同名予備カード枚数十分(bool flag) { usercarddata.同名枚数 = flag; }
 
-		public bool get所持フラグ(CardVariation variation)
-        {
-            foreach (var uservariation in usercarddata.UserVariationDataList)
-            {
-				if(uservariation.発売パックURL == variation.発売パック.URL && uservariation.rarity.Name == variation.rarity.Name)
-                {
-					return uservariation.所持フラグ;
-                }
-            }
-			Program.WriteLog("不明なvariation(TwinCardData.get所持フラグ) " + variation.発売パック.Name + " " + variation.rarity.Name
-				+ " " + variation.略号.get略号Full(), LogLevel.エラー);
-			return false;
-        }
-
-		public void set所持フラグ(CardVariation variation,bool flag)
-        {
+		private UserCardData.UserVariationData getUserVariation(CardVariation variation)
+		{
 			foreach (var uservariation in usercarddata.UserVariationDataList)
 			{
 				if (uservariation.発売パックURL == variation.発売パック.URL && uservariation.rarity.Name == variation.rarity.Name)
 				{
-					uservariation.所持フラグ = flag;
-					return ;
+					return uservariation;
 				}
 			}
-			Program.WriteLog("不明なvariation(TwinCardData.set所持フラグ) " + variation.発売パック.Name + " " + variation.rarity.Name
+			Program.WriteLog("不明なvariation(TwinCardData.getUserVariation) " + variation.発売パック.Name + " " + variation.rarity.Name
 				+ " " + variation.略号.get略号Full(), LogLevel.エラー);
+			return null;
+		}
+
+		public bool get所持フラグ(CardVariation variation)
+        {
+			var uservariation = getUserVariation(variation);
+			if (uservariation == null) return false;
+			return uservariation.所持フラグ;
+
+        }
+
+		public void set所持フラグ(CardVariation variation,bool flag)
+        {
+			var uservariation = getUserVariation(variation);
+			if (uservariation == null) return;
+
+			uservariation.所持フラグ = flag;
+		}
+
+		public EKanabellRank getRank(CardVariation variation)
+		{
+			var uservariation = getUserVariation(variation);
+			if (uservariation == null) return EKanabellRank.不明;
+			return uservariation.Rank;
+		}
+
+		public void setRank(CardVariation variation, EKanabellRank rank)
+		{
+			var uservariation = getUserVariation(variation);
+			if (uservariation == null) return;
+
+			uservariation.Rank = rank;
 		}
 
 		//そのカード名のカードを持っているかを返す

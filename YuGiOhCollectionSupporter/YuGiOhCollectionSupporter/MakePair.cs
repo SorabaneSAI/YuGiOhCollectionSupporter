@@ -38,7 +38,9 @@ namespace YuGiOhCollectionSupporter
 			formK.InvalidMenuItem();
 
 			var errorlist = new List<string>();
-			var pricedictionary = MakeDictionary2(errorlist, form, formK);  //なんかawaitできなそう　別スレッドにするか？
+
+			(Dictionary < CardDataKey, List < KanabellCard >> pricedictionary, int cardcount,int kanabellcount) 
+				= MakeDictionary2(errorlist, form, formK);  //なんかawaitできなそう　別スレッドにするか？
 
 			//			Program.Save(PriceDictionaryPath, pricedictionary);
 			await Program.SaveCardDataAsync();
@@ -57,7 +59,7 @@ namespace YuGiOhCollectionSupporter
 
 		}
 
-		public static Dictionary<CardDataKey, List<KanabellCard>> MakeDictionary2(List<string> errorlist, Form1 form, KanabellForm formK)
+		public static (Dictionary<CardDataKey, List<KanabellCard>>,int,int )MakeDictionary2(List<string> errorlist, Form1 form, KanabellForm formK)
 		{
 			Dictionary<CardDataKey, List<KanabellCard>> PricePairDictionary = new Dictionary<CardDataKey, List<KanabellCard>>();
 
@@ -108,6 +110,8 @@ namespace YuGiOhCollectionSupporter
 			goto_next:;
 			}
 
+			int 不一致CardCount = 0;
+			int 不一致KanabellCount = 0;
 			//中身を削除するので逆順
 			for (int i = CardListCopy.Count - 1; i >= 0; i--)
 			{
@@ -119,7 +123,9 @@ namespace YuGiOhCollectionSupporter
 
 					if (card.名前 == kanabell.Name)
 					{
-						Compare(card, kanabell, form, PricePairDictionary);
+						(int cardcount,int kanabellcount) = Compare(card, kanabell, form, PricePairDictionary);
+						不一致CardCount += cardcount;
+						不一致KanabellCount += kanabellcount;
 
 						//中身がなくなったら削除
 						if (kanabell.VariationList.Count ==0)
@@ -148,11 +154,11 @@ namespace YuGiOhCollectionSupporter
 			}
 
 
-            return PricePairDictionary;
+            return (PricePairDictionary, 不一致CardCount, 不一致KanabellCount);
 		}
 
 		//同名カードによるリンクを作成
-		public static void Compare(CardData card, KanabellCard2 kanabell, Form1 form, Dictionary<CardDataKey, List<KanabellCard>> dictionary)
+		public static (int ,int) Compare(CardData card, KanabellCard2 kanabell, Form1 form, Dictionary<CardDataKey, List<KanabellCard>> dictionary)
 		{
 			List<KanabellCard>[] PairListList = new List<KanabellCard>[card.ListVariations.Count]; // そのCardDataVariationと一致したKanabellCardのリスト
 			int count = 0;
@@ -231,6 +237,7 @@ namespace YuGiOhCollectionSupporter
 			Program.WriteLog(str, LogLevel.情報);
 			form.UpdateLabel(str);
 
+			return (card.ListVariations.Count, kanabell.VariationList.Count);
 		}
 
 		public static string getRareity_fromKanabell(KanabellCard kanabell, BindingList<RarityPairData> raritypairs)

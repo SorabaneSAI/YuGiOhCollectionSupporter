@@ -191,8 +191,10 @@ namespace YuGiOhCollectionSupporter
 				//ローカル関数
 				void AddDataGridView()
 				{
+					//コンボボックスの初期値は最初に設定しないと変更できない
 					int num = dataGridView1.Rows.Add(twincarddata.IsCardNameHave(), card.名前, ryakugou, rarity,
-						twincarddata.usercarddata.UserVariationDataList[0].所持フラグ);
+						twincarddata.usercarddata.UserVariationDataList[0].所持フラグ, (twincarddata.getRank(variation)).ToString(),
+						twincarddata.usercarddata.同名枚数.ToString());
 					dataGridView1.Rows[num].Tag = CardDB.getCard(card.ID); //行のタグにカード情報を埋め込む  cardは変更されてる可能性があるのでCardDBから同じのを持ってくる
 
 					var dgvcell = (DataGridViewImageCell)dataGridView1.Rows[num].Cells["type"];
@@ -213,16 +215,14 @@ namespace YuGiOhCollectionSupporter
 						dataGridView1.Rows[num].Cells["クイック"].ReadOnly = true;
 					}
 
-					var havecell = dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"];
-					havecell.Value = twincarddata.getIs同名予備カード枚数十分();
-					havecell.Tag = variation;
+					dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"].Tag = variation;
 
 					//１枚ならクイックランクセット
-					var quickrankcell = dataGridView1.Rows[num].Cells["Qランク"];
+					var quickrankcell = (DataGridViewComboBoxCell)dataGridView1.Rows[num].Cells["Qランク"];
 
 					if (rarity_allnum == 1)    //１枚しか存在しない場合はクイックセットが可能に
 					{
-						quickrankcell.Value = twincarddata.usercarddata.Rank.ToString();
+	//					quickrankcell.ValueMember = ().ToString();
 						quickrankcell.Tag = variation;  //Tagに仕込み
 					}
 					else
@@ -259,6 +259,12 @@ namespace YuGiOhCollectionSupporter
 					if (!あいうえお順フラグ && r>0)
 					{
 						dataGridView1.Rows[num].Cells["名前"].Value = "";
+						dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"].Value = null;
+						dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"] = new DataGridViewTextBoxCell();
+						dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"].Value = "";
+						dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"].ReadOnly = true;
+						dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"].Style.BackColor = Color.Gray;
+						dataGridView1.Rows[num].Cells["Is同名予備カード枚数十分"].Tag = variation;
 					}
 				}
 
@@ -368,8 +374,8 @@ namespace YuGiOhCollectionSupporter
 
 				if (row.Cells["クイック"].Style.BackColor != Color.Gray)
 					row.Cells["クイック"].Style.BackColor = c;
-				var cell = row.Cells["Is同名予備カード枚数十分"];
-				cell.Style.BackColor = ((bool)cell.Value) ? green : red;
+//				var cell = row.Cells["Is同名予備カード枚数十分"];
+//				cell.Style.BackColor = ((bool)cell.Value) ? green : red;
 
 
 			}
@@ -591,11 +597,12 @@ namespace YuGiOhCollectionSupporter
 				{
 					twincarddata.set所持フラグ(variation, (bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
 				}
+				/*
 				else if(dataGridView1.Columns[e.ColumnIndex].Name == "Is同名予備カード枚数十分")//予備カード所持
 				{
-					twincarddata.setIs同名予備カード枚数十分((bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
+					twincarddata.usercarddata.同名枚数 = ((int)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
 				}
-
+				*/
 				//				UpdateCellColor(e.RowIndex,twincarddata,variation);
 				UpdateDataGridViewColor();
 
@@ -668,7 +675,7 @@ namespace YuGiOhCollectionSupporter
 		{
 			DataGridView dgv = (DataGridView)sender;
 
-			if (dgv.Columns[e.ColumnIndex].Name == "Qランク" &&
+			if ((dgv.Columns[e.ColumnIndex].Name == "Qランク" || dgv.Columns[e.ColumnIndex].Name == "Is同名予備カード枚数十分") &&
 			   dgv.Columns[e.ColumnIndex] is DataGridViewComboBoxColumn)
 			{
 				SendKeys.Send("{F4}");
@@ -677,7 +684,8 @@ namespace YuGiOhCollectionSupporter
 
 		//ここからコンボボックスの変更を察知
 		private DataGridViewComboBoxEditingControl dataGridViewComboBox = null;
-
+		private string CellName = "";
+		
 		//EditingControlShowingイベントハンドラ
 		private void DataGridView1_EditingControlShowing(object sender,
 			DataGridViewEditingControlShowingEventArgs e)
@@ -687,8 +695,9 @@ namespace YuGiOhCollectionSupporter
 			{
 				DataGridView dgv = (DataGridView)sender;
 
+				CellName = dgv.CurrentCell.OwningColumn.Name;
 				//該当する列か調べる
-				if (dgv.CurrentCell.OwningColumn.Name == "Qランク")
+				if (CellName == "Qランク" || CellName == "Is同名予備カード枚数十分")
 				{
 					//編集のために表示されているコントロールを取得
 					this.dataGridViewComboBox =
@@ -722,6 +731,7 @@ namespace YuGiOhCollectionSupporter
 			DataGridViewComboBoxEditingControl cb =
 				(DataGridViewComboBoxEditingControl)sender;
 
+			if(CellName == "Qランク")
 			{
 				EKanabellRank rank;
 				if (Program.TryParse((string)cb.EditingControlFormattedValue, out rank) == false)
@@ -730,11 +740,26 @@ namespace YuGiOhCollectionSupporter
 					return;
 				}
 
-				var twincarddata = form.getTwinCardData((CardData) dataGridView1.Rows[cb.EditingControlRowIndex].Tag);
+				var carddata = (CardData)dataGridView1.Rows[cb.EditingControlRowIndex].Tag;
+				var twincarddata = form.getTwinCardData(carddata);
 
-				twincarddata.usercarddata.Rank = rank;
+				twincarddata.setRank((CardVariation)dataGridView1.Rows[cb.EditingControlRowIndex].Cells[CellName].Tag, rank);
 			}
+			else if(CellName == "Is同名予備カード枚数十分")
+			{
+				int num;
+				if (int.TryParse((string)cb.EditingControlFormattedValue, out num) == false)
+				{
+					Program.WriteLog("intへのキャストエラー　", LogLevel.エラー);
+					return;
+				}
 
+				var twincarddata = form.getTwinCardData((CardData)dataGridView1.Rows[cb.EditingControlRowIndex].Tag);
+
+				twincarddata.usercarddata.同名枚数 = num;
+
+			}
+			CellName = "";
 		}
 	}
 }

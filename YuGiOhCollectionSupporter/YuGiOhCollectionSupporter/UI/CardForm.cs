@@ -64,8 +64,12 @@ namespace YuGiOhCollectionSupporter
             foreach (var variation in twincarddata.carddata.ListVariations)
             {
                 {
-                    int num = dataGridView1.Rows.Add(variation.略号.get略号Full(), variation.発売パック.Name, variation.rarity.Initial, twincarddata.get所持フラグ(variation));
-                    dataGridView1.Rows[num].Cells["パック名"].Tag = variation.発売パック.URL; //タグに情報を埋め込む
+                    int num = dataGridView1.Rows.Add(variation.略号.get略号Full(), variation.発売パック.Name, variation.rarity.Initial,
+                        twincarddata.get所持フラグ(variation),twincarddata.getRank(variation).ToString());
+
+                    dataGridView1.Rows[num].Tag = data;
+
+					dataGridView1.Rows[num].Cells["パック名"].Tag = variation.発売パック.URL; //タグに情報を埋め込む
                     dataGridView1.Rows[num].Cells["所持"].Tag = variation; //タグに情報を埋め込む
                     dataGridView1.Rows[num].Cells["レアリティ"].ToolTipText = variation.rarity.Name;   //マウスホバーでレアの正式名称
 
@@ -83,7 +87,10 @@ namespace YuGiOhCollectionSupporter
                     dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
                     dataGridView1.Rows[num].Cells["所持"].Style.BackColor = c;
 
-                    for (int i = 0; i < 3; i++)
+                    dataGridView1.Rows[num].Cells["ランク"].Tag = variation;
+
+
+					for (int i = 0; i < 3; i++)
                     {
                         //ないとこはグレー
                         if(i >= variation.KanabellList.Count)
@@ -283,7 +290,7 @@ namespace YuGiOhCollectionSupporter
 
 				var twincarddata = form.getTwinCardData((CardData)dataGridView1.Rows[cb.EditingControlRowIndex].Tag);
 
-				twincarddata.usercarddata.Rank = rank;
+                twincarddata.setRank((CardVariation)dataGridView1.Rows[cb.EditingControlRowIndex].Cells["ランク"].Tag, rank);
 			}
 
 		}
