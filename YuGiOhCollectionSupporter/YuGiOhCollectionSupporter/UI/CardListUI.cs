@@ -238,14 +238,15 @@ namespace YuGiOhCollectionSupporter
 					//値段情報あったら書く
 					if (rarity_allnum == 1)
 					{
-						if (variation.KanabellList == null)
+						if (variation.KanabellList == null || variation.KanabellList.Count ==0)
 						{
 							dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
 						}
-						else if (!(variation.KanabellList[0].Rank == EKanabellRank.不明 || variation.KanabellList[0].Rank == EKanabellRank.在庫なし))
+						else if (!(variation.KanabellList[0].Rank == EKanabellRank.不明))
 						{
 							var pricecell = dataGridView1.Rows[num].Cells["Q値段"];
 							pricecell.Value = variation.KanabellList[0].Rank.ToString() + " " + variation.KanabellList[0].Price.ToString();
+							pricecell.Tag = variation.KanabellList[0].URL;
 						}
 					}
 					else
@@ -476,6 +477,7 @@ namespace YuGiOhCollectionSupporter
 		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
 			DataGridView dgv = (DataGridView)sender;
+			if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 			if (dgv.Columns[e.ColumnIndex].Name == "名前")
             {
 				//DGVに埋め込まれてるカードデータを直接使う予定だったが、パックリストによるDGVはデータを削るので、Formから探す
@@ -490,13 +492,8 @@ namespace YuGiOhCollectionSupporter
 			{
 				if (dataGridView1.Columns[e.ColumnIndex].Name == $"Q値段")
 				{
-					var data = (CardData)dgv.Rows[e.RowIndex].Tag;
-					var variation = data.ListVariations[0];
-					if ( variation.KanabellList.Count > 0)
-					{
-						string URL = variation.KanabellList[0].URL;
-						System.Diagnostics.Process.Start(URL);
-					}
+					string url = (string)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
+					System.Diagnostics.Process.Start(url);
 				}
 			}
 

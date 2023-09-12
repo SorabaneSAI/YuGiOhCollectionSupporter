@@ -76,8 +76,20 @@ namespace YuGiOhCollectionSupporter
 			//あいうえお順とパック順のツリー作成
 			button3.PerformClick();
 			button4.PerformClick();
-			//			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
-		}
+            //			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
+
+            foreach (var item in CardDB.CardList)
+            {
+				foreach (var vari in item.ListVariations)
+				{
+					if(vari.KanabellList == null)
+					{
+						vari.KanabellList = new List<KanabellForm.KanabellCard>();
+					}
+				}
+            }
+
+        }
 		//設定を開く
 		private void toolStripMenuItem1_Click(object sender, EventArgs e)
 		{

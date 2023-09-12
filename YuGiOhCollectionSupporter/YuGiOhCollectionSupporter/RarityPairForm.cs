@@ -86,6 +86,8 @@ namespace YuGiOhCollectionSupporter
 			RarityPairDataList.Add(new RarityPairData("ノレ", "N"));
 			RarityPairDataList.Add(new RarityPairData("ノー", "N"));
 
+			RarityPairDataList.Add(new RarityPairData("M", "P"));
+			RarityPairDataList.Add(new RarityPairData("P+UR", "P"));
 
 
 			RarityPairDataList.AllowNew = true;

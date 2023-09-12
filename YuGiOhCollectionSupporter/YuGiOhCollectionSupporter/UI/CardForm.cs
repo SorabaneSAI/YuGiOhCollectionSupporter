@@ -90,17 +90,18 @@ namespace YuGiOhCollectionSupporter
                     dataGridView1.Rows[num].Cells["ランク"].Tag = variation;
 
 
-					for (int i = 0; i < 3; i++)
+					for (int i = 0; i < variation.KanabellList.Count; i++)
                     {
-                        //ないとこはグレー
-                        if(i >= variation.KanabellList.Count)
+						var kanabell = variation.KanabellList[i];
+                        dataGridView1.Rows[num].Cells[$"値段{i + 1}"].Tag = kanabell.URL;
+						//ないとこはグレー
+						if (i >= variation.KanabellList.Count)
                         {
 							dataGridView1.Rows[num].Cells[$"値段{i + 1}"].Style.BackColor = Color.Gray;
                             continue;
 						}
 
-						var kanabell = variation.KanabellList[i];
-						if (kanabell.Rank == EKanabellRank.不明 || kanabell.Rank == EKanabellRank.在庫なし)
+						if (kanabell.Rank == EKanabellRank.不明)
 						{
 							dataGridView1.Rows[num].Cells[$"値段{i+1}"].Style.BackColor = Color.Gray;
 						}
@@ -168,6 +169,7 @@ namespace YuGiOhCollectionSupporter
                 */
 				Init(twincarddata.carddata, form);
 			}
+            /*
             //リンクならカーナベルを開く
             for (int i = 0; i < 3; i++)
             {
@@ -181,11 +183,13 @@ namespace YuGiOhCollectionSupporter
 					}
 				}
 			}
+            */
 		}
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridView dgv = (DataGridView)sender;
+            if (e.RowIndex < 0 || e.ColumnIndex <0) return;
             if (dgv.Columns[e.ColumnIndex].Name == "パック名")
             {
                 string url = (string)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
@@ -206,11 +210,16 @@ namespace YuGiOhCollectionSupporter
  //               f.FormBorderStyle = FormBorderStyle.Sizable;
                 f.Show();
             }
+			if (dataGridView1.Columns[e.ColumnIndex].Name.Contains("値段"))
+			{
+				string url = (string)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
+				System.Diagnostics.Process.Start(url);
+			}
 
-        }
+		}
 
-        //なぜかセルをクリックするとDGVの先頭にスクロールしてしまうので現在のスクロールポジションを返して回避
-        protected override Point ScrollToControl(Control activeControl)
+		//なぜかセルをクリックするとDGVの先頭にスクロールしてしまうので現在のスクロールポジションを返して回避
+		protected override Point ScrollToControl(Control activeControl)
         {
             return AutoScrollPosition;
         }

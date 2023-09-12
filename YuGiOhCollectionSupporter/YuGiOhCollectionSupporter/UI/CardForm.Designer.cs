@@ -37,17 +37,17 @@
 			this.label5 = new System.Windows.Forms.Label();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.label6 = new System.Windows.Forms.Label();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.パック名 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.所持 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.ランク = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.値段1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.値段2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.値段3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.label6 = new System.Windows.Forms.Label();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
-			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.値段1 = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.値段2 = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.値段3 = new System.Windows.Forms.DataGridViewLinkColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -177,6 +177,54 @@
 			this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DataGridView1_EditingControlShowing);
 			this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
 			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 15F);
+			this.label6.Location = new System.Drawing.Point(13, 112);
+			this.label6.Margin = new System.Windows.Forms.Padding(13, 12, 4, 0);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(72, 25);
+			this.label6.TabIndex = 9;
+			this.label6.Text = "label6";
+			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Checked = true;
+			this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBox1.Location = new System.Drawing.Point(4, 141);
+			this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(192, 19);
+			this.checkBox1.TabIndex = 10;
+			this.checkBox1.Text = "このカードを一覧に表示する";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.AutoScroll = true;
+			this.flowLayoutPanel1.AutoSize = true;
+			this.flowLayoutPanel1.Controls.Add(this.linkLabel1);
+			this.flowLayoutPanel1.Controls.Add(this.label1);
+			this.flowLayoutPanel1.Controls.Add(this.label2);
+			this.flowLayoutPanel1.Controls.Add(this.label6);
+			this.flowLayoutPanel1.Controls.Add(this.checkBox1);
+			this.flowLayoutPanel1.Controls.Add(this.label4);
+			this.flowLayoutPanel1.Controls.Add(this.textBox1);
+			this.flowLayoutPanel1.Controls.Add(this.label5);
+			this.flowLayoutPanel1.Controls.Add(this.textBox2);
+			this.flowLayoutPanel1.Controls.Add(this.dataGridView1);
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(1073, 608);
+			this.flowLayoutPanel1.TabIndex = 11;
+			this.flowLayoutPanel1.WrapContents = false;
+			// 
 			// 略号
 			// 
 			this.略号.HeaderText = "略号";
@@ -232,6 +280,7 @@
 			this.値段1.MinimumWidth = 6;
 			this.値段1.Name = "値段1";
 			this.値段1.ReadOnly = true;
+			this.値段1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.値段1.Width = 80;
 			// 
 			// 値段2
@@ -240,6 +289,7 @@
 			this.値段2.MinimumWidth = 6;
 			this.値段2.Name = "値段2";
 			this.値段2.ReadOnly = true;
+			this.値段2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.値段2.Width = 80;
 			// 
 			// 値段3
@@ -248,55 +298,8 @@
 			this.値段3.MinimumWidth = 6;
 			this.値段3.Name = "値段3";
 			this.値段3.ReadOnly = true;
+			this.値段3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.値段3.Width = 80;
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 15F);
-			this.label6.Location = new System.Drawing.Point(13, 112);
-			this.label6.Margin = new System.Windows.Forms.Padding(13, 12, 4, 0);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(72, 25);
-			this.label6.TabIndex = 9;
-			this.label6.Text = "label6";
-			// 
-			// checkBox1
-			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Checked = true;
-			this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBox1.Location = new System.Drawing.Point(4, 141);
-			this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(192, 19);
-			this.checkBox1.TabIndex = 10;
-			this.checkBox1.Text = "このカードを一覧に表示する";
-			this.checkBox1.UseVisualStyleBackColor = true;
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-			// 
-			// flowLayoutPanel1
-			// 
-			this.flowLayoutPanel1.AutoScroll = true;
-			this.flowLayoutPanel1.AutoSize = true;
-			this.flowLayoutPanel1.Controls.Add(this.linkLabel1);
-			this.flowLayoutPanel1.Controls.Add(this.label1);
-			this.flowLayoutPanel1.Controls.Add(this.label2);
-			this.flowLayoutPanel1.Controls.Add(this.label6);
-			this.flowLayoutPanel1.Controls.Add(this.checkBox1);
-			this.flowLayoutPanel1.Controls.Add(this.label4);
-			this.flowLayoutPanel1.Controls.Add(this.textBox1);
-			this.flowLayoutPanel1.Controls.Add(this.label5);
-			this.flowLayoutPanel1.Controls.Add(this.textBox2);
-			this.flowLayoutPanel1.Controls.Add(this.dataGridView1);
-			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(1073, 608);
-			this.flowLayoutPanel1.TabIndex = 11;
-			this.flowLayoutPanel1.WrapContents = false;
 			// 
 			// CardForm
 			// 
@@ -340,8 +343,8 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn 所持;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ランク;
-		private System.Windows.Forms.DataGridViewTextBoxColumn 値段1;
-		private System.Windows.Forms.DataGridViewTextBoxColumn 値段2;
-		private System.Windows.Forms.DataGridViewTextBoxColumn 値段3;
+		private System.Windows.Forms.DataGridViewLinkColumn 値段1;
+		private System.Windows.Forms.DataGridViewLinkColumn 値段2;
+		private System.Windows.Forms.DataGridViewLinkColumn 値段3;
 	}
 }

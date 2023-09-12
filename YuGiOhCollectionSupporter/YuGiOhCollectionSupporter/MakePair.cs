@@ -51,7 +51,10 @@ namespace YuGiOhCollectionSupporter
 			sw.Stop();
 			TimeSpan ts = sw.Elapsed;
 
-			string msg = $"ペア情報の取得が完了しました。\n全データ件数{pricedictionary.Count}" + $"エラー件数:{errorlist.Count}件\n" + Program.ToJson(errorlist, Newtonsoft.Json.Formatting.None) + $"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
+			string msg = $"ペア情報の取得が完了しました。\n全データ件数{pricedictionary.Count}" + 
+				$"エラー件数:{errorlist.Count}件\n" + Program.ToJson(errorlist, Newtonsoft.Json.Formatting.None) + 
+				$"カード側余り:{cardcount}件、カーナベル側余り{kanabellcount}件"+
+				$"\nかかった時間:{ts.Hours}時間 {ts.Minutes}分 {ts.Seconds}秒 {ts.Milliseconds}ミリ秒";
 			Program.WriteLog(msg, LogLevel.必須項目);
 			MessageBox.Show(msg, "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -85,7 +88,7 @@ namespace YuGiOhCollectionSupporter
 					for (int i = 0; i < 略号List.Length; i++)
 					{
 						var newkanabell = new KanabellCard(kanabell.Rare, kanabell.Name, kanabell.Rank, kanabell.Price, kanabell.URL);
-						newkanabell.略号Full = 略号List[i];
+						newkanabell.略号Full = 略号List[i].Trim();
 						newkanabell.備考詳細 = kanabell.備考詳細;
 						Kanabell略号分裂List.Add(newkanabell);
 					}
