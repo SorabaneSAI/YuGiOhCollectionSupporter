@@ -177,8 +177,9 @@ namespace YuGiOhCollectionSupporter
 					//略号一致してるか見る
 					if(card_variation.略号.get略号Full() == kanabell_variation.略号Full)
 					{
-						//レアリティ一致してるか見る
-						if (card_variation.rarity.Initial == getRareity_fromKanabell(kanabell_variation, form.RarityPairDataList))
+						//レアリティ一致してるか見る(両方変換)
+						if (getRareity_fromCard(card_variation, form.RarityPairDataList) == 
+							getRareity_fromKanabell(kanabell_variation, form.RarityPairDataList))
 						{
 							//でも油断できない　同じものが複数ある可能性あり
 							PairListList[i].Add(kanabell_variation);
@@ -247,14 +248,26 @@ namespace YuGiOhCollectionSupporter
 		{
 			foreach (var raritypair in raritypairs)
 			{
-				if(raritypair.Rarity_Kanabell == kanabell.Rare)
+				if (raritypair.Rarity_Kanabell == kanabell.Rare)
 				{
 					return raritypair.Rarity_Konami;
 				}
 			}
 
 			Program.WriteLog($"登録されてないレアリティ{kanabell.Rare}\n {Program.ToJson(kanabell)}", LogLevel.警告);
-			return "";
+			return kanabell.Rare;
+		}
+		public static string getRareity_fromCard(CardVariation variation, BindingList<RarityPairData> raritypairs)
+		{
+			foreach (var raritypair in raritypairs)
+			{
+				if (raritypair.Rarity_Kanabell == variation.rarity.Initial)
+				{
+					return raritypair.Rarity_Konami;
+				}
+			}
+
+			return variation.rarity.Initial;	//こっちはなくても警告なし
 		}
 
 	}

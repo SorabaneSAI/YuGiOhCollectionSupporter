@@ -118,7 +118,7 @@ namespace YuGiOhCollectionSupporter
 					{
 						sum +=PackCardDB.CardList[n].ListVariations.Count;
 						if (IsStartEndDeside == false)
-							end_i = n;
+							end_i = n+1;
 
 						if (sum >=100)
 						{

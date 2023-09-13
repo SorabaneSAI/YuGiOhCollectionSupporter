@@ -124,14 +124,15 @@ namespace YuGiOhCollectionSupporter
             table.Rows.Height = 6;
             //列作成
             var column = table.AddColumn(Unit.FromCentimeter(5));   //名前
-            column = table.AddColumn(Unit.FromCentimeter(5));       //読み
+            column = table.AddColumn(Unit.FromCentimeter(3));       //読み
             column = table.AddColumn(Unit.FromCentimeter(0.8));     //属性
             column = table.AddColumn(Unit.FromCentimeter(4));       //種族
             column = table.AddColumn(Unit.FromCentimeter(1.2));     //レベル
             column = table.AddColumn(Unit.FromCentimeter(1.3));     //ATK/DEF
             column = table.AddColumn(Unit.FromCentimeter(1.4));     //略号
-            column = table.AddColumn(Unit.FromCentimeter(5));       //パック名
-            column = table.AddColumn(Unit.FromCentimeter(3));       //レアリティ
+            column = table.AddColumn(Unit.FromCentimeter(6));       //パック名
+			column = table.AddColumn(Unit.FromCentimeter(3));       //レアリティ
+			column = table.AddColumn(Unit.FromCentimeter(1));       //値段
 
 
 			foreach (var twincarddata in TwinCardDataList)
@@ -150,7 +151,7 @@ namespace YuGiOhCollectionSupporter
 
                     List<string> strlist = new List<string>();
                     strlist.Add(twincarddata.carddata.名前);
-                    strlist.Add(twincarddata.carddata.読み);
+                    strlist.Add(Kanaxs.Kana.ToHankakuKana( twincarddata.carddata.読み));
                     strlist.Add(getvalue(twincarddata.carddata, "属性"));
                     if (twincarddata.carddata.種族 == "") //魔法罠
                     {
@@ -188,8 +189,19 @@ namespace YuGiOhCollectionSupporter
 					if (num >= 1)
 						strlist.Add(variation.発売パック.Name);
 
-                    if(num==2 )
+                    if (num == 2)
+                    {
                         strlist.Add(variation.rarity.Name);
+
+                        foreach (var kanabell in variation.KanabellList)
+                        {
+                            if(!(kanabell.Rank == EKanabellRank.在庫なし || kanabell.Rank == EKanabellRank.不明))
+                            {
+								strlist.Add(kanabell.Rank.ToString() + " " + kanabell.Price.ToString());
+                                break;
+							}
+						}
+                    }
 
                     AddRow(table, font, strlist);
 

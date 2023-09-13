@@ -88,7 +88,15 @@ namespace YuGiOhCollectionSupporter
 
 			RarityPairDataList.Add(new RarityPairData("M", "P"));
 			RarityPairDataList.Add(new RarityPairData("P+UR", "P"));
-
+			RarityPairDataList.Add(new RarityPairData("P+SR", "SR"));
+			RarityPairDataList.Add(new RarityPairData("P+SE", "SE"));
+			RarityPairDataList.Add(new RarityPairData("EXSE", "SE"));
+			RarityPairDataList.Add(new RarityPairData("P+EXSE", "SE"));
+			RarityPairDataList.Add(new RarityPairData("M+GR", "GR"));
+			RarityPairDataList.Add(new RarityPairData("KC+UR", "UR"));
+			RarityPairDataList.Add(new RarityPairData("KC+R", "SE"));
+			RarityPairDataList.Add(new RarityPairData("KC", "P"));
+			RarityPairDataList.Add(new RarityPairData("P+R", "P"));
 
 			RarityPairDataList.AllowNew = true;
 
