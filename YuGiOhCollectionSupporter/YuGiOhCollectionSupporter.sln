@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuGiOhCollectionSupporter", "YuGiOhCollectionSupporter\YuGiOhCollectionSupporter.csproj", "{1DF68BA5-A325-47BB-BA19-0C8AEFDB9281}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YuGiOhCollectionSupporterTests1", "YuGiOhCollectionSupporterTests1\YuGiOhCollectionSupporterTests1.csproj", "{0D29FB40-44E8-44C8-9069-55093C715E8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{1DF68BA5-A325-47BB-BA19-0C8AEFDB9281}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DF68BA5-A325-47BB-BA19-0C8AEFDB9281}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DF68BA5-A325-47BB-BA19-0C8AEFDB9281}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D29FB40-44E8-44C8-9069-55093C715E8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D29FB40-44E8-44C8-9069-55093C715E8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D29FB40-44E8-44C8-9069-55093C715E8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D29FB40-44E8-44C8-9069-55093C715E8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0E01F8B1-202F-4D08-8145-0A61CB80DF4A}
 	EndGlobalSection
 EndGlobal

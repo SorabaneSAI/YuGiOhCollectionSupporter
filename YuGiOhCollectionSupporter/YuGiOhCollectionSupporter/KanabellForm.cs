@@ -509,5 +509,11 @@ namespace YuGiOhCollectionSupporter
 				throw e;
 			}
 		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+			var form = new NotMatchForm(MakePair.MatchDataList);
+			form.Show();
+		}
 	}
 }

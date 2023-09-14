@@ -12,21 +12,43 @@ using static YuGiOhCollectionSupporter.KanabellForm;
 
 namespace YuGiOhCollectionSupporter
 {
-	internal class MakePair
+	public class MakePair
 	{
-//		static string PriceDictionaryPath = "PriceDictionary.json";
+		//		static string PriceDictionaryPath = "PriceDictionary.json";
 
+		public static List<MatchData> MatchDataList = new List<MatchData>();
+
+		//同名を１つにまとめる用
 		public class KanabellCard2
 		{
 			public List<KanabellCard> VariationList = new List<KanabellCard>();    //KanabellCardはValiationとして使用される
 			public string Name; //ID
 
+			public KanabellCard2()
+			{
+				//nullだと色々困る
+			}
 			public KanabellCard2(KanabellCard card)
 			{
 				VariationList.Add(card);
 				Name = card.Name;
 			}
 		}
+
+		//二種類のデータ登録用
+		public class MatchData
+		{
+			public CardData Card;
+			public KanabellCard2 Kanabell;
+
+			public MatchData(CardData card, KanabellCard2 kanabell) 
+			{
+				Card = card;
+				Kanabell = kanabell;
+			}
+
+		}
+
 
 		public static async void MakeDictionary(Form1 form, KanabellForm formK)
 		{
@@ -39,12 +61,13 @@ namespace YuGiOhCollectionSupporter
 
 			var errorlist = new List<string>();
 
-			(Dictionary < CardDataKey, List < KanabellCard >> pricedictionary, int cardcount,int kanabellcount) 
-				= MakeDictionary2(errorlist, form, formK);  //なんかawaitできなそう　別スレッドにするか？
+			(Dictionary < CardDataKey, List < KanabellCard >> pricedictionary, int cardcount,int kanabellcount, 
+				List<MatchData> matchdatalist) = MakeDictionary2(errorlist, form, formK);  //なんかawaitできなそう　別スレッドにするか？
 
 			//			Program.Save(PriceDictionaryPath, pricedictionary);
 			await Program.SaveCardDataAsync();
 
+			MatchDataList = matchdatalist;
 
 			formK.ValidMenuItem();
 
@@ -62,12 +85,12 @@ namespace YuGiOhCollectionSupporter
 
 		}
 
-		public static (Dictionary<CardDataKey, List<KanabellCard>>,int,int )MakeDictionary2(List<string> errorlist, Form1 form, KanabellForm formK)
+		public static (Dictionary<CardDataKey, List<KanabellCard>>,int,int, List<MatchData>) MakeDictionary2(List<string> errorlist, Form1 form, KanabellForm formK)
 		{
 			Dictionary<CardDataKey, List<KanabellCard>> PricePairDictionary = new Dictionary<CardDataKey, List<KanabellCard>>();
+			List<MatchData> MatchDataList = new List<MatchData>();
 
-			var CardListCopy = new List<CardData>();
-			CardListCopy = Program.DeepCopy(form.CardDB.CardList);	//本データを削除するわけにはいかないのでコピー
+			var CardListCopy = Program.DeepCopy(form.CardDB.CardList);	//本データを削除するわけにはいかないのでコピー
 
 			var Kanabell略号分裂List = new List<KanabellCard>();
 			var Kanabell2List = new List<KanabellCard2>();  //このリストは削除してOK!
@@ -124,24 +147,40 @@ namespace YuGiOhCollectionSupporter
 				{
 					KanabellCard2 kanabell = Kanabell2List[j];
 
-					if (card.名前 == kanabell.Name)
+					if (IsSameName(card.名前 , kanabell.Name))
 					{
-						(int cardcount,int kanabellcount) = Compare(card, kanabell, form, PricePairDictionary);
-						不一致CardCount += cardcount;
-						不一致KanabellCount += kanabellcount;
+						Compare(card, kanabell, form, PricePairDictionary);
+						不一致CardCount += card.ListVariations.Count;
+						不一致KanabellCount += kanabell.VariationList.Count;
 
-						//中身がなくなったら削除
-						if (kanabell.VariationList.Count ==0)
+						MatchDataList.Add(new MatchData(card,kanabell));	//同名のがあったらマッチデータにして削除
+//						//中身がなくなったら削除
+//						if (kanabell.VariationList.Count ==0)
 							Kanabell2List.Remove(kanabell);
+						break;
+
 					}
+
 				}
-				if (card.ListVariations.Count == 0)
+//				if (card.ListVariations.Count == 0)
 					CardListCopy.Remove(card);
 
 			}
 
-            //最後にCardDB更新
-            foreach (var card in form.CardDB.CardList)
+			//残ったものをMatchDataに
+			foreach (var card in CardListCopy)
+			{
+				MatchDataList.Add(new MatchData(card, new KanabellCard2()));
+			}
+			foreach (var kanabell in Kanabell2List)
+			{
+				MatchDataList.Add(new MatchData(new CardData(), kanabell));
+			}
+
+
+
+			//最後にCardDB更新
+			foreach (var card in form.CardDB.CardList)
             {
                 foreach (var variation in card.ListVariations)
                 {
@@ -157,11 +196,51 @@ namespace YuGiOhCollectionSupporter
 			}
 
 
-            return (PricePairDictionary, 不一致CardCount, 不一致KanabellCount);
+            return (PricePairDictionary, 不一致CardCount, 不一致KanabellCount, MatchDataList);
+		}
+
+		//表記ゆれとかどうしろと
+		public static bool IsSameName(string cardname, string kanabellname)
+		{
+			if (cardname == kanabellname) return true;
+			var dic = new Dictionary<string, string>
+							{
+								{ "　",  "" },
+								{ " ",  "" },
+								{ "＠", "@" },
+								{ "＝", "=" },
+								{ "－", "-" },
+								{ "／", "/" },
+								{ "：", ":" },
+								{ "！", "!" },
+								{ "？", "?" },
+								{ "＜", "<" },
+								{ "＞", ">" },
+								{ "”", "\"" },
+								{ "’", "\'" },
+								{ "１", "1" },
+								{ "２", "2" },
+								{ "３", "3" },
+								{ "４", "4" },
+								{ "５", "5" },
+								{ "６", "6" },
+								{ "７", "7" },
+								{ "８", "8" },
+								{ "９", "9" },
+								{ "０", "0" },
+							};
+
+			string str = cardname;
+
+			foreach (var key in dic)
+			{
+				str = str.Replace(key.Key, key.Value);
+			}
+			return str == kanabellname;
 		}
 
 		//同名カードによるリンクを作成
-		public static (int ,int) Compare(CardData card, KanabellCard2 kanabell, Form1 form, Dictionary<CardDataKey, List<KanabellCard>> dictionary)
+		public static void Compare(CardData card, KanabellCard2 kanabell, Form1 form, Dictionary<CardDataKey, List<KanabellCard>> dictionary)
 		{
 			List<KanabellCard>[] PairListList = new List<KanabellCard>[card.ListVariations.Count]; // そのCardDataVariationと一致したKanabellCardのリスト
 			int count = 0;
@@ -241,7 +320,7 @@ namespace YuGiOhCollectionSupporter
 			Program.WriteLog(str, LogLevel.情報);
 			form.UpdateLabel(str);
 
-			return (card.ListVariations.Count, kanabell.VariationList.Count);
+			return;
 		}
 
 		public static string getRareity_fromKanabell(KanabellCard kanabell, BindingList<RarityPairData> raritypairs)
