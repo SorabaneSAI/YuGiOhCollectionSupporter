@@ -131,9 +131,9 @@ namespace YuGiOhCollectionSupporter
             column = table.AddColumn(Unit.FromCentimeter(1.3));     //ATK/DEF
             column = table.AddColumn(Unit.FromCentimeter(1.4));     //略号
             column = table.AddColumn(Unit.FromCentimeter(6));       //パック名
-			column = table.AddColumn(Unit.FromCentimeter(3));       //レアリティ
+			column = table.AddColumn(Unit.FromCentimeter(1));       //レアリティ
+			column = table.AddColumn(Unit.FromCentimeter(1));       //持ってたらランク
 			column = table.AddColumn(Unit.FromCentimeter(1));       //値段
-
 
 			foreach (var twincarddata in TwinCardDataList)
             {
@@ -147,12 +147,24 @@ namespace YuGiOhCollectionSupporter
 					}
 					oldvariation = variation;
 
-					if (twincarddata.get所持フラグ(variation) == true) continue;
+                    if (twincarddata.get所持フラグ(variation) == true)
+                    {
+                        //レアリティ別で出力してるときは、ランクがAでないと出力
+                        if (num == 2)
+                        {
+                            if (twincarddata.getRank(variation) == EKanabellRank.A)
+								continue;
+						}
+                        else
+    						continue;
+                    }
 
                     List<string> strlist = new List<string>();
                     strlist.Add(twincarddata.carddata.名前);
                     strlist.Add(Kanaxs.Kana.ToHankakuKana( twincarddata.carddata.読み));
-                    strlist.Add(getvalue(twincarddata.carddata, "属性"));
+                    string str3 = getvalue(twincarddata.carddata, "属性");
+					strlist.Add(str3 == "" ? " " : str3);   //""だとなぜか改行が発生する
+
                     if (twincarddata.carddata.種族 == "") //魔法罠
                     {
                         string type;
@@ -173,11 +185,11 @@ namespace YuGiOhCollectionSupporter
                     else if(link != "")
                         strlist.Add(link);
                     else
-						strlist.Add("");
+						strlist.Add(" ");
 
 					string atk = getvalue(twincarddata.carddata, "攻撃力");
                     string def = getvalue(twincarddata.carddata, "守備力");
-                    string str = "";
+                    string str = " ";
                     if (!(atk == "" && def == ""))
                         str = atk + " / " + def;
 
@@ -191,8 +203,8 @@ namespace YuGiOhCollectionSupporter
 
                     if (num == 2)
                     {
-                        strlist.Add(variation.rarity.Name);
-
+                        strlist.Add(variation.rarity.Initial);
+                        strlist.Add(twincarddata.get所持フラグ(variation) == true ?  twincarddata.getRank(variation).ToString() : " ");
                         foreach (var kanabell in variation.KanabellList)
                         {
                             if(!(kanabell.Rank == EKanabellRank.在庫なし || kanabell.Rank == EKanabellRank.不明))
@@ -201,6 +213,12 @@ namespace YuGiOhCollectionSupporter
                                 break;
 							}
 						}
+                    }
+
+                    //空欄があると改行がなぜか発生するため欄を埋める
+                    while(strlist.Count < 11)
+                    {
+                        strlist.Add(" ");
                     }
 
                     AddRow(table, font, strlist);
