@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Web.UI.HtmlControls;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -33,6 +34,8 @@ namespace YuGiOhCollectionSupporter
 
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+
+
 			form1 = new Form1();
 			Application.Run(form1);
 		}

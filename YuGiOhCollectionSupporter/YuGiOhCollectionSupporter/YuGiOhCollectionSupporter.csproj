@@ -124,6 +124,12 @@
       <DependentUpon>PackGroupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="PrintPDF.cs" />
+    <Compile Include="TmpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TmpForm.Designer.cs">
+      <DependentUpon>TmpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\CardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +202,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PackGroupForm.resx">
       <DependentUpon>PackGroupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TmpForm.resx">
+      <DependentUpon>TmpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CardForm.resx">
       <DependentUpon>CardForm.cs</DependentUpon>

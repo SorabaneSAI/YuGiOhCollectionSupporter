@@ -38,6 +38,7 @@
 			this.ホームToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.パック分類設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.シリーズ期設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.販売価格調査ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.label1 = new System.Windows.Forms.Label();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -50,7 +51,6 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.treeView2 = new System.Windows.Forms.TreeView();
-			this.販売価格調査ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -146,6 +146,13 @@
 			this.シリーズ期設定ToolStripMenuItem.Text = "シリーズ（期）設定";
 			this.シリーズ期設定ToolStripMenuItem.Click += new System.EventHandler(this.シリーズ期設定ToolStripMenuItem_Click);
 			// 
+			// 販売価格調査ToolStripMenuItem
+			// 
+			this.販売価格調査ToolStripMenuItem.Name = "販売価格調査ToolStripMenuItem";
+			this.販売価格調査ToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
+			this.販売価格調査ToolStripMenuItem.Text = "販売価格調査";
+			this.販売価格調査ToolStripMenuItem.Click += new System.EventHandler(this.販売価格調査ToolStripMenuItem_Click);
+			// 
 			// これについてToolStripMenuItem
 			// 
 			this.これについてToolStripMenuItem.Name = "これについてToolStripMenuItem";
@@ -178,7 +185,7 @@
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
 			this.splitContainer1.Size = new System.Drawing.Size(1540, 794);
-			this.splitContainer1.SplitterDistance = 567;
+			this.splitContainer1.SplitterDistance = 565;
 			this.splitContainer1.SplitterWidth = 5;
 			this.splitContainer1.TabIndex = 3;
 			// 
@@ -203,14 +210,14 @@
 			this.splitContainer2.Panel2.Controls.Add(this.button2);
 			this.splitContainer2.Panel2.Controls.Add(this.textBox2);
 			this.splitContainer2.Panel2.Controls.Add(this.treeView2);
-			this.splitContainer2.Size = new System.Drawing.Size(567, 794);
-			this.splitContainer2.SplitterDistance = 230;
+			this.splitContainer2.Size = new System.Drawing.Size(565, 794);
+			this.splitContainer2.SplitterDistance = 228;
 			this.splitContainer2.TabIndex = 6;
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(174, 4);
+			this.button3.Location = new System.Drawing.Point(172, 4);
 			this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(49, 34);
@@ -222,7 +229,7 @@
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(114, 4);
+			this.button1.Location = new System.Drawing.Point(112, 4);
 			this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(54, 34);
@@ -238,7 +245,7 @@
 			this.textBox1.Location = new System.Drawing.Point(4, 2);
 			this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(104, 22);
+			this.textBox1.Size = new System.Drawing.Size(102, 22);
 			this.textBox1.TabIndex = 6;
 			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
 			// 
@@ -249,7 +256,7 @@
 			this.treeView1.Margin = new System.Windows.Forms.Padding(4);
 			this.treeView1.MinimumSize = new System.Drawing.Size(31, 4);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(226, 743);
+			this.treeView1.Size = new System.Drawing.Size(224, 743);
 			this.treeView1.TabIndex = 5;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
@@ -298,13 +305,6 @@
 			this.treeView2.Size = new System.Drawing.Size(329, 745);
 			this.treeView2.TabIndex = 0;
 			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
-			// 
-			// 販売価格調査ToolStripMenuItem
-			// 
-			this.販売価格調査ToolStripMenuItem.Name = "販売価格調査ToolStripMenuItem";
-			this.販売価格調査ToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
-			this.販売価格調査ToolStripMenuItem.Text = "販売価格調査";
-			this.販売価格調査ToolStripMenuItem.Click += new System.EventHandler(this.販売価格調査ToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 

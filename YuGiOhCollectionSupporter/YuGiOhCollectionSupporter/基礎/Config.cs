@@ -17,6 +17,7 @@ namespace YuGiOhCollectionSupporter
 		public bool Is捜索打ち切り = true;
 		public decimal 捜索打ち切り限界 = 200;
 
+		public bool Is存在しないカードリスト捜索スキップ = true;
 
 		public static string Domain = "https://www.db.yugioh-card.com";
 		public static string ConfigPass = Form1.SaveFolder + "\\" + "Config.dat";

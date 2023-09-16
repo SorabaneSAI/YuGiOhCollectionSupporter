@@ -9,6 +9,7 @@ namespace YuGiOhCollectionSupporter
     public class CardDataBase
     {
         public List<CardData> CardList = new List<CardData>();
+        public List<int> 存在しないカードIDList = new List<int>();
         public string SaveDataPath = Form1.SaveFolder + "\\" + "CardDataBase.json";
         public CardData getCard(int ID)
         {

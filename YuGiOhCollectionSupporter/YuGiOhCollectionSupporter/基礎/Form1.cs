@@ -40,10 +40,13 @@ namespace YuGiOhCollectionSupporter
 
 		public static string SaveFolder = "Save";
 
+
+		public TmpForm tmpform;
 		public Form1()
 		{
 			InitializeComponent();
 
+			
 			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
 			if (!System.IO.Directory.Exists(SaveFolder))
@@ -58,6 +61,8 @@ namespace YuGiOhCollectionSupporter
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+
+
 			config = Config.Load();
 			Program.WriteLog(String.Format("遊戯王カードコレクションサポーター  バージョン:{0}", Assembly.GetExecutingAssembly().GetName().Version.ToString()), LogLevel.必須項目);
 			Program.Load(CardDB.SaveDataPath, ref CardDB);
@@ -69,8 +74,8 @@ namespace YuGiOhCollectionSupporter
 			Program.Load(RarityPairSavePath, ref RarityPairDataList);
 			Program.Load(ThroughPageSavePath, ref ThroughPageDataList);
 
-			formPanel.ShowHome(this);
 
+			formPanel.ShowHome(this);
 			formPanel.ShowHome(this);
 
 			//あいうえお順とパック順のツリー作成
@@ -212,6 +217,7 @@ namespace YuGiOhCollectionSupporter
 					//新しいデータを追加し、古いデータは上書きする
 					(int newnum, int updatenum) = CardDB.AddCardDataList(newcardDB.CardList);
 					UserCardDB.AddCardDataList(newuserDB.UserCardDataList);
+					CardDB.存在しないカードIDList = newcardDB.存在しないカードIDList;
 
 					await Program.SaveCardDataAsync();
 					await Program.SaveUserDataAsync();
@@ -418,5 +424,6 @@ namespace YuGiOhCollectionSupporter
 			KanabellForm f = new KanabellForm(this);
 			f.Show(this);
 		}
+
 	}
 }

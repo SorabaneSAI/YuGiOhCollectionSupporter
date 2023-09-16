@@ -17,10 +17,16 @@ namespace YuGiOhCollectionSupporter
             CardDataBase carddatabase = new CardDataBase();
             UserCardDataBase usercarddatabase = new UserCardDataBase();
 
+            var 仮存在しないカードIDList = new List<int>();
             int NoCardCount = 0;
 
             for (int i = 0; i < CardIDList.Count; i++)
             {
+                if (form.CardDB.存在しないカードIDList.Contains(CardIDList[i])) //ここはformからのデータを使う
+                {
+					Program.WriteLog(config.URL2 + CardIDList[i] + ":存在しないカードIDだったためスキップ", LogLevel.情報);
+					continue;
+                }
                 await Task.Delay(1000); //負荷軽減のため１秒待機;
 
                 //カードリストはjavascriptを経由しないと入手できないっぽいので直接idを入力(当てずっぽう)
@@ -57,7 +63,9 @@ namespace YuGiOhCollectionSupporter
 
                 if (html.Source.Text.IndexOf("カード情報がありません。") >= 0)
                 {
-                    Program.WriteLog(config.URL2 + CardIDList[i] + ":カードデータなし", LogLevel.情報);
+                    仮存在しないカードIDList.Add(CardIDList[i]); //仮登録
+
+					Program.WriteLog(config.URL2 + CardIDList[i] + ":カードデータなし", LogLevel.情報);
                     NoCardCount++;
                     if (config.Is捜索打ち切り == true && NoCardCount >= config.捜索打ち切り限界)
                     {
@@ -67,7 +75,11 @@ namespace YuGiOhCollectionSupporter
                     continue;
                 }
 
-                var DivNameNode = html.QuerySelector("div[id='cardname']>h1");
+                //カードがあったので本登録 こうしないとまだ作られていないIDを省いてしまう可能性
+                carddatabase.存在しないカードIDList.AddRange(仮存在しないカードIDList);
+                仮存在しないカードIDList.Clear();
+
+				var DivNameNode = html.QuerySelector("div[id='cardname']>h1");
                 var ListSpanNodes = DivNameNode.QuerySelectorAll("span");
                 string 読み = "";
                 string 英語 = ""; //英語名が存在しないカードがある
