@@ -12,7 +12,7 @@ using static YuGiOhCollectionSupporter.KanabellForm;
 namespace YuGiOhCollectionSupporter
 {
 	[Serializable]
-	public class CardData
+	public class CardData :IComparer<CardData>
 	{
 		public int ID;
 		public DateTime 誕生日;
@@ -121,11 +121,32 @@ namespace YuGiOhCollectionSupporter
 			return date;
         }
 
+		public int Compare(CardData cx, CardData cy)
+		{
+			var x = cx.ListVariations[0];
+			var y = cy.ListVariations[0];
+			//その略号のパックの発売日順にする
+			int num = x.発売パック.BirthDay.CompareTo(y.発売パック.BirthDay);
+			if (num > 0) return 1;
+			if (num < 0) return -1;
+
+
+			//略号記号が同じ場合は数字で決める
+			if (x.略号.No < y.略号.No) return -1;
+			if (x.略号.No > y.略号.No) return 1;
+
+			//なし対策に最後はID順
+			if (cx.ID < cy.ID) return -1;
+			if(cx.ID > cy.ID) return 1;
+
+
+			return 0;
+		}
 
 	}
 
 	[Serializable]
-	public class CardVariation : IComparer<CardVariation>
+	public class CardVariation 
 	{
 
 		public PackData 発売パック;
@@ -148,20 +169,6 @@ namespace YuGiOhCollectionSupporter
 		}
 
 
-		public int Compare(CardVariation x, CardVariation y)
-		{
-			//その略号のパックの発売日順にする
-			int num = x.発売パック.BirthDay.CompareTo(y.発売パック.BirthDay);
-			if (num > 0) return 1;
-			if (num < 0) return -1;
-
-
-			//略号記号が同じ場合は数字で決める
-			if (x.略号.No < y.略号.No) return -1;
-			if (x.略号.No > y.略号.No) return 1;
-
-			return 0;
-		}
 
 		public override int GetHashCode()
 		{

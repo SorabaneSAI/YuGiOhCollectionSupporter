@@ -86,7 +86,7 @@ namespace YuGiOhCollectionSupporter
 				}
 
 				//順番はめちゃくちゃになってるので略号順にソート
-				PackCardDB.CardList.Sort((a, b) => new CardVariation().Compare(a.ListVariations[0], b.ListVariations[0]));
+				PackCardDB.CardList.Sort((a, b) => new CardData().Compare(a, b));
 
 
 			}
