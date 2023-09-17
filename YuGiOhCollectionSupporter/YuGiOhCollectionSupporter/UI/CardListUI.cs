@@ -664,7 +664,7 @@ namespace YuGiOhCollectionSupporter
 				list.Add(card.ID);
 			}
 
-			form.データ取得(false, true, list);
+			form.データ取得(false, true, list,false);
 		}
 
 		//１回のクリックでコンボボックス起動

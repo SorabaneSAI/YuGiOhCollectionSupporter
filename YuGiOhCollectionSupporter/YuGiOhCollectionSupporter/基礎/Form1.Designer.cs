@@ -51,6 +51,7 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.treeView2 = new System.Windows.Forms.TreeView();
+			this.新しいパックと新しいカード取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -92,7 +93,8 @@
 			this.データ取得ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.パックデータ取得ToolStripMenuItem,
             this.カードデータ取得ToolStripMenuItem,
-            this.パックカード両方取得ToolStripMenuItem});
+            this.パックカード両方取得ToolStripMenuItem,
+            this.新しいパックと新しいカード取得ToolStripMenuItem});
 			this.データ取得ToolStripMenuItem.Name = "データ取得ToolStripMenuItem";
 			this.データ取得ToolStripMenuItem.Size = new System.Drawing.Size(86, 24);
 			this.データ取得ToolStripMenuItem.Text = "データ取得";
@@ -306,6 +308,13 @@
 			this.treeView2.TabIndex = 0;
 			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			// 
+			// 新しいパックと新しいカード取得ToolStripMenuItem
+			// 
+			this.新しいパックと新しいカード取得ToolStripMenuItem.Name = "新しいパックと新しいカード取得ToolStripMenuItem";
+			this.新しいパックと新しいカード取得ToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
+			this.新しいパックと新しいカード取得ToolStripMenuItem.Text = "新しいパックと新しいカード取得";
+			this.新しいパックと新しいカード取得ToolStripMenuItem.Click += new System.EventHandler(this.新しいパックと新しいカード取得ToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -361,6 +370,7 @@
 		public System.Windows.Forms.TreeView treeView2;
 		private System.Windows.Forms.ToolStripMenuItem シリーズ期設定ToolStripMenuItem;
 		public System.Windows.Forms.ToolStripMenuItem 販売価格調査ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 新しいパックと新しいカード取得ToolStripMenuItem;
 	}
 }
 

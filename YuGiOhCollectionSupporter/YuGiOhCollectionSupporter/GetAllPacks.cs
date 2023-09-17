@@ -10,11 +10,12 @@ namespace YuGiOhCollectionSupporter
 {
     class GetAllPacks
     {
-        public static async Task<List<PackData>> getAllPackDatasAsync(string URL, Form1 form)
+        public static async Task<(List<PackData>,List<int>)> getAllPackDatasAsync(string URL, Form1 form, bool IsUpdate)
         {
             Program.WriteLog("パックデータ取得中", LogLevel.必須項目);
 
             List<PackData> packDatas = new List<PackData>();
+            var IDList = new List<int>();
 
             var task = Program.GetHtml(URL);    //taskはwait,resultしてはいけない　awaitするべき
             await task;
@@ -48,39 +49,61 @@ namespace YuGiOhCollectionSupporter
 
                         string 相対パス = packnode.QuerySelector("input").GetAttribute("value");
 
+                        //新しいののみ取得だった場合、もうあるパックはスキップ
+                        if(IsUpdate)
+                        {
+                            foreach (var packdata in form.PackDB.PackDataList)
+                            {
+								if (Config.Domain + 相対パス == packdata.URL)
+                                {
+                                    goto next;
+                                }
+
+							}
+                            goto resume;
+                            next:;
+                            continue;
+                        resume:;
+						}
+
                         await Task.Delay(1000); //負荷軽減のため１秒待機;
-                        (int num, DateTime day) tmp = await getPackData(Config.Domain + 相対パス);
+                        (int num, DateTime day, List<int> idList) tmp = await getPackData(Config.Domain + 相対パス);
 
                         if(tmp.num == -1)
                         {
                             MessageBox.Show("エラーが発生したため、パック収集を終了します。（ログ参照）", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return null;
+                            return (null,null);
                         }
 
                         Program.WriteLog($"{name} : {Program.ToString(tmp.day)} : 全{tmp.num}枚 : {相対パス}", LogLevel.情報);
                         form.UpdateLabel($"{name} : {Program.ToString(tmp.day)} : 全{tmp.num}枚 : {相対パス}");
                         PackData pd = new PackData(Config.Domain + 相対パス, name, ListTitle, "", tmp.day,tmp.num);  //シリーズと誕生日はとりあえず空欄
                         packDatas.Add(pd);
-                    }
+
+                        IDList.AddRange(tmp.idList);
+
+					}
 
                 }
 
 
             }
+        
 
-            Program.WriteLog("パックデータ取得終了", LogLevel.必須項目);
 
-            return packDatas;
+			Program.WriteLog("パックデータ取得終了", LogLevel.必須項目);
+
+            return (packDatas, IDList.ToHashSet().ToList());    //一度HashSetにすることで重複をなくす
         }
 
-        public static async Task<(int, DateTime)> getPackData(string url)
+        public static async Task<(int, DateTime,List<int>)> getPackData(string url)
         {
-            var html = await Program.GetHtml(url);
+            var html = await Program.GetHtml(url + "&mode=2");  //mode2ならリンク取得できる？
 
             if (html == null)
             {
                 Program.WriteLog($"エラー発生。ログファイル参照。[{url}]", LogLevel.エラー);
-                return (-1, DateTime.Now);
+                return (-1, DateTime.Now, null);
             }
             var DivNode = html.QuerySelector("div[id='bg']");
 
@@ -102,9 +125,28 @@ namespace YuGiOhCollectionSupporter
             if(!int.TryParse(numstr,out num))
             {
                 Program.WriteLog("getPackDataで日付変換失敗",LogLevel.エラー);
-                return (-1, DateTime.Now);
+                return (-1, DateTime.Now, null);
             }
-            return (num, birthday);
+
+            //カードリスト取得
+            var IDList = new List<int>();
+
+            var t_bodyNode = html.QuerySelector("div[class='t_body']");
+            var CardNameNodeList = t_bodyNode.QuerySelectorAll("div[class='card_name flex_1']");
+            foreach (var node in CardNameNodeList)
+            {
+                var cardurl = node.QuerySelector("input").GetAttribute("value");
+				string ID = Regex.Match(cardurl, @"cid=(.+)").Groups[1].Captures[0].Value;   //正規表現で日付だけ抜き出す
+				int num2;
+				if (!int.TryParse(ID, out num2))
+				{
+					Program.WriteLog("getPackDataでID変換失敗", LogLevel.エラー);
+					return (-1, DateTime.Now, null);
+				}
+                IDList.Add(num2);
+			}
+
+			return (num, birthday, IDList);
 
         }
     }

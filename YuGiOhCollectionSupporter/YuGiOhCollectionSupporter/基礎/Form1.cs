@@ -83,9 +83,10 @@ namespace YuGiOhCollectionSupporter
 			button4.PerformClick();
             //			あいうえお順ToolStripMenuItem.CheckState = CheckState.Indeterminate;
 
-            foreach (var item in CardDB.CardList)
+			//null対策
+            foreach (var card in CardDB.CardList)
             {
-				foreach (var vari in item.ListVariations)
+				foreach (var vari in card.ListVariations)
 				{
 					if(vari.KanabellList == null)
 					{
@@ -142,18 +143,18 @@ namespace YuGiOhCollectionSupporter
 
 		private void パックデータ取得ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			データ取得(true, false, null);
+			データ取得(true, false, null,false);
 		}
 
 		private void カードデータ取得ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			データ取得(false, true, getCardIDListFromConfig());
+			データ取得(false, true, getCardIDListFromConfig(),false);
 		}
 
 
 		private void 両方取得ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-            データ取得(true,true, getCardIDListFromConfig());
+            データ取得(true,true, getCardIDListFromConfig(),false);
 		}
 
 		private List<int> getCardIDListFromConfig()
@@ -166,20 +167,32 @@ namespace YuGiOhCollectionSupporter
 			return list;
 		}
 
-		public async void データ取得(bool IsPackSearch, bool IsCardSearch, List<int> CardIDList)
+		public async void データ取得(bool IsPackSearch, bool IsCardSearch, List<int> CardIDList, bool IsUpdatePack)
 		{
 
-			int 推測探索秒 = 0;
-			if (IsPackSearch) 推測探索秒 += 1800;
-			if (IsCardSearch) 推測探索秒 += CardIDList.Count;
+			if (IsUpdatePack)
+			{
+				//メッセージボックスを表示する
+				DialogResult result = MessageBox.Show($"更新にはどれだけ時間がかかるかわかりません。\n本当に始めますか？", "",
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Exclamation,
+					MessageBoxDefaultButton.Button2);
+				if (result == DialogResult.No) return;
+			}
+			else
+			{
+				int 推測探索秒 = 0;
+				if (IsPackSearch) 推測探索秒 += 1800;
+				if (IsCardSearch) 推測探索秒 += CardIDList.Count;
 
-			//メッセージボックスを表示する
-			DialogResult result = MessageBox.Show($"捜索には{推測探索秒 / 60}分程度かかることが予測されます。\n本当に始めますか？", "",
-				MessageBoxButtons.YesNo,
-				MessageBoxIcon.Exclamation,
-				MessageBoxDefaultButton.Button2);
+				//メッセージボックスを表示する
+				DialogResult result = MessageBox.Show($"捜索には{推測探索秒 / 60}分程度かかることが予測されます。\n本当に始めますか？", "",
+					MessageBoxButtons.YesNo,
+					MessageBoxIcon.Exclamation,
+					MessageBoxDefaultButton.Button2);
 
-			if (result == DialogResult.No) return;
+				if (result == DialogResult.No) return;
+			}
 
 			var sw = new System.Diagnostics.Stopwatch();
 			sw.Start();
@@ -196,12 +209,14 @@ namespace YuGiOhCollectionSupporter
 				if (IsPackSearch)
 				{
 					//公式サイトにアクセスして、全パックを取得する パックのタイプを取得するため必要
-					var newdatalist = await GetAllPacks.getAllPackDatasAsync(config.URL, this);
+					(var newdatalist,var IDList ) = await GetAllPacks.getAllPackDatasAsync(config.URL, this, IsUpdatePack);
 					if (newdatalist == null) break;
 
 					//新しいデータを追加し、古いデータは上書きする
 					(int newnum, int updatenum) = PackDB.AddPackDataList(newdatalist);
-
+					//パック更新の場合、IDリストは乗っ取る
+					if(IsUpdatePack)
+						CardIDList = IDList;
 
 					Program.SavePackData();
 
@@ -306,7 +321,7 @@ namespace YuGiOhCollectionSupporter
 			return num;
 		}
 
-		//二種類の記録データを統合したデータを返す
+		//二種類の記録データを統合したデータを返す なかったら作る
 		public TwinCardData getTwinCardData(CardData carddata)
         {
             foreach (var usercarddata in UserCardDB.UserCardDataList)
@@ -316,8 +331,12 @@ namespace YuGiOhCollectionSupporter
 					return new TwinCardData(carddata,usercarddata);
                 }
             }
-			Program.WriteLog("不明なcarddata(form1.getTwinCardData)", LogLevel.エラー);
-			return null;
+
+			var userdata = new UserCardData(carddata);
+			UserCardDB.UserCardDataList.Add( userdata );
+			return new TwinCardData(carddata, userdata);
+//			Program.WriteLog("不明なcarddata(form1.getTwinCardData)", LogLevel.エラー);
+//			return null;
 		}
 
         private void パック分類設定ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -425,5 +444,9 @@ namespace YuGiOhCollectionSupporter
 			f.Show(this);
 		}
 
+		private void 新しいパックと新しいカード取得ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			データ取得(true, true, null, true);
+		}
 	}
 }
