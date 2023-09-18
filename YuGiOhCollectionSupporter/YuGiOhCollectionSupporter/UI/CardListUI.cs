@@ -681,7 +681,6 @@ namespace YuGiOhCollectionSupporter
 
 		//ここからコンボボックスの変更を察知
 		private DataGridViewComboBoxEditingControl dataGridViewComboBox = null;
-		private string CellName = "";
 		
 		//EditingControlShowingイベントハンドラ
 		private void DataGridView1_EditingControlShowing(object sender,
