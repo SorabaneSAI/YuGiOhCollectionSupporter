@@ -214,10 +214,10 @@ namespace YuGiOhCollectionSupporter
 
 		public class UserVariationData
         {
-			public bool 所持フラグ = false;
+//			public bool 所持フラグ = false;
 			public string 発売パックURL;
 			public Rarity rarity;
-			public EKanabellRank Rank = EKanabellRank.A;    //持っているカードのランク　デフォでAにしとく
+			public EKanabellRank Rank = EKanabellRank.なし;    //持っているカードのランク　デフォでAにしとく
 
 		}
 
@@ -273,17 +273,12 @@ namespace YuGiOhCollectionSupporter
         {
 			var uservariation = getUserVariation(variation);
 			if (uservariation == null) return false;
-			return uservariation.所持フラグ;
+			if(((int)uservariation.Rank) < ((int)EKanabellRank.なし))
+				return true;
+			return false;
 
         }
 
-		public void set所持フラグ(CardVariation variation,bool flag)
-        {
-			var uservariation = getUserVariation(variation);
-			if (uservariation == null) return;
-
-			uservariation.所持フラグ = flag;
-		}
 
 		public EKanabellRank getRank(CardVariation variation)
 		{

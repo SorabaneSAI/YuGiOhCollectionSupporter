@@ -75,7 +75,7 @@ namespace YuGiOhCollectionSupporter
 			Program.Load(ThroughPageSavePath, ref ThroughPageDataList);
 
 
-			formPanel.ShowHome(this);
+//			formPanel.ShowHome(this);
 			formPanel.ShowHome(this);
 
 			//あいうえお順とパック順のツリー作成
@@ -92,6 +92,7 @@ namespace YuGiOhCollectionSupporter
 					{
 						vari.KanabellList = new List<KanabellForm.KanabellCard>();
 					}
+
 				}
             }
 

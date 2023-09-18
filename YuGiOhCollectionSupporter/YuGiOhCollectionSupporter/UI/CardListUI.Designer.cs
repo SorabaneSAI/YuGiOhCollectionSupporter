@@ -34,20 +34,19 @@
 			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
+			this.type = new System.Windows.Forms.DataGridViewImageColumn();
+			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Qランク = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.Is同名予備カード枚数十分 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+			this.Q値段 = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
-			this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
-			this.type = new System.Windows.Forms.DataGridViewImageColumn();
-			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
-			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.クイック = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.Qランク = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.Is同名予備カード枚数十分 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-			this.Q値段 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.flowLayoutPanel3.SuspendLayout();
@@ -139,7 +138,6 @@
             this.名前,
             this.略号,
             this.レアリティ,
-            this.クイック,
             this.Qランク,
             this.Is同名予備カード枚数十分,
             this.Q値段});
@@ -162,64 +160,6 @@
 			this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
 			this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DataGridView1_EditingControlShowing);
 			this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-			// 
-			// flowLayoutPanel1
-			// 
-			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 455);
-			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(1004, 54);
-			this.flowLayoutPanel1.TabIndex = 12;
-			// 
-			// flowLayoutPanel3
-			// 
-			this.flowLayoutPanel3.Controls.Add(this.button1);
-			this.flowLayoutPanel3.Controls.Add(this.button2);
-			this.flowLayoutPanel3.Controls.Add(this.button3);
-			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 111);
-			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(592, 38);
-			this.flowLayoutPanel3.TabIndex = 14;
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(4, 4);
-			this.button1.Margin = new System.Windows.Forms.Padding(4);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(177, 29);
-			this.button1.TabIndex = 11;
-			this.button1.Text = "リスト更新（意味ない）";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click_1);
-			// 
-			// button2
-			// 
-			this.button2.Location = new System.Drawing.Point(188, 3);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(151, 30);
-			this.button2.TabIndex = 12;
-			this.button2.Text = "セーブ";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click_1);
-			// 
-			// button3
-			// 
-			this.button3.Location = new System.Drawing.Point(345, 3);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(176, 30);
-			this.button3.TabIndex = 13;
-			this.button3.Text = "このリストのデータ取得";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
-			// 
-			// collectDataUI1
-			// 
-			this.collectDataUI1.Location = new System.Drawing.Point(5, 157);
-			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(5);
-			this.collectDataUI1.Name = "collectDataUI1";
-			this.collectDataUI1.Size = new System.Drawing.Size(987, 289);
-			this.collectDataUI1.TabIndex = 11;
 			// 
 			// type
 			// 
@@ -259,23 +199,16 @@
 			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.レアリティ.Width = 70;
 			// 
-			// クイック
-			// 
-			this.クイック.HeaderText = "Q所持";
-			this.クイック.MinimumWidth = 6;
-			this.クイック.Name = "クイック";
-			this.クイック.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.クイック.Width = 70;
-			// 
 			// Qランク
 			// 
 			this.Qランク.HeaderText = "Qランク";
 			this.Qランク.Items.AddRange(new object[] {
+            "S",
             "A",
             "B",
             "C",
             "D",
-            "在庫なし",
+            "なし",
             "不明"});
 			this.Qランク.MinimumWidth = 6;
 			this.Qランク.Name = "Qランク";
@@ -307,6 +240,64 @@
 			this.Q値段.Name = "Q値段";
 			this.Q値段.ReadOnly = true;
 			this.Q値段.Width = 80;
+			// 
+			// collectDataUI1
+			// 
+			this.collectDataUI1.Location = new System.Drawing.Point(5, 157);
+			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(5);
+			this.collectDataUI1.Name = "collectDataUI1";
+			this.collectDataUI1.Size = new System.Drawing.Size(987, 289);
+			this.collectDataUI1.TabIndex = 11;
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 455);
+			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(1004, 54);
+			this.flowLayoutPanel1.TabIndex = 12;
+			// 
+			// flowLayoutPanel3
+			// 
+			this.flowLayoutPanel3.Controls.Add(this.button1);
+			this.flowLayoutPanel3.Controls.Add(this.button2);
+			this.flowLayoutPanel3.Controls.Add(this.button3);
+			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 111);
+			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(592, 38);
+			this.flowLayoutPanel3.TabIndex = 14;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(4, 4);
+			this.button1.Margin = new System.Windows.Forms.Padding(4);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(177, 29);
+			this.button1.TabIndex = 11;
+			this.button1.Text = "リスト更新";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click_1);
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(188, 3);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(151, 30);
+			this.button2.TabIndex = 12;
+			this.button2.Text = "セーブ";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click_1);
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(345, 3);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(176, 30);
+			this.button3.TabIndex = 13;
+			this.button3.Text = "このリストのデータ取得";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.button3_Click);
 			// 
 			// CardListUI
 			// 
@@ -344,7 +335,6 @@
 		private System.Windows.Forms.DataGridViewLinkColumn 名前;
 		private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
 		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn クイック;
 		private System.Windows.Forms.DataGridViewComboBoxColumn Qランク;
 		private System.Windows.Forms.DataGridViewComboBoxColumn Is同名予備カード枚数十分;
 		private System.Windows.Forms.DataGridViewLinkColumn Q値段;

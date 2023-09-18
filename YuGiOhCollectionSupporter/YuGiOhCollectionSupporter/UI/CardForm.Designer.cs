@@ -43,7 +43,6 @@
 			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.パック名 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.レアリティ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.所持 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.ランク = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.値段1 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.値段2 = new System.Windows.Forms.DataGridViewLinkColumn();
@@ -154,7 +153,6 @@
             this.略号,
             this.パック名,
             this.レアリティ,
-            this.所持,
             this.ランク,
             this.値段1,
             this.値段2,
@@ -253,22 +251,16 @@
 			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.レアリティ.Width = 125;
 			// 
-			// 所持
-			// 
-			this.所持.HeaderText = "所持";
-			this.所持.MinimumWidth = 6;
-			this.所持.Name = "所持";
-			this.所持.Width = 50;
-			// 
 			// ランク
 			// 
 			this.ランク.HeaderText = "ランク";
 			this.ランク.Items.AddRange(new object[] {
+            "S",
             "A",
             "B",
             "C",
             "D",
-            "在庫なし",
+            "なし",
             "不明"});
 			this.ランク.MinimumWidth = 6;
 			this.ランク.Name = "ランク";
@@ -341,7 +333,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn 略号;
 		private System.Windows.Forms.DataGridViewLinkColumn パック名;
 		private System.Windows.Forms.DataGridViewTextBoxColumn レアリティ;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn 所持;
 		private System.Windows.Forms.DataGridViewComboBoxColumn ランク;
 		private System.Windows.Forms.DataGridViewLinkColumn 値段1;
 		private System.Windows.Forms.DataGridViewLinkColumn 値段2;

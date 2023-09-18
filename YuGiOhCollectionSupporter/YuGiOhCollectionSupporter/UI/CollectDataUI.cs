@@ -65,9 +65,9 @@ namespace YuGiOhCollectionSupporter
 
 			if (カード名全カード > 0 && 略号別全カード > 0 && レアリティ別全カード > 0)
 			{
-				label5.Text = ((double)カード名別持ってるカード / カード名全カード).ToString("F") + "％";
-				label10.Text = ((double)略号別持ってるカード / 略号別全カード).ToString("F") + "％";
-				label15.Text = ((double)レアリティ別持ってるカード / レアリティ別全カード).ToString("F") + "％";
+				label5.Text = ((double)カード名別持ってるカード / カード名全カード*100).ToString("F") + "％";
+				label10.Text = ((double)略号別持ってるカード / 略号別全カード*100).ToString("F") + "％";
+				label15.Text = ((double)レアリティ別持ってるカード / レアリティ別全カード * 100).ToString("F") + "％";
 			}
 			else
 			{

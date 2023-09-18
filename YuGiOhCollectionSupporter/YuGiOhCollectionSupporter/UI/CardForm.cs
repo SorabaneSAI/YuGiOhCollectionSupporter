@@ -65,12 +65,12 @@ namespace YuGiOhCollectionSupporter
             {
                 {
                     int num = dataGridView1.Rows.Add(variation.略号.get略号Full(), variation.発売パック.Name, variation.rarity.Initial,
-                        twincarddata.get所持フラグ(variation),twincarddata.getRank(variation).ToString());
+                        twincarddata.getRank(variation).ToString());
 
                     dataGridView1.Rows[num].Tag = data;
 
 					dataGridView1.Rows[num].Cells["パック名"].Tag = variation.発売パック.URL; //タグに情報を埋め込む
-                    dataGridView1.Rows[num].Cells["所持"].Tag = variation; //タグに情報を埋め込む
+  //                  dataGridView1.Rows[num].Cells["所持"].Tag = variation; //タグに情報を埋め込む
                     dataGridView1.Rows[num].Cells["レアリティ"].ToolTipText = variation.rarity.Name;   //マウスホバーでレアの正式名称
 
                     Color c;
@@ -85,7 +85,7 @@ namespace YuGiOhCollectionSupporter
                     if (twincarddata.get所持フラグ(variation)) c = green;
                     else c = red;
                     dataGridView1.Rows[num].Cells["レアリティ"].Style.BackColor = c;
-                    dataGridView1.Rows[num].Cells["所持"].Style.BackColor = c;
+  //                  dataGridView1.Rows[num].Cells["所持"].Style.BackColor = c;
 
                     dataGridView1.Rows[num].Cells["ランク"].Tag = variation;
 
@@ -153,11 +153,13 @@ namespace YuGiOhCollectionSupporter
         //チェックボックスがクリックされたかを知るその２
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            /*
             //チェックボックスの列かどうか調べる
             if (dataGridView1.Columns[e.ColumnIndex].Name == "所持")
             {
                 var variation = (CardVariation)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
                 twincarddata.set所持フラグ(variation,(bool)dataGridView1[e.ColumnIndex, e.RowIndex].Value);
+            */
 				/*
                 checkBox1.Enabled = false;
                 dataGridView1.Enabled = false;
@@ -167,8 +169,8 @@ namespace YuGiOhCollectionSupporter
 				checkBox1.Enabled = true;
                 dataGridView1.Enabled = true;
                 */
-				Init(twincarddata.carddata, form);
-			}
+	//			Init(twincarddata.carddata, form);
+	//		}
             /*
             //リンクならカーナベルを開く
             for (int i = 0; i < 3; i++)
@@ -300,6 +302,7 @@ namespace YuGiOhCollectionSupporter
 				var twincarddata = form.getTwinCardData((CardData)dataGridView1.Rows[cb.EditingControlRowIndex].Tag);
 
                 twincarddata.setRank((CardVariation)dataGridView1.Rows[cb.EditingControlRowIndex].Cells["ランク"].Tag, rank);
+				Init(twincarddata.carddata, form);
 			}
 
 		}

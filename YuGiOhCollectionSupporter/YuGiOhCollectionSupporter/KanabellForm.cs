@@ -17,7 +17,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YuGiOhCollectionSupporter
 {
-	public enum EKanabellRank { A, B, C, D, 在庫なし, 不明 }
+	public enum EKanabellRank {S, A, B, C, D, なし, 不明 }
 
 	public partial class KanabellForm : Form
 	{
@@ -219,7 +219,7 @@ namespace YuGiOhCollectionSupporter
 //			var seriesstr1 = "";
 //			var seriesstr2 = "";
 			var namestr = "";
-			EKanabellRank rank = EKanabellRank.在庫なし;
+			EKanabellRank rank = EKanabellRank.なし;
 			int price = 0;
 			string url = "";
 
@@ -252,7 +252,7 @@ namespace YuGiOhCollectionSupporter
 				{
 					if(pricenode.QuerySelector("span[class='None']") != null)
 					{
-						rank = EKanabellRank.在庫なし;
+						rank = EKanabellRank.なし;
 						continue;
 					}
 
@@ -282,7 +282,7 @@ namespace YuGiOhCollectionSupporter
 			if (URL.Contains("b.gif")) return EKanabellRank.B;
 			if (URL.Contains("c.gif")) return EKanabellRank.C;
 			if (URL.Contains("d.gif")) return EKanabellRank.D;
-			if (URL.Contains("card_none.gif")) return EKanabellRank.在庫なし;
+			if (URL.Contains("card_none.gif")) return EKanabellRank.なし;
 			return EKanabellRank.不明;
 		}
 

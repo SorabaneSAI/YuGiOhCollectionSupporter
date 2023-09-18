@@ -152,7 +152,7 @@ namespace YuGiOhCollectionSupporter
                         //レアリティ別で出力してるときは、ランクがAでないと出力
                         if (num == 2)
                         {
-                            if (twincarddata.getRank(variation) == EKanabellRank.A)
+                            if (twincarddata.getRank(variation) == EKanabellRank.A || twincarddata.getRank(variation) == EKanabellRank.S)
 								continue;
 						}
                         else
@@ -207,7 +207,7 @@ namespace YuGiOhCollectionSupporter
                         strlist.Add(twincarddata.get所持フラグ(variation) == true ?  twincarddata.getRank(variation).ToString() : " ");
                         foreach (var kanabell in variation.KanabellList)
                         {
-                            if(!(kanabell.Rank == EKanabellRank.在庫なし || kanabell.Rank == EKanabellRank.不明))
+                            if(!(kanabell.Rank == EKanabellRank.なし || kanabell.Rank == EKanabellRank.不明))
                             {
 								strlist.Add(kanabell.Rank.ToString() + " " + kanabell.Price.ToString());
                                 break;
