@@ -239,13 +239,15 @@ namespace YuGiOhCollectionSupporter
 					//値段情報あったら書く
 					if (rarity_allnum == 1)
 					{
+						var pricecell = dataGridView1.Rows[num].Cells["Q値段"];
 						if (variation.KanabellList == null || variation.KanabellList.Count ==0)
 						{
 							dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
+							pricecell.Value = "？";
+							pricecell.Tag = "https://www.ka-nabell.com/?type=2&act=sell_search&key_word=" + card.読み; //うーーーーん
 						}
 						else if (!(variation.KanabellList[0].Rank == EKanabellRank.不明))
 						{
-							var pricecell = dataGridView1.Rows[num].Cells["Q値段"];
 							pricecell.Value = variation.KanabellList[0].Rank.ToString() + " " + variation.KanabellList[0].Price.ToString();
 							pricecell.Tag = variation.KanabellList[0].URL;
 						}

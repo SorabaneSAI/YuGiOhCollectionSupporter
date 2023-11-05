@@ -208,8 +208,12 @@ namespace YuGiOhCollectionSupporter
 								{ "　",  "" },
 								{ " ",  "" },
 								{ "＠", "@" },
+								{ "・", "" },
+								{ "･", "" },
+								{ "＆", "&" },
 								{ "＝", "=" },
-								{ "－", "-" },
+								{ "－", "" },
+								{ "-", "" },
 								{ "／", "/" },
 								{ "：", ":" },
 								{ "！", "!" },
@@ -228,15 +232,41 @@ namespace YuGiOhCollectionSupporter
 								{ "８", "8" },
 								{ "９", "9" },
 								{ "０", "0" },
+								{ "Ａ", "A" },
+								{ "Ｂ", "B" },
+								{ "Ｃ", "C" },
+								{ "Ｄ", "D" },
+								{ "Ｅ", "E" },
+								{ "Ｆ", "F" },
+								{ "Ｇ", "G" },
+								{ "Ｈ", "H" },
+								{ "Ｉ", "I" },
+								{ "Ｊ", "J" },
+								{ "Ｋ", "K" },
+								{ "Ｌ", "L" },
+								{ "Ｍ", "M" },
+								{ "Ｎ", "N" },
+								{ "Ｏ", "O" },
+								{ "Ｐ", "P" },
+								{ "Ｑ", "Q" },
+								{ "Ｒ", "R" },
+								{ "Ｓ", "S" },
+								{ "Ｔ", "T" },
+								{ "Ｕ", "U" },
+								{ "Ｖ", "V" },
+								{ "Ｗ", "W" },
+								{ "Ｘ", "X" },
+								{ "Ｙ", "Y" },
+								{ "Ｚ", "Z" },
 							};
 
-			string str = cardname;
-
+			//stringbuilderにしたほうが速い
 			foreach (var key in dic)
 			{
-				str = str.Replace(key.Key, key.Value);
+				cardname = cardname.Replace(key.Key, key.Value);
+				kanabellname = kanabellname.Replace(key.Key, key.Value);
 			}
-			return str == kanabellname;
+			return cardname == kanabellname;
 		}
 
 		//同名カードによるリンクを作成

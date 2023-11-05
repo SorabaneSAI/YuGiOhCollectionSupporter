@@ -15,7 +15,7 @@ namespace YuGiOhCollectionSupporter.Tests
 		public void MakeDictionary2Test()
 		{
 			
-			Assert.AreEqual(expected: true, actual: MakePair.IsSameName("神風のバリア －エア・フォース－", "神風のバリア-エア・フォース-"));
+			Assert.AreEqual(expected: true, actual: MakePair.IsSameName("タリホー！スプリガンズ！", "タリホー!スプリガンズ!"));
 		}
 	}
 }

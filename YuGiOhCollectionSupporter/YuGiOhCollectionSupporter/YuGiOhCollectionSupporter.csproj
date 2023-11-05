@@ -136,6 +136,12 @@
     <Compile Include="UI\CardForm.Designer.cs">
       <DependentUpon>CardForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\HomePDFUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\HomePDFUI.Designer.cs">
+      <DependentUpon>HomePDFUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="データ\Code.cs" />
     <Compile Include="GetAllCards.cs" />
     <Compile Include="GetAllPacks.cs" />
@@ -208,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\CardForm.resx">
       <DependentUpon>CardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\HomePDFUI.resx">
+      <DependentUpon>HomePDFUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="基礎\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>

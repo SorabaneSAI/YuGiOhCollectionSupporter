@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YuGiOhCollectionSupporter.UI;
 using YuGiOhCollectionSupporter.データ;
 
 namespace YuGiOhCollectionSupporter
@@ -92,11 +93,10 @@ namespace YuGiOhCollectionSupporter
 					{
 						vari.KanabellList = new List<KanabellForm.KanabellCard>();
 					}
-
 				}
             }
 
-        }
+		}
 		//設定を開く
 		private void toolStripMenuItem1_Click(object sender, EventArgs e)
 		{
@@ -354,8 +354,8 @@ namespace YuGiOhCollectionSupporter
 		{
 			//senderからcomboboxデータを取り出す
 			Button button = (Button)sender;
-			ComboBox combobox = (ComboBox)button.Tag;
-			int num = combobox.SelectedIndex;
+
+			HomePDFUI pdfUI = (HomePDFUI)button.Tag;
 
 			List<TwinCardData> TwinCardDataList = new List<TwinCardData>();
 
@@ -368,7 +368,7 @@ namespace YuGiOhCollectionSupporter
 			}
 
 
-			PrintPDF.Print(TwinCardDataList,num);
+			PrintPDF.Print(TwinCardDataList, pdfUI);
 
 			MessageBox.Show("PDFの出力が終わりました。", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}

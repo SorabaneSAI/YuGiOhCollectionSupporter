@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YuGiOhCollectionSupporter.UI;
 
 namespace YuGiOhCollectionSupporter
 {
@@ -388,6 +389,7 @@ namespace YuGiOhCollectionSupporter
 				form.getCardHaveNumCode(form.CardDB).Item2, form.getCardHaveNumRarity(form.CardDB).Item1, form.getCardHaveNumRarity(form.CardDB).Item2);
 			panel.Controls.Add(homeUI);
 
+			/*
 			ComboBox comboBox = new ComboBox();
 			comboBox.Items.Add("カード名別で");
 			comboBox.Items.Add("略号別で");
@@ -402,9 +404,13 @@ namespace YuGiOhCollectionSupporter
 			button.Click += form.button_Click;  //変数の都合でformにイベントあり
 			button.BringToFront();
 			panel.Controls.Add(button);
-
+			
 
 			button.Tag = comboBox;
+			*/
+			HomePDFUI pdfUI = new HomePDFUI(form);
+			panel.Controls.Add(pdfUI);
+
 		}
 
 
