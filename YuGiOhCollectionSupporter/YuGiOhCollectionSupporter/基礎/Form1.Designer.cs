@@ -34,6 +34,7 @@
 			this.パックデータ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.カードデータ取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.パックカード両方取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.新しいパックと新しいカード取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ログToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.ホームToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.パック分類設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,8 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.treeView2 = new System.Windows.Forms.TreeView();
-			this.新しいパックと新しいカード取得ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.評価調査ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -73,18 +75,20 @@
             this.パック分類設定ToolStripMenuItem,
             this.シリーズ期設定ToolStripMenuItem,
             this.販売価格調査ToolStripMenuItem,
-            this.これについてToolStripMenuItem});
+            this.これについてToolStripMenuItem,
+            this.評価調査ToolStripMenuItem,
+            this.testToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-			this.menuStrip1.Size = new System.Drawing.Size(1540, 28);
+			this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+			this.menuStrip1.Size = new System.Drawing.Size(1210, 24);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(53, 24);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
 			this.toolStripMenuItem1.Text = "設定";
 			this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
 			// 
@@ -96,69 +100,76 @@
             this.パックカード両方取得ToolStripMenuItem,
             this.新しいパックと新しいカード取得ToolStripMenuItem});
 			this.データ取得ToolStripMenuItem.Name = "データ取得ToolStripMenuItem";
-			this.データ取得ToolStripMenuItem.Size = new System.Drawing.Size(86, 24);
+			this.データ取得ToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
 			this.データ取得ToolStripMenuItem.Text = "データ取得";
 			// 
 			// パックデータ取得ToolStripMenuItem
 			// 
 			this.パックデータ取得ToolStripMenuItem.Name = "パックデータ取得ToolStripMenuItem";
-			this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+			this.パックデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
 			this.パックデータ取得ToolStripMenuItem.Text = "パックデータ取得";
 			this.パックデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.パックデータ取得ToolStripMenuItem_Click);
 			// 
 			// カードデータ取得ToolStripMenuItem
 			// 
 			this.カードデータ取得ToolStripMenuItem.Name = "カードデータ取得ToolStripMenuItem";
-			this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+			this.カードデータ取得ToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
 			this.カードデータ取得ToolStripMenuItem.Text = "カードデータ取得";
 			this.カードデータ取得ToolStripMenuItem.Click += new System.EventHandler(this.カードデータ取得ToolStripMenuItem_Click);
 			// 
 			// パックカード両方取得ToolStripMenuItem
 			// 
 			this.パックカード両方取得ToolStripMenuItem.Name = "パックカード両方取得ToolStripMenuItem";
-			this.パックカード両方取得ToolStripMenuItem.Size = new System.Drawing.Size(188, 26);
+			this.パックカード両方取得ToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
 			this.パックカード両方取得ToolStripMenuItem.Text = "両方取得";
 			this.パックカード両方取得ToolStripMenuItem.Click += new System.EventHandler(this.両方取得ToolStripMenuItem_Click);
+			// 
+			// 新しいパックと新しいカード取得ToolStripMenuItem
+			// 
+			this.新しいパックと新しいカード取得ToolStripMenuItem.Name = "新しいパックと新しいカード取得ToolStripMenuItem";
+			this.新しいパックと新しいカード取得ToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+			this.新しいパックと新しいカード取得ToolStripMenuItem.Text = "新しいパックと新しいカード取得";
+			this.新しいパックと新しいカード取得ToolStripMenuItem.Click += new System.EventHandler(this.新しいパックと新しいカード取得ToolStripMenuItem_Click);
 			// 
 			// ログToolStripMenuItem
 			// 
 			this.ログToolStripMenuItem.Name = "ログToolStripMenuItem";
-			this.ログToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+			this.ログToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.ログToolStripMenuItem.Text = "ログ";
 			this.ログToolStripMenuItem.Click += new System.EventHandler(this.ログToolStripMenuItem_Click);
 			// 
 			// ホームToolStripMenuItem
 			// 
 			this.ホームToolStripMenuItem.Name = "ホームToolStripMenuItem";
-			this.ホームToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
+			this.ホームToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
 			this.ホームToolStripMenuItem.Text = "ホーム";
 			this.ホームToolStripMenuItem.Click += new System.EventHandler(this.ホームToolStripMenuItem_Click);
 			// 
 			// パック分類設定ToolStripMenuItem
 			// 
 			this.パック分類設定ToolStripMenuItem.Name = "パック分類設定ToolStripMenuItem";
-			this.パック分類設定ToolStripMenuItem.Size = new System.Drawing.Size(116, 24);
+			this.パック分類設定ToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
 			this.パック分類設定ToolStripMenuItem.Text = "パック分類設定";
 			this.パック分類設定ToolStripMenuItem.Click += new System.EventHandler(this.パック分類設定ToolStripMenuItem_Click);
 			// 
 			// シリーズ期設定ToolStripMenuItem
 			// 
 			this.シリーズ期設定ToolStripMenuItem.Name = "シリーズ期設定ToolStripMenuItem";
-			this.シリーズ期設定ToolStripMenuItem.Size = new System.Drawing.Size(143, 24);
+			this.シリーズ期設定ToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
 			this.シリーズ期設定ToolStripMenuItem.Text = "シリーズ（期）設定";
 			this.シリーズ期設定ToolStripMenuItem.Click += new System.EventHandler(this.シリーズ期設定ToolStripMenuItem_Click);
 			// 
 			// 販売価格調査ToolStripMenuItem
 			// 
 			this.販売価格調査ToolStripMenuItem.Name = "販売価格調査ToolStripMenuItem";
-			this.販売価格調査ToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
+			this.販売価格調査ToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
 			this.販売価格調査ToolStripMenuItem.Text = "販売価格調査";
 			this.販売価格調査ToolStripMenuItem.Click += new System.EventHandler(this.販売価格調査ToolStripMenuItem_Click);
 			// 
 			// これについてToolStripMenuItem
 			// 
 			this.これについてToolStripMenuItem.Name = "これについてToolStripMenuItem";
-			this.これについてToolStripMenuItem.Size = new System.Drawing.Size(93, 24);
+			this.これについてToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
 			this.これについてToolStripMenuItem.Text = "これについて";
 			this.これについてToolStripMenuItem.Click += new System.EventHandler(this.これについてToolStripMenuItem_Click);
 			// 
@@ -166,10 +177,9 @@
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(16, 802);
-			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.label1.Location = new System.Drawing.Point(12, 642);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(52, 15);
+			this.label1.Size = new System.Drawing.Size(41, 12);
 			this.label1.TabIndex = 2;
 			this.label1.Text = "待機中";
 			this.label1.Visible = false;
@@ -179,16 +189,14 @@
 			this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainer1.Location = new System.Drawing.Point(0, 35);
-			this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
+			this.splitContainer1.Location = new System.Drawing.Point(0, 28);
 			this.splitContainer1.Name = "splitContainer1";
 			// 
 			// splitContainer1.Panel1
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
-			this.splitContainer1.Size = new System.Drawing.Size(1540, 794);
-			this.splitContainer1.SplitterDistance = 565;
-			this.splitContainer1.SplitterWidth = 5;
+			this.splitContainer1.Size = new System.Drawing.Size(1210, 635);
+			this.splitContainer1.SplitterDistance = 481;
 			this.splitContainer1.TabIndex = 3;
 			// 
 			// splitContainer2
@@ -196,7 +204,7 @@
 			this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.splitContainer2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.splitContainer2.Name = "splitContainer2";
 			// 
 			// splitContainer2.Panel1
@@ -212,17 +220,18 @@
 			this.splitContainer2.Panel2.Controls.Add(this.button2);
 			this.splitContainer2.Panel2.Controls.Add(this.textBox2);
 			this.splitContainer2.Panel2.Controls.Add(this.treeView2);
-			this.splitContainer2.Size = new System.Drawing.Size(565, 794);
-			this.splitContainer2.SplitterDistance = 228;
+			this.splitContainer2.Size = new System.Drawing.Size(481, 635);
+			this.splitContainer2.SplitterDistance = 225;
+			this.splitContainer2.SplitterWidth = 3;
 			this.splitContainer2.TabIndex = 6;
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(172, 4);
-			this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.button3.Location = new System.Drawing.Point(183, 3);
+			this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(49, 34);
+			this.button3.Size = new System.Drawing.Size(37, 27);
 			this.button3.TabIndex = 8;
 			this.button3.Text = "更新";
 			this.button3.UseVisualStyleBackColor = true;
@@ -231,10 +240,10 @@
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(112, 4);
-			this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.button1.Location = new System.Drawing.Point(137, 3);
+			this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(54, 34);
+			this.button1.Size = new System.Drawing.Size(40, 27);
 			this.button1.TabIndex = 7;
 			this.button1.Text = "検索";
 			this.button1.UseVisualStyleBackColor = true;
@@ -244,31 +253,30 @@
 			// 
 			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox1.Location = new System.Drawing.Point(4, 2);
-			this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.textBox1.Location = new System.Drawing.Point(3, 7);
+			this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(102, 22);
+			this.textBox1.Size = new System.Drawing.Size(130, 19);
 			this.textBox1.TabIndex = 6;
 			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
 			// 
 			// treeView1
 			// 
 			this.treeView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.treeView1.Location = new System.Drawing.Point(0, 47);
-			this.treeView1.Margin = new System.Windows.Forms.Padding(4);
-			this.treeView1.MinimumSize = new System.Drawing.Size(31, 4);
+			this.treeView1.Location = new System.Drawing.Point(0, 36);
+			this.treeView1.MinimumSize = new System.Drawing.Size(24, 4);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(224, 743);
+			this.treeView1.Size = new System.Drawing.Size(221, 595);
 			this.treeView1.TabIndex = 5;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button4.Location = new System.Drawing.Point(266, 4);
-			this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.button4.Location = new System.Drawing.Point(202, 3);
+			this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(60, 34);
+			this.button4.Size = new System.Drawing.Size(45, 27);
 			this.button4.TabIndex = 9;
 			this.button4.Text = "更新";
 			this.button4.UseVisualStyleBackColor = true;
@@ -277,10 +285,10 @@
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(205, 5);
-			this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.button2.Location = new System.Drawing.Point(156, 4);
+			this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(55, 34);
+			this.button2.Size = new System.Drawing.Size(41, 27);
 			this.button2.TabIndex = 8;
 			this.button2.Text = "検索";
 			this.button2.UseVisualStyleBackColor = true;
@@ -290,41 +298,47 @@
 			// 
 			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox2.Location = new System.Drawing.Point(3, 4);
-			this.textBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.textBox2.Location = new System.Drawing.Point(2, 3);
+			this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
 			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(196, 22);
+			this.textBox2.Size = new System.Drawing.Size(150, 19);
 			this.textBox2.TabIndex = 8;
 			this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
 			// 
 			// treeView2
 			// 
 			this.treeView2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.treeView2.Location = new System.Drawing.Point(0, 45);
-			this.treeView2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.treeView2.MinimumSize = new System.Drawing.Size(249, 4);
+			this.treeView2.Location = new System.Drawing.Point(0, 34);
+			this.treeView2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.treeView2.MinimumSize = new System.Drawing.Size(188, 4);
 			this.treeView2.Name = "treeView2";
-			this.treeView2.Size = new System.Drawing.Size(329, 745);
+			this.treeView2.Size = new System.Drawing.Size(249, 597);
 			this.treeView2.TabIndex = 0;
 			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			// 
-			// 新しいパックと新しいカード取得ToolStripMenuItem
+			// 評価調査ToolStripMenuItem
 			// 
-			this.新しいパックと新しいカード取得ToolStripMenuItem.Name = "新しいパックと新しいカード取得ToolStripMenuItem";
-			this.新しいパックと新しいカード取得ToolStripMenuItem.Size = new System.Drawing.Size(272, 26);
-			this.新しいパックと新しいカード取得ToolStripMenuItem.Text = "新しいパックと新しいカード取得";
-			this.新しいパックと新しいカード取得ToolStripMenuItem.Click += new System.EventHandler(this.新しいパックと新しいカード取得ToolStripMenuItem_Click);
+			this.評価調査ToolStripMenuItem.Name = "評価調査ToolStripMenuItem";
+			this.評価調査ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+			this.評価調査ToolStripMenuItem.Text = "評価調査";
+			this.評価調査ToolStripMenuItem.Click += new System.EventHandler(this.評価調査ToolStripMenuItem_Click);
+			// 
+			// testToolStripMenuItem
+			// 
+			this.testToolStripMenuItem.Name = "testToolStripMenuItem";
+			this.testToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
+			this.testToolStripMenuItem.Text = "test";
+			this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1540, 829);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+			this.ClientSize = new System.Drawing.Size(1210, 663);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.splitContainer1);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "Form1";
 			this.Text = "遊戯王カードコレクトサポーター";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
@@ -371,6 +385,8 @@
 		private System.Windows.Forms.ToolStripMenuItem シリーズ期設定ToolStripMenuItem;
 		public System.Windows.Forms.ToolStripMenuItem 販売価格調査ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 新しいパックと新しいカード取得ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem 評価調査ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
 	}
 }
 

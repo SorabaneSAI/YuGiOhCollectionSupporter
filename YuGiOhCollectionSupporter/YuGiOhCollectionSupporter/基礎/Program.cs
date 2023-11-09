@@ -19,7 +19,7 @@ using System.Web.UI.HtmlControls;
 
 namespace YuGiOhCollectionSupporter
 {
-	static class Program
+	public static class Program
 	{
 		private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 		private static HttpClient hc = new HttpClient();    //これは使い回すのが正しいらしい

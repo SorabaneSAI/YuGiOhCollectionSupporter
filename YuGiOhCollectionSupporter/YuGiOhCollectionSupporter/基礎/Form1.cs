@@ -449,5 +449,42 @@ namespace YuGiOhCollectionSupporter
 		{
 			データ取得(true, true, null, true);
 		}
+
+		private void 評価調査ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void testToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Program.Save(UserCardDB.SaveUserDataPath + "_old", UserCardDB);
+			Program.Save(PriceDataBase.SaveDataPath + "_old", PriceDB.PriceDataList);
+
+			foreach (var card in UserCardDB.UserCardDataList)
+			{
+				foreach (var vari in card.UserVariationDataList)
+				{
+					if (((int)vari.Rank) > (int)EKanabellRank.S)
+					{
+						vari.Rank = ((EKanabellRank)(((int)vari.Rank) + 1));
+					}
+				}
+			}
+
+			foreach (var card in PriceDB.PriceDataList)
+			{
+				{
+					if (((int)card.Rank) > (int)EKanabellRank.S)
+					{
+						card.Rank = ((EKanabellRank)(((int)card.Rank) + 1));
+					}
+				}
+			}
+
+			Program.Save(UserCardDB.SaveUserDataPath, UserCardDB);
+			Program.Save(PriceDataBase.SaveDataPath, PriceDB.PriceDataList);
+
+
+		}
 	}
 }
