@@ -99,6 +99,12 @@
     <Compile Include="NotMatchForm.Designer.cs">
       <DependentUpon>NotMatchForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RatingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RatingForm.Designer.cs">
+      <DependentUpon>RatingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ThroughPageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +202,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NotMatchForm.resx">
       <DependentUpon>NotMatchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RatingForm.resx">
+      <DependentUpon>RatingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ThroughPageForm.resx">
       <DependentUpon>ThroughPageForm.cs</DependentUpon>

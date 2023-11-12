@@ -147,7 +147,8 @@ namespace YuGiOhCollectionSupporter
 				{
 					KanabellCard2 kanabell = Kanabell2List[j];
 
-					if (IsSameName(card.名前 , kanabell.Name))
+					//表記ゆれとかどうしろと
+					if (Program.IsSameName(card.名前 , kanabell.Name))
 					{
 						Compare(card, kanabell, form, PricePairDictionary);
 						不一致CardCount += card.ListVariations.Count;
@@ -199,75 +200,6 @@ namespace YuGiOhCollectionSupporter
             return (PricePairDictionary, 不一致CardCount, 不一致KanabellCount, MatchDataList);
 		}
 
-		//表記ゆれとかどうしろと
-		public static bool IsSameName(string cardname, string kanabellname)
-		{
-			if (cardname == kanabellname) return true;
-			var dic = new Dictionary<string, string>
-							{
-								{ "　",  "" },
-								{ " ",  "" },
-								{ "＠", "@" },
-								{ "・", "" },
-								{ "･", "" },
-								{ "＆", "&" },
-								{ "＝", "=" },
-								{ "－", "" },
-								{ "-", "" },
-								{ "／", "/" },
-								{ "：", ":" },
-								{ "！", "!" },
-								{ "？", "?" },
-								{ "＜", "<" },
-								{ "＞", ">" },
-								{ "”", "\"" },
-								{ "’", "\'" },
-								{ "１", "1" },
-								{ "２", "2" },
-								{ "３", "3" },
-								{ "４", "4" },
-								{ "５", "5" },
-								{ "６", "6" },
-								{ "７", "7" },
-								{ "８", "8" },
-								{ "９", "9" },
-								{ "０", "0" },
-								{ "Ａ", "A" },
-								{ "Ｂ", "B" },
-								{ "Ｃ", "C" },
-								{ "Ｄ", "D" },
-								{ "Ｅ", "E" },
-								{ "Ｆ", "F" },
-								{ "Ｇ", "G" },
-								{ "Ｈ", "H" },
-								{ "Ｉ", "I" },
-								{ "Ｊ", "J" },
-								{ "Ｋ", "K" },
-								{ "Ｌ", "L" },
-								{ "Ｍ", "M" },
-								{ "Ｎ", "N" },
-								{ "Ｏ", "O" },
-								{ "Ｐ", "P" },
-								{ "Ｑ", "Q" },
-								{ "Ｒ", "R" },
-								{ "Ｓ", "S" },
-								{ "Ｔ", "T" },
-								{ "Ｕ", "U" },
-								{ "Ｖ", "V" },
-								{ "Ｗ", "W" },
-								{ "Ｘ", "X" },
-								{ "Ｙ", "Y" },
-								{ "Ｚ", "Z" },
-							};
-
-			//stringbuilderにしたほうが速い
-			foreach (var key in dic)
-			{
-				cardname = cardname.Replace(key.Key, key.Value);
-				kanabellname = kanabellname.Replace(key.Key, key.Value);
-			}
-			return cardname == kanabellname;
-		}
 
 		//同名カードによるリンクを作成
 		public static void Compare(CardData card, KanabellCard2 kanabell, Form1 form, Dictionary<CardDataKey, List<KanabellCard>> dictionary)

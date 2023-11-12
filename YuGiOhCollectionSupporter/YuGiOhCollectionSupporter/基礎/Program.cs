@@ -269,6 +269,49 @@ namespace YuGiOhCollectionSupporter
 		{
 			return Enum.TryParse(s, out wd) && Enum.IsDefined(typeof(TEnum), wd);
 		}
+
+		//表記ゆれ対策
+		public static bool IsSameName(string cardname, string kanabellname)
+		{
+			if (cardname == kanabellname) return true;
+			//半角に
+			cardname = Kanaxs.Kana.ToHankaku(cardname);
+			kanabellname = Kanaxs.Kana.ToHankaku(kanabellname);
+
+			var dic = new Dictionary<string, string>
+							{
+								{ "　",  "" },
+								{ " ",  "" },
+								{ "＠", "@" },
+								{ "・", "" },
+								{ "･", "" },
+								{ "＆", "&" },
+								{ "＝", "=" },
+								{ "－", "" },
+								{ "-", "" },
+								{ "／", "/" },
+								{ "：", ":" },
+								{ "！", "!" },
+								{ "？", "?" },
+								{ "＜", "<" },
+								{ "＞", ">" },
+								{ "”", "\"" },
+								{ "’", "\'" },
+							};
+
+			StringBuilder sb1 = new StringBuilder(cardname);
+			StringBuilder sb2 = new StringBuilder(kanabellname);
+
+			//stringbuilderにしたほうが速い
+			foreach (var key in dic)
+			{
+				sb1.Replace(key.Key, key.Value);
+				sb2.Replace(key.Key, key.Value);
+
+			}
+			return sb1.ToString() == sb2.ToString();
+		}
+
 	}
 
 }

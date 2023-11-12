@@ -41,6 +41,7 @@
 			this.シリーズ期設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.販売価格調査ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.評価調査ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.label1 = new System.Windows.Forms.Label();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -52,8 +53,6 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.treeView2 = new System.Windows.Forms.TreeView();
-			this.評価調査ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -75,9 +74,8 @@
             this.パック分類設定ToolStripMenuItem,
             this.シリーズ期設定ToolStripMenuItem,
             this.販売価格調査ToolStripMenuItem,
-            this.これについてToolStripMenuItem,
             this.評価調査ToolStripMenuItem,
-            this.testToolStripMenuItem});
+            this.これについてToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -173,6 +171,13 @@
 			this.これについてToolStripMenuItem.Text = "これについて";
 			this.これについてToolStripMenuItem.Click += new System.EventHandler(this.これについてToolStripMenuItem_Click);
 			// 
+			// 評価調査ToolStripMenuItem
+			// 
+			this.評価調査ToolStripMenuItem.Name = "評価調査ToolStripMenuItem";
+			this.評価調査ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+			this.評価調査ToolStripMenuItem.Text = "評価調査";
+			this.評価調査ToolStripMenuItem.Click += new System.EventHandler(this.評価調査ToolStripMenuItem_Click);
+			// 
 			// label1
 			// 
 			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -204,7 +209,7 @@
 			this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.splitContainer2.Margin = new System.Windows.Forms.Padding(2);
 			this.splitContainer2.Name = "splitContainer2";
 			// 
 			// splitContainer2.Panel1
@@ -221,15 +226,15 @@
 			this.splitContainer2.Panel2.Controls.Add(this.textBox2);
 			this.splitContainer2.Panel2.Controls.Add(this.treeView2);
 			this.splitContainer2.Size = new System.Drawing.Size(481, 635);
-			this.splitContainer2.SplitterDistance = 225;
+			this.splitContainer2.SplitterDistance = 224;
 			this.splitContainer2.SplitterWidth = 3;
 			this.splitContainer2.TabIndex = 6;
 			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button3.Location = new System.Drawing.Point(183, 3);
-			this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.button3.Location = new System.Drawing.Point(182, 3);
+			this.button3.Margin = new System.Windows.Forms.Padding(2);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(37, 27);
 			this.button3.TabIndex = 8;
@@ -240,8 +245,8 @@
 			// button1
 			// 
 			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.Location = new System.Drawing.Point(137, 3);
-			this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.button1.Location = new System.Drawing.Point(136, 3);
+			this.button1.Margin = new System.Windows.Forms.Padding(2);
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(40, 27);
 			this.button1.TabIndex = 7;
@@ -254,9 +259,9 @@
 			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(3, 7);
-			this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.textBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(130, 19);
+			this.textBox1.Size = new System.Drawing.Size(129, 19);
 			this.textBox1.TabIndex = 6;
 			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
 			// 
@@ -266,15 +271,15 @@
 			this.treeView1.Location = new System.Drawing.Point(0, 36);
 			this.treeView1.MinimumSize = new System.Drawing.Size(24, 4);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(221, 595);
+			this.treeView1.Size = new System.Drawing.Size(220, 595);
 			this.treeView1.TabIndex = 5;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button4.Location = new System.Drawing.Point(202, 3);
-			this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.button4.Location = new System.Drawing.Point(204, 3);
+			this.button4.Margin = new System.Windows.Forms.Padding(2);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(45, 27);
 			this.button4.TabIndex = 9;
@@ -285,8 +290,8 @@
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(156, 4);
-			this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.button2.Location = new System.Drawing.Point(158, 4);
+			this.button2.Margin = new System.Windows.Forms.Padding(2);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(41, 27);
 			this.button2.TabIndex = 8;
@@ -299,9 +304,9 @@
 			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox2.Location = new System.Drawing.Point(2, 3);
-			this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.textBox2.Margin = new System.Windows.Forms.Padding(2);
 			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(150, 19);
+			this.textBox2.Size = new System.Drawing.Size(152, 19);
 			this.textBox2.TabIndex = 8;
 			this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
 			// 
@@ -309,26 +314,12 @@
 			// 
 			this.treeView2.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.treeView2.Location = new System.Drawing.Point(0, 34);
-			this.treeView2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+			this.treeView2.Margin = new System.Windows.Forms.Padding(2);
 			this.treeView2.MinimumSize = new System.Drawing.Size(188, 4);
 			this.treeView2.Name = "treeView2";
-			this.treeView2.Size = new System.Drawing.Size(249, 597);
+			this.treeView2.Size = new System.Drawing.Size(250, 597);
 			this.treeView2.TabIndex = 0;
 			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
-			// 
-			// 評価調査ToolStripMenuItem
-			// 
-			this.評価調査ToolStripMenuItem.Name = "評価調査ToolStripMenuItem";
-			this.評価調査ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-			this.評価調査ToolStripMenuItem.Text = "評価調査";
-			this.評価調査ToolStripMenuItem.Click += new System.EventHandler(this.評価調査ToolStripMenuItem_Click);
-			// 
-			// testToolStripMenuItem
-			// 
-			this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-			this.testToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
-			this.testToolStripMenuItem.Text = "test";
-			this.testToolStripMenuItem.Click += new System.EventHandler(this.testToolStripMenuItem_Click);
 			// 
 			// Form1
 			// 
@@ -386,7 +377,6 @@
 		public System.Windows.Forms.ToolStripMenuItem 販売価格調査ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 新しいパックと新しいカード取得ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 評価調査ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
 	}
 }
 

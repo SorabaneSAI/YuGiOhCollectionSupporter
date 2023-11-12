@@ -26,6 +26,7 @@ namespace YuGiOhCollectionSupporter
 		public PackDataBase PackDB = new PackDataBase();
 		public UserCardDataBase UserCardDB = new UserCardDataBase();
 		public PriceDataBase PriceDB = new PriceDataBase();
+		public RateDataBase RateDB = new RateDataBase();
 
 		public BindingList<PackGroupData> PackGroupDataList = new BindingList<PackGroupData>();
 		public string PackGroupSavePath = SaveFolder + "\\"+"PackGroupData.json";
@@ -74,9 +75,10 @@ namespace YuGiOhCollectionSupporter
 			Program.Load(SeriesGroupSavePath, ref SeriesGroupDataList);
 			Program.Load(RarityPairSavePath, ref RarityPairDataList);
 			Program.Load(ThroughPageSavePath, ref ThroughPageDataList);
+			Program.Load(RateDataBase.SaveDataPath, ref RateDB.RateDataList);
 
 
-//			formPanel.ShowHome(this);
+			//			formPanel.ShowHome(this);
 			formPanel.ShowHome(this);
 
 			//あいうえお順とパック順のツリー作成
@@ -452,7 +454,8 @@ namespace YuGiOhCollectionSupporter
 
 		private void 評価調査ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+			RatingForm f = new RatingForm(this);
+			f.Show(this);
 		}
 
 		private void testToolStripMenuItem_Click(object sender, EventArgs e)

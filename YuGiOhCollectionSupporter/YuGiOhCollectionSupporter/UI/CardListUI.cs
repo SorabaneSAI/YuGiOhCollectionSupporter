@@ -242,7 +242,6 @@ namespace YuGiOhCollectionSupporter
 						var pricecell = dataGridView1.Rows[num].Cells["Q値段"];
 						if (variation.KanabellList == null || variation.KanabellList.Count ==0)
 						{
-							dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
 							pricecell.Value = "？";
 							pricecell.Tag = "https://www.ka-nabell.com/?type=2&act=sell_search&key_word=" + card.読み; //うーーーーん
 						}
@@ -257,7 +256,32 @@ namespace YuGiOhCollectionSupporter
 						dataGridView1.Rows[num].Cells["Q値段"].Style.BackColor = Color.Gray;
 					}
 
-//					UpdateCellColor(num, twincarddata, variation);
+					//評価情報書く
+					if (r == 0)
+					{
+						var ratecell = dataGridView1.Rows[num].Cells["評価"];
+
+						//こうすればgoto使わなくて済むが・・・
+						ratecell.Value = "？";
+						ratecell.Tag = "https://yugioh-list.com/searches/result?keyword=" + card.名前 + "&keyword1=0&keyword1=1&keyword2=0&keyword3=0&effect=&kind_id1=&kind_id2=&type_id=&attribute_id=&level_f=&level_t=&level1=0&level1=1&level2=0&level2=1&p_blue_f=&p_blue_t=&p_red_f=&p_red_t=&link_num_f=&link_num_t=&link1=0&link2=0&link3=0&link4=0&link5=0&link6=0&link7=0&link8=0&atk_f=&atk_t=&atk_h=&dif_f=&dif_t=&dif_h=&limit_id=&limit_id%5B%5D=1&limit_id%5B%5D=2&limit_id%5B%5D=3&limit_id%5B%5D=4&avg_point_f=&avg_point_t="; //うーーーーん
+
+						foreach (var ratedata in form1.RateDB.RateDataList)
+						{
+							if (Program.IsSameName(card.名前, ratedata.Name))
+							{
+								ratecell.Value = ratedata.Rate;
+								ratecell.Tag = ratedata.URL;
+								break;
+							}
+						}
+
+					}
+					else
+					{
+						dataGridView1.Rows[num].Cells["評価"].Style.BackColor = Color.Gray;
+					}
+
+					//					UpdateCellColor(num, twincarddata, variation);
 
 					//パックでは二個目の名前を消す
 					if (!あいうえお順フラグ && r>0)
@@ -495,6 +519,11 @@ namespace YuGiOhCollectionSupporter
 			//リンクならカーナベルを開く
 			{
 				if (dataGridView1.Columns[e.ColumnIndex].Name == $"Q値段")
+				{
+					string url = (string)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
+					System.Diagnostics.Process.Start(url);
+				}
+				if (dataGridView1.Columns[e.ColumnIndex].Name == $"評価")
 				{
 					string url = (string)dataGridView1[e.ColumnIndex, e.RowIndex].Tag;
 					System.Diagnostics.Process.Start(url);
