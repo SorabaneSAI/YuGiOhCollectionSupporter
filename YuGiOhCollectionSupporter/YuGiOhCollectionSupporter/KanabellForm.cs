@@ -17,7 +17,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace YuGiOhCollectionSupporter
 {
-	public enum EKanabellRank {S, A, B, C, D, なし, 不明 }
+	public enum EKanabellRank {S, AA,A, B, C, D, なし, 不明 }
 
 	public partial class KanabellForm : Form
 	{

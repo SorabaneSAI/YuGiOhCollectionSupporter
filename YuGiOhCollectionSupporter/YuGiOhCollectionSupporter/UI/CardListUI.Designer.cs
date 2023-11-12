@@ -39,6 +39,7 @@
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
+			this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
 			this.type = new System.Windows.Forms.DataGridViewImageColumn();
 			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,7 +48,6 @@
 			this.Is同名予備カード枚数十分 = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.Q値段 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.評価 = new System.Windows.Forms.DataGridViewLinkColumn();
-			this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.flowLayoutPanel3.SuspendLayout();
@@ -208,6 +208,14 @@
 			this.button3.UseVisualStyleBackColor = true;
 			this.button3.Click += new System.EventHandler(this.button3_Click);
 			// 
+			// collectDataUI1
+			// 
+			this.collectDataUI1.Location = new System.Drawing.Point(4, 125);
+			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(4);
+			this.collectDataUI1.Name = "collectDataUI1";
+			this.collectDataUI1.Size = new System.Drawing.Size(740, 231);
+			this.collectDataUI1.TabIndex = 11;
+			// 
 			// type
 			// 
 			this.type.HeaderText = "";
@@ -219,35 +227,38 @@
 			// 
 			// 名前
 			// 
+			this.名前.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.名前.HeaderText = "名前";
 			this.名前.MinimumWidth = 100;
 			this.名前.Name = "名前";
 			this.名前.ReadOnly = true;
 			this.名前.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.名前.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.名前.Width = 250;
 			// 
 			// 略号
 			// 
+			this.略号.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.略号.HeaderText = "略号";
 			this.略号.MinimumWidth = 70;
 			this.略号.Name = "略号";
 			this.略号.ReadOnly = true;
 			this.略号.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.略号.Width = 125;
+			this.略号.Width = 70;
 			// 
 			// レアリティ
 			// 
+			this.レアリティ.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.レアリティ.HeaderText = "レアリティ";
-			this.レアリティ.MinimumWidth = 70;
+			this.レアリティ.MinimumWidth = 50;
 			this.レアリティ.Name = "レアリティ";
 			this.レアリティ.ReadOnly = true;
 			this.レアリティ.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.レアリティ.Width = 70;
+			this.レアリティ.Width = 52;
 			// 
 			// Qランク
 			// 
+			this.Qランク.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.Qランク.HeaderText = "Qランク";
 			this.Qランク.Items.AddRange(new object[] {
             "S",
@@ -257,12 +268,13 @@
             "D",
             "なし",
             "不明"});
-			this.Qランク.MinimumWidth = 6;
+			this.Qランク.MinimumWidth = 50;
 			this.Qランク.Name = "Qランク";
-			this.Qランク.Width = 80;
+			this.Qランク.Width = 50;
 			// 
 			// Is同名予備カード枚数十分
 			// 
+			this.Is同名予備カード枚数十分.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.Is同名予備カード枚数十分.HeaderText = "同名枚数";
 			this.Is同名予備カード枚数十分.Items.AddRange(new object[] {
             "0",
@@ -278,32 +290,26 @@
 			this.Is同名予備カード枚数十分.MinimumWidth = 6;
 			this.Is同名予備カード枚数十分.Name = "Is同名予備カード枚数十分";
 			this.Is同名予備カード枚数十分.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.Is同名予備カード枚数十分.Width = 80;
+			this.Is同名予備カード枚数十分.Width = 59;
 			// 
 			// Q値段
 			// 
+			this.Q値段.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.Q値段.HeaderText = "Q値段";
 			this.Q値段.MinimumWidth = 6;
 			this.Q値段.Name = "Q値段";
 			this.Q値段.ReadOnly = true;
-			this.Q値段.Width = 80;
+			this.Q値段.Width = 43;
 			// 
 			// 評価
 			// 
+			this.評価.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.評価.HeaderText = "評価";
 			this.評価.Name = "評価";
 			this.評価.ReadOnly = true;
 			this.評価.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.評価.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.評価.Width = 60;
-			// 
-			// collectDataUI1
-			// 
-			this.collectDataUI1.Location = new System.Drawing.Point(4, 125);
-			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(4);
-			this.collectDataUI1.Name = "collectDataUI1";
-			this.collectDataUI1.Size = new System.Drawing.Size(740, 231);
-			this.collectDataUI1.TabIndex = 11;
+			this.評価.Width = 54;
 			// 
 			// CardListUI
 			// 

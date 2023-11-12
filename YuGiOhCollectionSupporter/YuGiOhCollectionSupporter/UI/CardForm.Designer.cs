@@ -55,10 +55,10 @@
 			// 
 			this.linkLabel1.AutoSize = true;
 			this.linkLabel1.Font = new System.Drawing.Font("MS UI Gothic", 20F);
-			this.linkLabel1.Location = new System.Drawing.Point(13, 12);
-			this.linkLabel1.Margin = new System.Windows.Forms.Padding(13, 12, 4, 0);
+			this.linkLabel1.Location = new System.Drawing.Point(10, 10);
+			this.linkLabel1.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
 			this.linkLabel1.Name = "linkLabel1";
-			this.linkLabel1.Size = new System.Drawing.Size(154, 34);
+			this.linkLabel1.Size = new System.Drawing.Size(125, 27);
 			this.linkLabel1.TabIndex = 0;
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Text = "linkLabel1";
@@ -67,20 +67,20 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(13, 58);
-			this.label1.Margin = new System.Windows.Forms.Padding(13, 12, 4, 0);
+			this.label1.Location = new System.Drawing.Point(10, 47);
+			this.label1.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(43, 15);
+			this.label1.Size = new System.Drawing.Size(35, 12);
 			this.label1.TabIndex = 1;
 			this.label1.Text = "label1";
 			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(13, 85);
-			this.label2.Margin = new System.Windows.Forms.Padding(13, 12, 4, 0);
+			this.label2.Location = new System.Drawing.Point(10, 69);
+			this.label2.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(43, 15);
+			this.label2.Size = new System.Drawing.Size(35, 12);
 			this.label2.TabIndex = 2;
 			this.label2.Text = "label2";
 			// 
@@ -88,20 +88,20 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("MS UI Gothic", 15F);
-			this.label3.Location = new System.Drawing.Point(11, 150);
-			this.label3.Margin = new System.Windows.Forms.Padding(13, 12, 4, 0);
+			this.label3.Location = new System.Drawing.Point(8, 120);
+			this.label3.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(0, 25);
+			this.label3.Size = new System.Drawing.Size(0, 20);
 			this.label3.TabIndex = 3;
 			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-			this.label4.Location = new System.Drawing.Point(13, 183);
-			this.label4.Margin = new System.Windows.Forms.Padding(13, 19, 4, 0);
+			this.label4.Location = new System.Drawing.Point(10, 148);
+			this.label4.Margin = new System.Windows.Forms.Padding(10, 15, 3, 0);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(104, 15);
+			this.label4.Size = new System.Drawing.Size(84, 12);
 			this.label4.TabIndex = 4;
 			this.label4.Text = "ペンデュラム効果";
 			// 
@@ -109,22 +109,22 @@
 			// 
 			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox1.Location = new System.Drawing.Point(13, 204);
-			this.textBox1.Margin = new System.Windows.Forms.Padding(13, 6, 4, 4);
+			this.textBox1.Location = new System.Drawing.Point(10, 165);
+			this.textBox1.Margin = new System.Windows.Forms.Padding(10, 5, 3, 3);
 			this.textBox1.Multiline = true;
 			this.textBox1.Name = "textBox1";
 			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(996, 74);
+			this.textBox1.Size = new System.Drawing.Size(789, 60);
 			this.textBox1.TabIndex = 5;
 			// 
 			// label5
 			// 
 			this.label5.AutoSize = true;
 			this.label5.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-			this.label5.Location = new System.Drawing.Point(13, 301);
-			this.label5.Margin = new System.Windows.Forms.Padding(13, 19, 4, 0);
+			this.label5.Location = new System.Drawing.Point(10, 243);
+			this.label5.Margin = new System.Windows.Forms.Padding(10, 15, 3, 0);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(996, 15);
+			this.label5.Size = new System.Drawing.Size(789, 24);
 			this.label5.TabIndex = 6;
 			this.label5.Text = "カードテキスト                                                                          " +
     "                                                                                " +
@@ -134,12 +134,12 @@
 			// 
 			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox2.Location = new System.Drawing.Point(13, 322);
-			this.textBox2.Margin = new System.Windows.Forms.Padding(13, 6, 4, 4);
+			this.textBox2.Location = new System.Drawing.Point(10, 272);
+			this.textBox2.Margin = new System.Windows.Forms.Padding(10, 5, 3, 3);
 			this.textBox2.Multiline = true;
 			this.textBox2.Name = "textBox2";
 			this.textBox2.ReadOnly = true;
-			this.textBox2.Size = new System.Drawing.Size(996, 74);
+			this.textBox2.Size = new System.Drawing.Size(789, 60);
 			this.textBox2.TabIndex = 7;
 			// 
 			// dataGridView1
@@ -157,15 +157,15 @@
             this.値段1,
             this.値段2,
             this.値段3});
-			this.dataGridView1.Location = new System.Drawing.Point(13, 412);
-			this.dataGridView1.Margin = new System.Windows.Forms.Padding(13, 12, 4, 4);
+			this.dataGridView1.Location = new System.Drawing.Point(10, 345);
+			this.dataGridView1.Margin = new System.Windows.Forms.Padding(10, 10, 3, 3);
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.RowHeadersVisible = false;
 			this.dataGridView1.RowHeadersWidth = 51;
 			this.dataGridView1.RowTemplate.Height = 21;
 			this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-			this.dataGridView1.Size = new System.Drawing.Size(996, 126);
+			this.dataGridView1.Size = new System.Drawing.Size(789, 101);
 			this.dataGridView1.TabIndex = 8;
 			this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
 			this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellEndEdit);
@@ -179,10 +179,10 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 15F);
-			this.label6.Location = new System.Drawing.Point(13, 112);
-			this.label6.Margin = new System.Windows.Forms.Padding(13, 12, 4, 0);
+			this.label6.Location = new System.Drawing.Point(10, 91);
+			this.label6.Margin = new System.Windows.Forms.Padding(10, 10, 3, 0);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(72, 25);
+			this.label6.Size = new System.Drawing.Size(57, 20);
 			this.label6.TabIndex = 9;
 			this.label6.Text = "label6";
 			// 
@@ -191,10 +191,9 @@
 			this.checkBox1.AutoSize = true;
 			this.checkBox1.Checked = true;
 			this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBox1.Location = new System.Drawing.Point(4, 141);
-			this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
+			this.checkBox1.Location = new System.Drawing.Point(3, 114);
 			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(192, 19);
+			this.checkBox1.Size = new System.Drawing.Size(155, 16);
 			this.checkBox1.TabIndex = 10;
 			this.checkBox1.Text = "このカードを一覧に表示する";
 			this.checkBox1.UseVisualStyleBackColor = true;
@@ -217,42 +216,45 @@
 			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(1073, 608);
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(805, 486);
 			this.flowLayoutPanel1.TabIndex = 11;
 			this.flowLayoutPanel1.WrapContents = false;
 			// 
 			// 略号
 			// 
+			this.略号.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.略号.HeaderText = "略号";
-			this.略号.MinimumWidth = 6;
+			this.略号.MinimumWidth = 50;
 			this.略号.Name = "略号";
 			this.略号.ReadOnly = true;
 			this.略号.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.略号.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.略号.Width = 125;
+			this.略号.Width = 50;
 			// 
 			// パック名
 			// 
+			this.パック名.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.パック名.HeaderText = "パック名";
 			this.パック名.MinimumWidth = 6;
 			this.パック名.Name = "パック名";
 			this.パック名.ReadOnly = true;
 			this.パック名.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.パック名.Width = 350;
+			this.パック名.Width = 48;
 			// 
 			// レアリティ
 			// 
+			this.レアリティ.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.レアリティ.HeaderText = "レアリティ";
 			this.レアリティ.MinimumWidth = 6;
 			this.レアリティ.Name = "レアリティ";
 			this.レアリティ.ReadOnly = true;
 			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.レアリティ.Width = 125;
+			this.レアリティ.Width = 52;
 			// 
 			// ランク
 			// 
+			this.ランク.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.ランク.HeaderText = "ランク";
 			this.ランク.Items.AddRange(new object[] {
             "S",
@@ -264,47 +266,49 @@
             "不明"});
 			this.ランク.MinimumWidth = 6;
 			this.ランク.Name = "ランク";
-			this.ランク.Width = 80;
+			this.ランク.Width = 36;
 			// 
 			// 値段1
 			// 
+			this.値段1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.値段1.HeaderText = "値段1";
 			this.値段1.MinimumWidth = 6;
 			this.値段1.Name = "値段1";
 			this.値段1.ReadOnly = true;
 			this.値段1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.値段1.Width = 80;
+			this.値段1.Width = 41;
 			// 
 			// 値段2
 			// 
+			this.値段2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.値段2.HeaderText = "値段2";
 			this.値段2.MinimumWidth = 6;
 			this.値段2.Name = "値段2";
 			this.値段2.ReadOnly = true;
 			this.値段2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.値段2.Width = 80;
+			this.値段2.Width = 41;
 			// 
 			// 値段3
 			// 
+			this.値段3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.値段3.HeaderText = "値段3";
 			this.値段3.MinimumWidth = 6;
 			this.値段3.Name = "値段3";
 			this.値段3.ReadOnly = true;
 			this.値段3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.値段3.Width = 80;
+			this.値段3.Width = 41;
 			// 
 			// CardForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoScroll = true;
 			this.AutoSize = true;
-			this.ClientSize = new System.Drawing.Size(1073, 608);
+			this.ClientSize = new System.Drawing.Size(805, 486);
 			this.Controls.Add(this.flowLayoutPanel1);
 			this.Controls.Add(this.label3);
-			this.Margin = new System.Windows.Forms.Padding(4);
-			this.MaximumSize = new System.Drawing.Size(1327, 988);
-			this.MinimumSize = new System.Drawing.Size(18, 47);
+			this.MaximumSize = new System.Drawing.Size(999, 798);
+			this.MinimumSize = new System.Drawing.Size(18, 45);
 			this.Name = "CardForm";
 			this.Text = "カード情報";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CardForm_FormClosed);
