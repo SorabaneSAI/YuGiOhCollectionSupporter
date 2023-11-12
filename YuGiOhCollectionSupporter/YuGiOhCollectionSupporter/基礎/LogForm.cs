@@ -34,6 +34,7 @@ namespace YuGiOhCollectionSupporter
 			lock (dataGridView1)
 			{
 				dataGridView1.Rows.Clear();
+				Program.WriteLog("ログのクリア", LogLevel.クリア);
 			}
 		}
 

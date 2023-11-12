@@ -271,9 +271,22 @@ namespace YuGiOhCollectionSupporter
 							{
 								ratecell.Value = ratedata.Rate;
 								ratecell.Tag = ratedata.URL;
+								double number;
+								if (double.TryParse(ratedata.Rate, out number) == true)
+								{
+									Color color = Color.White;
+									if (number >=1 && number < 3) color = Color.FromArgb(255, 128, 128);
+									if (number >= 3 && number <= 4) color = Color.FromArgb(255, 255, 128);
+									if (number > 4 && number < 6) color = Color.FromArgb(128, 255, 128);
+									if (number >= 6 && number <=8) color = Color.FromArgb(128, 255, 255);
+									if (number > 8 && number <=10) color = Color.FromArgb(194, 194, 255);
+
+									dataGridView1.Rows[num].Cells["評価"].Style.BackColor = color;
+								}
 								break;
 							}
 						}
+
 
 					}
 					else
@@ -782,14 +795,15 @@ namespace YuGiOhCollectionSupporter
 			}
 			else if(CellName == "Is同名予備カード枚数十分")
 			{
+				/*
 				int num;
 				if (int.TryParse((string)cb.EditingControlFormattedValue, out num) == false)
 				{
 					Program.WriteLog("intへのキャストエラー　", LogLevel.エラー);
 					return;
 				}
-
-				twincarddata.usercarddata.同名枚数 = num;
+				*/
+				twincarddata.usercarddata.同名枚数 = (string)cb.EditingControlFormattedValue;
 
 			}
 		}

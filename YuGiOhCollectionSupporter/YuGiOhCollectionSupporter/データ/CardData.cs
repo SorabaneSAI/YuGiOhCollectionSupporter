@@ -210,7 +210,7 @@ namespace YuGiOhCollectionSupporter
 		public int ID;
 		public bool 表示フラグ = true;
 		public List<UserVariationData> UserVariationDataList = new List<UserVariationData>();
-		public int 同名枚数 = 0;  //自分で設定する予備枚数
+		public string 同名枚数 = "0";  //自分で設定する予備枚数
 
 		public class UserVariationData
         {
