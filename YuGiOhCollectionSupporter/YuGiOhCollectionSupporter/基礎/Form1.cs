@@ -77,6 +77,10 @@ namespace YuGiOhCollectionSupporter
 			Program.Load(ThroughPageSavePath, ref ThroughPageDataList);
 			Program.Load(RateDataBase.SaveDataPath, ref RateDB.RateDataList);
 
+			this.Size = config.WindowSize;
+			this.splitContainer1.SplitterDistance = config.Container1SpritterDistance;
+			this.splitContainer2.SplitterDistance = config.Container2SpritterDistance;
+
 
 			//			formPanel.ShowHome(this);
 			formPanel.ShowHome(this);
@@ -137,10 +141,15 @@ namespace YuGiOhCollectionSupporter
 		}
 
 
-
+		//閉じるときにウィンドウサイズ保存
 
 		private void Form1_FormClosed(object sender, FormClosedEventArgs e)
 		{
+			config.WindowSize = this.Size;
+			config.Container1SpritterDistance = this.splitContainer1.SplitterDistance;
+			config.Container2SpritterDistance = this.splitContainer2.SplitterDistance;
+			Config.Save(config);
+
 			Application.Exit();
 		}
 

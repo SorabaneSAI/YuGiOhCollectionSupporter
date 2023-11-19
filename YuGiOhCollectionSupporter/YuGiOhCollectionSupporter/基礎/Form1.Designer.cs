@@ -40,8 +40,8 @@
 			this.パック分類設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.シリーズ期設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.販売価格調査ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.評価調査ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.これについてToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.label1 = new System.Windows.Forms.Label();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
@@ -65,6 +65,7 @@
 			// 
 			// menuStrip1
 			// 
+			this.menuStrip1.AutoSize = false;
 			this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
@@ -86,7 +87,7 @@
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 24);
 			this.toolStripMenuItem1.Text = "設定";
 			this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
 			// 
@@ -98,7 +99,7 @@
             this.パックカード両方取得ToolStripMenuItem,
             this.新しいパックと新しいカード取得ToolStripMenuItem});
 			this.データ取得ToolStripMenuItem.Name = "データ取得ToolStripMenuItem";
-			this.データ取得ToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+			this.データ取得ToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
 			this.データ取得ToolStripMenuItem.Text = "データ取得";
 			// 
 			// パックデータ取得ToolStripMenuItem
@@ -132,51 +133,51 @@
 			// ログToolStripMenuItem
 			// 
 			this.ログToolStripMenuItem.Name = "ログToolStripMenuItem";
-			this.ログToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+			this.ログToolStripMenuItem.Size = new System.Drawing.Size(37, 24);
 			this.ログToolStripMenuItem.Text = "ログ";
 			this.ログToolStripMenuItem.Click += new System.EventHandler(this.ログToolStripMenuItem_Click);
 			// 
 			// ホームToolStripMenuItem
 			// 
 			this.ホームToolStripMenuItem.Name = "ホームToolStripMenuItem";
-			this.ホームToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+			this.ホームToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
 			this.ホームToolStripMenuItem.Text = "ホーム";
 			this.ホームToolStripMenuItem.Click += new System.EventHandler(this.ホームToolStripMenuItem_Click);
 			// 
 			// パック分類設定ToolStripMenuItem
 			// 
 			this.パック分類設定ToolStripMenuItem.Name = "パック分類設定ToolStripMenuItem";
-			this.パック分類設定ToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+			this.パック分類設定ToolStripMenuItem.Size = new System.Drawing.Size(94, 24);
 			this.パック分類設定ToolStripMenuItem.Text = "パック分類設定";
 			this.パック分類設定ToolStripMenuItem.Click += new System.EventHandler(this.パック分類設定ToolStripMenuItem_Click);
 			// 
 			// シリーズ期設定ToolStripMenuItem
 			// 
 			this.シリーズ期設定ToolStripMenuItem.Name = "シリーズ期設定ToolStripMenuItem";
-			this.シリーズ期設定ToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
+			this.シリーズ期設定ToolStripMenuItem.Size = new System.Drawing.Size(114, 24);
 			this.シリーズ期設定ToolStripMenuItem.Text = "シリーズ（期）設定";
 			this.シリーズ期設定ToolStripMenuItem.Click += new System.EventHandler(this.シリーズ期設定ToolStripMenuItem_Click);
 			// 
 			// 販売価格調査ToolStripMenuItem
 			// 
 			this.販売価格調査ToolStripMenuItem.Name = "販売価格調査ToolStripMenuItem";
-			this.販売価格調査ToolStripMenuItem.Size = new System.Drawing.Size(91, 20);
+			this.販売価格調査ToolStripMenuItem.Size = new System.Drawing.Size(91, 24);
 			this.販売価格調査ToolStripMenuItem.Text = "販売価格調査";
 			this.販売価格調査ToolStripMenuItem.Click += new System.EventHandler(this.販売価格調査ToolStripMenuItem_Click);
-			// 
-			// これについてToolStripMenuItem
-			// 
-			this.これについてToolStripMenuItem.Name = "これについてToolStripMenuItem";
-			this.これについてToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
-			this.これについてToolStripMenuItem.Text = "これについて";
-			this.これについてToolStripMenuItem.Click += new System.EventHandler(this.これについてToolStripMenuItem_Click);
 			// 
 			// 評価調査ToolStripMenuItem
 			// 
 			this.評価調査ToolStripMenuItem.Name = "評価調査ToolStripMenuItem";
-			this.評価調査ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+			this.評価調査ToolStripMenuItem.Size = new System.Drawing.Size(67, 24);
 			this.評価調査ToolStripMenuItem.Text = "評価調査";
 			this.評価調査ToolStripMenuItem.Click += new System.EventHandler(this.評価調査ToolStripMenuItem_Click);
+			// 
+			// これについてToolStripMenuItem
+			// 
+			this.これについてToolStripMenuItem.Name = "これについてToolStripMenuItem";
+			this.これについてToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
+			this.これについてToolStripMenuItem.Text = "これについて";
+			this.これについてToolStripMenuItem.Click += new System.EventHandler(this.これについてToolStripMenuItem_Click);
 			// 
 			// label1
 			// 
@@ -191,15 +192,21 @@
 			// 
 			// splitContainer1
 			// 
+			this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
 			this.splitContainer1.Location = new System.Drawing.Point(0, 28);
+			this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 25, 3, 3);
 			this.splitContainer1.Name = "splitContainer1";
 			// 
 			// splitContainer1.Panel1
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.AutoScroll = true;
 			this.splitContainer1.Size = new System.Drawing.Size(1210, 635);
 			this.splitContainer1.SplitterDistance = 481;
 			this.splitContainer1.TabIndex = 3;
@@ -214,6 +221,7 @@
 			// 
 			// splitContainer2.Panel1
 			// 
+			this.splitContainer2.Panel1.AutoScroll = true;
 			this.splitContainer2.Panel1.Controls.Add(this.button3);
 			this.splitContainer2.Panel1.Controls.Add(this.button1);
 			this.splitContainer2.Panel1.Controls.Add(this.textBox1);
@@ -221,6 +229,7 @@
 			// 
 			// splitContainer2.Panel2
 			// 
+			this.splitContainer2.Panel2.AutoScroll = true;
 			this.splitContainer2.Panel2.Controls.Add(this.button4);
 			this.splitContainer2.Panel2.Controls.Add(this.button2);
 			this.splitContainer2.Panel2.Controls.Add(this.textBox2);
@@ -267,18 +276,20 @@
 			// 
 			// treeView1
 			// 
-			this.treeView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.treeView1.Location = new System.Drawing.Point(0, 36);
 			this.treeView1.MinimumSize = new System.Drawing.Size(24, 4);
 			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(220, 595);
+			this.treeView1.Size = new System.Drawing.Size(217, 595);
 			this.treeView1.TabIndex = 5;
 			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
 			// 
 			// button4
 			// 
 			this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button4.Location = new System.Drawing.Point(204, 3);
+			this.button4.Location = new System.Drawing.Point(205, 3);
 			this.button4.Margin = new System.Windows.Forms.Padding(2);
 			this.button4.Name = "button4";
 			this.button4.Size = new System.Drawing.Size(45, 27);
@@ -290,7 +301,7 @@
 			// button2
 			// 
 			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.Location = new System.Drawing.Point(158, 4);
+			this.button2.Location = new System.Drawing.Point(159, 4);
 			this.button2.Margin = new System.Windows.Forms.Padding(2);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(41, 27);
@@ -306,18 +317,20 @@
 			this.textBox2.Location = new System.Drawing.Point(2, 3);
 			this.textBox2.Margin = new System.Windows.Forms.Padding(2);
 			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(152, 19);
+			this.textBox2.Size = new System.Drawing.Size(153, 19);
 			this.textBox2.TabIndex = 8;
 			this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
 			// 
 			// treeView2
 			// 
-			this.treeView2.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.treeView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.treeView2.Location = new System.Drawing.Point(0, 34);
 			this.treeView2.Margin = new System.Windows.Forms.Padding(2);
 			this.treeView2.MinimumSize = new System.Drawing.Size(188, 4);
 			this.treeView2.Name = "treeView2";
-			this.treeView2.Size = new System.Drawing.Size(250, 597);
+			this.treeView2.Size = new System.Drawing.Size(248, 597);
 			this.treeView2.TabIndex = 0;
 			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			// 

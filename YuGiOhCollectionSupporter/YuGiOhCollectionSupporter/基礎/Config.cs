@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,10 @@ namespace YuGiOhCollectionSupporter
 		public static string Domain = "https://www.db.yugioh-card.com";
 		public static string ConfigPass = Form1.SaveFolder + "\\" + "Config.dat";
 
-
+		//ウィンドウの形保持
+		public Size WindowSize = new Size(1220,700);
+		public int Container1SpritterDistance = 480;
+		public int Container2SpritterDistance = 230;
 
 		public static void Save(Config config)
 		{
