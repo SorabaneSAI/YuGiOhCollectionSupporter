@@ -67,9 +67,9 @@
 			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.groupBox1.Font = new System.Drawing.Font("MS UI Gothic", 15F);
 			this.groupBox1.Location = new System.Drawing.Point(0, 0);
-			this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
 			this.groupBox1.Size = new System.Drawing.Size(933, 289);
 			this.groupBox1.TabIndex = 3;
 			this.groupBox1.TabStop = false;
@@ -233,10 +233,10 @@
 			// 
 			// CollectDataUI
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.Controls.Add(this.groupBox1);
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "CollectDataUI";
 			this.Size = new System.Drawing.Size(933, 289);
 			this.groupBox1.ResumeLayout(false);

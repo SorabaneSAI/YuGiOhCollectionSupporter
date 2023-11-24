@@ -34,12 +34,6 @@
 			this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.dataGridView1 = new System.Windows.Forms.DataGridView();
-			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
 			this.type = new System.Windows.Forms.DataGridViewImageColumn();
 			this.名前 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.略号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +42,12 @@
 			this.Is同名予備カード枚数十分 = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.Q値段 = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.評価 = new System.Windows.Forms.DataGridViewLinkColumn();
+			this.collectDataUI1 = new YuGiOhCollectionSupporter.CollectDataUI();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.button3 = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
 			this.flowLayoutPanel3.SuspendLayout();
@@ -57,10 +57,10 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("MS UI Gothic", 15F);
-			this.label1.Location = new System.Drawing.Point(3, 37);
-			this.label1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
+			this.label1.Location = new System.Drawing.Point(4, 46);
+			this.label1.Margin = new System.Windows.Forms.Padding(4, 12, 4, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(108, 20);
+			this.label1.Size = new System.Drawing.Size(134, 25);
 			this.label1.TabIndex = 3;
 			this.label1.Text = "パックの種類";
 			// 
@@ -68,10 +68,10 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("MS UI Gothic", 15F);
-			this.label4.Location = new System.Drawing.Point(3, 67);
-			this.label4.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
+			this.label4.Location = new System.Drawing.Point(4, 83);
+			this.label4.Margin = new System.Windows.Forms.Padding(4, 12, 4, 0);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(69, 20);
+			this.label4.Size = new System.Drawing.Size(87, 25);
 			this.label4.TabIndex = 8;
 			this.label4.Text = "シリーズ";
 			// 
@@ -88,7 +88,8 @@
 			this.tableLayoutPanel1.Controls.Add(this.collectDataUI1, 0, 4);
 			this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 0, 5);
 			this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel3, 0, 3);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 4);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 8;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -96,29 +97,31 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(876, 849);
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(1168, 1061);
 			this.tableLayoutPanel1.TabIndex = 9;
 			// 
 			// flowLayoutPanel2
 			// 
 			this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 752);
+			this.flowLayoutPanel2.Location = new System.Drawing.Point(4, 939);
+			this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-			this.flowLayoutPanel2.Size = new System.Drawing.Size(870, 94);
+			this.flowLayoutPanel2.Size = new System.Drawing.Size(1160, 118);
 			this.flowLayoutPanel2.TabIndex = 13;
 			// 
 			// linkLabel1
 			// 
 			this.linkLabel1.AutoSize = true;
 			this.linkLabel1.Font = new System.Drawing.Font("MS UI Gothic", 20F);
-			this.linkLabel1.Location = new System.Drawing.Point(3, 0);
+			this.linkLabel1.Location = new System.Drawing.Point(4, 0);
+			this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.linkLabel1.Name = "linkLabel1";
-			this.linkLabel1.Size = new System.Drawing.Size(96, 27);
+			this.linkLabel1.Size = new System.Drawing.Size(121, 34);
 			this.linkLabel1.TabIndex = 9;
 			this.linkLabel1.TabStop = true;
 			this.linkLabel1.Text = "パック名";
@@ -138,7 +141,8 @@
             this.Is同名予備カード枚数十分,
             this.Q値段,
             this.評価});
-			this.dataGridView1.Location = new System.Drawing.Point(3, 413);
+			this.dataGridView1.Location = new System.Drawing.Point(4, 515);
+			this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.dataGridView1.MultiSelect = false;
 			this.dataGridView1.Name = "dataGridView1";
 			this.dataGridView1.RowHeadersVisible = false;
@@ -147,7 +151,7 @@
 			this.dataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
 			this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-			this.dataGridView1.Size = new System.Drawing.Size(800, 333);
+			this.dataGridView1.Size = new System.Drawing.Size(1067, 416);
 			this.dataGridView1.TabIndex = 0;
 			this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
 			this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellEndEdit);
@@ -156,65 +160,6 @@
 			this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
 			this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DataGridView1_EditingControlShowing);
 			this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-			// 
-			// flowLayoutPanel1
-			// 
-			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 363);
-			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-			this.flowLayoutPanel1.Size = new System.Drawing.Size(870, 44);
-			this.flowLayoutPanel1.TabIndex = 12;
-			// 
-			// flowLayoutPanel3
-			// 
-			this.flowLayoutPanel3.Controls.Add(this.button1);
-			this.flowLayoutPanel3.Controls.Add(this.button2);
-			this.flowLayoutPanel3.Controls.Add(this.button3);
-			this.flowLayoutPanel3.Location = new System.Drawing.Point(2, 89);
-			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-			this.flowLayoutPanel3.Size = new System.Drawing.Size(444, 30);
-			this.flowLayoutPanel3.TabIndex = 14;
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(3, 3);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(133, 23);
-			this.button1.TabIndex = 11;
-			this.button1.Text = "リスト更新";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click_1);
-			// 
-			// button2
-			// 
-			this.button2.Location = new System.Drawing.Point(141, 2);
-			this.button2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(113, 24);
-			this.button2.TabIndex = 12;
-			this.button2.Text = "セーブ";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click_1);
-			// 
-			// button3
-			// 
-			this.button3.Location = new System.Drawing.Point(258, 2);
-			this.button3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(132, 24);
-			this.button3.TabIndex = 13;
-			this.button3.Text = "このリストのデータ取得";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
-			// 
-			// collectDataUI1
-			// 
-			this.collectDataUI1.Location = new System.Drawing.Point(4, 125);
-			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(4);
-			this.collectDataUI1.Name = "collectDataUI1";
-			this.collectDataUI1.Size = new System.Drawing.Size(740, 231);
-			this.collectDataUI1.TabIndex = 11;
 			// 
 			// type
 			// 
@@ -254,7 +199,7 @@
 			this.レアリティ.ReadOnly = true;
 			this.レアリティ.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.レアリティ.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.レアリティ.Width = 52;
+			this.レアリティ.Width = 63;
 			// 
 			// Qランク
 			// 
@@ -270,7 +215,7 @@
             "不明"});
 			this.Qランク.MinimumWidth = 50;
 			this.Qランク.Name = "Qランク";
-			this.Qランク.Width = 50;
+			this.Qランク.Width = 55;
 			// 
 			// Is同名予備カード枚数十分
 			// 
@@ -290,7 +235,7 @@
 			this.Is同名予備カード枚数十分.MinimumWidth = 6;
 			this.Is同名予備カード枚数十分.Name = "Is同名予備カード枚数十分";
 			this.Is同名予備カード枚数十分.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.Is同名予備カード枚数十分.Width = 59;
+			this.Is同名予備カード枚数十分.Width = 73;
 			// 
 			// Q値段
 			// 
@@ -299,27 +244,90 @@
 			this.Q値段.MinimumWidth = 6;
 			this.Q値段.Name = "Q値段";
 			this.Q値段.ReadOnly = true;
-			this.Q値段.Width = 43;
+			this.Q値段.Width = 54;
 			// 
 			// 評価
 			// 
 			this.評価.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.評価.HeaderText = "評価";
+			this.評価.MinimumWidth = 6;
 			this.評価.Name = "評価";
 			this.評価.ReadOnly = true;
 			this.評価.Resizable = System.Windows.Forms.DataGridViewTriState.True;
 			this.評価.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.評価.Width = 54;
+			this.評価.Width = 66;
+			// 
+			// collectDataUI1
+			// 
+			this.collectDataUI1.Location = new System.Drawing.Point(5, 155);
+			this.collectDataUI1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+			this.collectDataUI1.Name = "collectDataUI1";
+			this.collectDataUI1.Size = new System.Drawing.Size(987, 289);
+			this.collectDataUI1.TabIndex = 11;
+			// 
+			// flowLayoutPanel1
+			// 
+			this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 453);
+			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(1160, 54);
+			this.flowLayoutPanel1.TabIndex = 12;
+			// 
+			// flowLayoutPanel3
+			// 
+			this.flowLayoutPanel3.Controls.Add(this.button1);
+			this.flowLayoutPanel3.Controls.Add(this.button2);
+			this.flowLayoutPanel3.Controls.Add(this.button3);
+			this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 110);
+			this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+			this.flowLayoutPanel3.Size = new System.Drawing.Size(592, 38);
+			this.flowLayoutPanel3.TabIndex = 14;
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(4, 4);
+			this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(177, 29);
+			this.button1.TabIndex = 11;
+			this.button1.Text = "リスト更新";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click_1);
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(188, 2);
+			this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(151, 30);
+			this.button2.TabIndex = 12;
+			this.button2.Text = "セーブ";
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click_1);
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(345, 2);
+			this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(176, 30);
+			this.button3.TabIndex = 13;
+			this.button3.Text = "このリストのデータ取得";
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.button3_Click);
 			// 
 			// CardListUI
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.AutoScroll = true;
 			this.AutoSize = true;
 			this.Controls.Add(this.tableLayoutPanel1);
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "CardListUI";
-			this.Size = new System.Drawing.Size(882, 855);
+			this.Size = new System.Drawing.Size(1176, 1069);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
