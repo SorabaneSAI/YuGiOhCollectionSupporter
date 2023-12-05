@@ -174,7 +174,26 @@ namespace YuGiOhCollectionSupporter
 						foreach (var cell in td2)
 						{
 							var carddata = getCardData(cell);
-							KanabellCardList.Add(carddata);
+							if (checkBox1.Checked)
+							{
+								//略号がある＝過去に調査済みの場合はスキップ
+								foreach (var card in form.PriceDB.PriceDataList)
+								{
+									if (carddata.URL == card.URL && card.略号Full != "")
+									{
+										KanabellCardList.Add(card);
+										goto next_cell;
+									}
+								}
+								KanabellCardList.Add(carddata);
+							}
+							else
+							{
+								KanabellCardList.Add(carddata);
+							}
+
+
+						next_cell:;
 						}
 					}
 
@@ -191,7 +210,8 @@ namespace YuGiOhCollectionSupporter
 
 							html2 = await Program.GetHtml(textBox1.Text + page.GetAttribute("href").Trim());
 
-							str = $"{SeriesNameList[k]} {k}/{SeriesURLList.Count}の{num}ページ目  {Program.ToJson(KanabellCardList.Last())}";
+							str = $"{SeriesNameList[k]} {k}/{SeriesURLList.Count}の{num}ページ目  " +
+								$"{(KanabellCardList.Count == 0 ? "スキップされました" : Program.ToJson(KanabellCardList.Last()))}";
 							Program.WriteLog(str, LogLevel.情報);
 							form.UpdateLabel(str);
 
@@ -424,7 +444,8 @@ namespace YuGiOhCollectionSupporter
 			for (int k = StartNum; k < EndNum; k++)
 			{
 				string URL = KanabellCardList[k].URL;
-				if (URL == "") continue;	//①を実行していなければ空白 っていうか要素がないか
+				if (URL == "") continue;    //①を実行していなければ空白 っていうか要素がないか
+				if (checkBox1.Checked && KanabellCardList[k].略号Full != "") continue;	//略号がある＝過去に調査済みの場合はスキップ
 
 				await Task.Delay(1000); //負荷軽減のため１秒待機;
 

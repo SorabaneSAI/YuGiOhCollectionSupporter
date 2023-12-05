@@ -380,8 +380,8 @@ namespace YuGiOhCollectionSupporter
 			//ホーム画面
 
 			//FlowLayoutPanelに埋め込む（そのままだとうまくいかなかった）
-			FlowLayoutPanel panel = new FlowLayoutPanel();
-			panel.FlowDirection = FlowDirection.TopDown;
+			Panel panel = new Panel();
+//			panel.FlowDirection = FlowDirection.TopDown;
 			panel.Dock = DockStyle.Fill;
 			form.splitContainer1.Panel2.Controls.Add(panel);
 
@@ -389,6 +389,7 @@ namespace YuGiOhCollectionSupporter
 				form.getCardHaveNumCode(form.CardDB).Item2, form.getCardHaveNumRarity(form.CardDB).Item1, form.getCardHaveNumRarity(form.CardDB).Item2);
 			panel.Controls.Add(homeUI);
 
+			homeUI.Dock = DockStyle.Top;
 			/*
 			ComboBox comboBox = new ComboBox();
 			comboBox.Items.Add("カード名別で");
@@ -410,6 +411,7 @@ namespace YuGiOhCollectionSupporter
 			*/
 			HomePDFUI pdfUI = new HomePDFUI(form);
 			panel.Controls.Add(pdfUI);
+
 
 		}
 
