@@ -45,16 +45,16 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.treeView1 = new System.Windows.Forms.TreeView();
 			this.button3 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.treeView2 = new System.Windows.Forms.TreeView();
 			this.button4 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.treeView2 = new System.Windows.Forms.TreeView();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.panel2 = new System.Windows.Forms.Panel();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -244,6 +244,28 @@
 			this.splitContainer2.SplitterDistance = 224;
 			this.splitContainer2.TabIndex = 6;
 			// 
+			// panel1
+			// 
+			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel1.Controls.Add(this.treeView1);
+			this.panel1.Location = new System.Drawing.Point(0, 43);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(220, 747);
+			this.panel1.TabIndex = 4;
+			// 
+			// treeView1
+			// 
+			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeView1.Location = new System.Drawing.Point(0, 0);
+			this.treeView1.Margin = new System.Windows.Forms.Padding(4);
+			this.treeView1.MinimumSize = new System.Drawing.Size(29, 4);
+			this.treeView1.Name = "treeView1";
+			this.treeView1.Size = new System.Drawing.Size(220, 747);
+			this.treeView1.TabIndex = 5;
+			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+			// 
 			// button3
 			// 
 			this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -279,16 +301,27 @@
 			this.textBox1.TabIndex = 6;
 			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
 			// 
-			// treeView1
+			// panel2
 			// 
-			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeView1.Location = new System.Drawing.Point(0, 0);
-			this.treeView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.treeView1.MinimumSize = new System.Drawing.Size(29, 4);
-			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(220, 747);
-			this.treeView1.TabIndex = 5;
-			this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+			this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel2.Controls.Add(this.treeView2);
+			this.panel2.Location = new System.Drawing.Point(0, 43);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(249, 747);
+			this.panel2.TabIndex = 1;
+			// 
+			// treeView2
+			// 
+			this.treeView2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeView2.Location = new System.Drawing.Point(0, 0);
+			this.treeView2.Margin = new System.Windows.Forms.Padding(2);
+			this.treeView2.MinimumSize = new System.Drawing.Size(234, 4);
+			this.treeView2.Name = "treeView2";
+			this.treeView2.Size = new System.Drawing.Size(249, 747);
+			this.treeView2.TabIndex = 0;
+			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
 			// 
 			// button4
 			// 
@@ -325,35 +358,6 @@
 			this.textBox2.TabIndex = 8;
 			this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
 			// 
-			// treeView2
-			// 
-			this.treeView2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeView2.Location = new System.Drawing.Point(0, 0);
-			this.treeView2.Margin = new System.Windows.Forms.Padding(2);
-			this.treeView2.MinimumSize = new System.Drawing.Size(234, 4);
-			this.treeView2.Name = "treeView2";
-			this.treeView2.Size = new System.Drawing.Size(249, 747);
-			this.treeView2.TabIndex = 0;
-			this.treeView2.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView2_AfterSelect);
-			// 
-			// panel1
-			// 
-			this.panel1.Controls.Add(this.treeView1);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel1.Location = new System.Drawing.Point(0, 43);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(220, 747);
-			this.panel1.TabIndex = 4;
-			// 
-			// panel2
-			// 
-			this.panel2.Controls.Add(this.treeView2);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel2.Location = new System.Drawing.Point(0, 43);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(249, 747);
-			this.panel2.TabIndex = 1;
-			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -363,7 +367,7 @@
 			this.Controls.Add(this.menuStrip1);
 			this.Controls.Add(this.splitContainer1);
 			this.MainMenuStrip = this.menuStrip1;
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "Form1";
 			this.Text = "遊戯王カードコレクトサポーター";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
